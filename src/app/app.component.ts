@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-@Component({
-  selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matHomeRound, matLoginRound, matSettingsRound, matPersonAddRound } from '@ng-icons/material-icons/round';
+import { Divider } from 'primeng/divider';
+
+@Component ({
+    selector: 'app-root',
+    imports: [RouterOutlet, RouterLink, NgIcon, RouterLinkActive, Divider],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    viewProviders: [provideIcons ({ matHomeRound, matLoginRound, matSettingsRound, matPersonAddRound })]
 })
 export class AppComponent {
-  title = 'squadtalk';
 }

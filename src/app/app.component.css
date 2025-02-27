@@ -1,0 +1,28 @@
+.nav-item {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    padding: calc(var(--spacing) * 3);
+    transition: color 0.2s, background-color 0.2s, font-weight 0.2s;
+}
+
+.nav-item span {
+    margin-top: -2px;
+}
+
+.nav-item:hover {
+    background-color: var(--p-content-border-color);
+}
+
+.nav-item.active {
+    border-inline-end-width: 2px;
+    border-inline-end-color: var(--p-primary-color);
+    color: var(--p-primary-color);
+    background-color: color-mix(in srgb, var(--p-primary-color), transparent 90%);
+    font-weight: bold;
+}
+
+.nav-container {
+    background: var(--p-content-hover-background);
+}
