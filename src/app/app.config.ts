@@ -7,6 +7,7 @@ import { providePrimeNG } from 'primeng/config';
 import Material from '@primeng/themes/material';
 import {provideNgIconsConfig} from '@ng-icons/core';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {provideHttpClient, withFetch} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -40,6 +41,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideNgIconsConfig({
             size: '1.5em'
-        })
+        }),
+        provideHttpClient(withFetch())
     ]
 };

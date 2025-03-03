@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { Button } from "primeng/button";
 import { Card } from "primeng/card";
 
@@ -16,6 +16,8 @@ import { InputText } from "primeng/inputtext";
 import { Password } from "primeng/password";
 import { RouterLink } from "@angular/router";
 import {NgClass, NgIf} from '@angular/common';
+import {ProfileService} from '../../../services/ProfileService';
+import {UserRegisterDto} from '../../../dto/UserRegisterDto';
 
 @Component({
     selector: 'app-register',
@@ -35,6 +37,8 @@ import {NgClass, NgIf} from '@angular/common';
     styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
+
+    private profileService = inject(ProfileService);
 
     registerForm!: FormGroup;
 
@@ -104,5 +108,20 @@ export class RegisterComponent implements OnInit {
 
         console.log('Register data:', this.registerForm.value);
         console.log('Form valid:', this.registerForm.valid);
+
+        if (this.registerForm.invalid) {
+            return;
+        }
+
+        const user: UserRegisterDto = this.registerForm.value;
+
+        this.profileService.register(user).subscribe({
+            next: (response) => {
+                console.log('Registration successful:', response);
+            },
+            error: (error) => {
+                console.error('Registration failed:', error);
+            }
+        });
     }
 }
