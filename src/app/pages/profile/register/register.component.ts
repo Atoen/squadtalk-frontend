@@ -16,8 +16,9 @@ import { InputText } from "primeng/inputtext";
 import { Password } from "primeng/password";
 import { RouterLink } from "@angular/router";
 import {NgClass, NgIf} from '@angular/common';
-import {ProfileService} from '../../../services/ProfileService';
-import {UserRegisterDto} from '../../../dto/UserRegisterDto';
+import {UserAuthenticationService} from '../../../services/UserAuthenticationService';
+import {UserRegisterDto} from '../../../data/dtos/UserRegisterDto';
+import { Fluid } from "primeng/fluid";
 
 @Component({
     selector: 'app-register',
@@ -32,13 +33,14 @@ import {UserRegisterDto} from '../../../dto/UserRegisterDto';
         RouterLink,
         NgIf,
         NgClass,
+        Fluid,
     ],
     templateUrl: './register.component.html',
     styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
 
-    private profileService = inject(ProfileService);
+    private profileService = inject(UserAuthenticationService);
 
     registerForm!: FormGroup;
 
@@ -101,27 +103,25 @@ export class RegisterComponent implements OnInit {
         return password === repeatPassword ? null : { passwordsDoNotMatch: true };
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.username?.markAsDirty();
         this.email?.markAsDirty();
         this.password?.markAsDirty();
 
-        console.log('Register data:', this.registerForm.value);
-        console.log('Form valid:', this.registerForm.valid);
+        console.debug('Register data:', this.registerForm.value);
+        console.debug('Form valid:', this.registerForm.valid);
 
         if (this.registerForm.invalid) {
             return;
         }
 
-        const user: UserRegisterDto = this.registerForm.value;
+        const formData: UserRegisterDto = this.registerForm.value;
+        const result = await this.profileService.register(formData);
 
-        this.profileService.register(user).subscribe({
-            next: (response) => {
-                console.log('Registration successful:', response);
-            },
-            error: (error) => {
-                console.error('Registration failed:', error);
-            }
-        });
+        if (result.success) {
+            console.log('Registration successful');
+        } else {
+            console.error('Registration failed:', result.error);
+        }
     }
 }

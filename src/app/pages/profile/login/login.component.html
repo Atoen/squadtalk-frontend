@@ -2,53 +2,54 @@
     <p-card>
         <span class="text-primary text-2xl mb-4 block">Log in</span>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-            <p-floatlabel class="w-full" variant="on">
-                <input pInputText formControlName="usernameOrEmail"
-                       variant="outlined" type="text" id="username_input"
-                        class="w-full"/>
-                <label for="username_input">Username or Email</label>
-            </p-floatlabel>
-            <div *ngIf="usernameOrEmail?.invalid && usernameOrEmail?.dirty" class="-mt-4 invalid-text">
-                <small>
-                    Username or email is required.
-                </small>
+        <p-fluid>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+                <p-floatlabel variant="on">
+                    <input pInputText formControlName="usernameOrEmail"
+                           variant="outlined" type="text" id="username_input"/>
+                    <label for="username_input">Username or Email</label>
+                </p-floatlabel>
+                <div *ngIf="usernameOrEmail?.invalid && usernameOrEmail?.dirty" class="-mt-4 invalid-text">
+                    <small>
+                        Username or email is required.
+                    </small>
+                </div>
+
+                <p-floatlabel variant="on">
+                    <p-password id="password_input" type="password" [feedback]="false"
+                                [toggleMask]="true" formControlName="password"/>
+                    <label for="password_input">Password</label>
+                </p-floatlabel>
+                <div *ngIf="password?.invalid && password?.dirty" class="-mt-4 invalid-text">
+                    <small>
+                        Password is required.
+                    </small>
+                </div>
+
+                <div class="flex items-center ms-2">
+                    <p-checkbox formControlName="rememberMe" [binary]="true" inputId="remember" />
+                    <label for="remember" class="ml-2">Remember me</label>
+                </div>
+
+                <p-button styleClass="w-60" class="mx-auto" type="submit">
+                    <span class="text-xl">Log in</span>
+                </p-button>
+            </form>
+
+            <div class="flex flex-col mt-2">
+                <p-button variant="text" class="mx-auto" routerLink="/profile/register">
+                    Create an account
+                </p-button>
+                <p-button variant="text" class="mx-auto" size="small" routerLink="/profile/forgot-password">
+                    Forgot your password?
+                </p-button>
+
+                <p-toast />
+                <p-button variant="text" class="mx-auto" size="small" (onClick)="onResendActivationEmail()">
+                    Resend activation email
+                </p-button>
             </div>
+        </p-fluid>
 
-            <p-floatlabel class="w-full" variant="on">
-                <p-password id="password_input" type="password" [feedback]="false"
-                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-                            [toggleMask]="true" formControlName="password"/>
-                <label for="password_input">Password</label>
-            </p-floatlabel>
-            <div *ngIf="password?.invalid && password?.dirty" class="-mt-4 invalid-text">
-                <small>
-                    Password is required.
-                </small>
-            </div>
-
-            <div class="flex items-center ms-2">
-                <p-checkbox formControlName="rememberMe" [binary]="true" inputId="remember" />
-                <label for="remember" class="ml-2">Remember me</label>
-            </div>
-
-            <p-button styleClass="w-60" class="mx-auto" type="submit">
-                <span class="text-xl">Log in</span>
-            </p-button>
-        </form>
-
-        <div class="flex flex-col mt-2">
-            <p-button variant="text" class="mx-auto" routerLink="/profile/register">
-                Create an account
-            </p-button>
-            <p-button variant="text" class="mx-auto" size="small" routerLink="/profile/forgot-password">
-                Forgot your password?
-            </p-button>
-
-            <p-toast />
-            <p-button variant="text" class="mx-auto" size="small" (onClick)="onResendActivationEmail()">
-                Resend activation email
-            </p-button>
-        </div>
     </p-card>
 </div>

@@ -6,6 +6,7 @@ import { Card } from 'primeng/card';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputText } from 'primeng/inputtext';
 import { NgIf } from '@angular/common';
+import { Fluid } from "primeng/fluid";
 
 @Component({
     selector: 'app-forgot-password',
@@ -17,6 +18,7 @@ import { NgIf } from '@angular/common';
         InputText,
         ReactiveFormsModule,
         NgIf,
+        Fluid,
     ],
     providers: [MessageService],
     templateUrl: './forgot-password.component.html',

@@ -8,21 +8,22 @@ import {
     Router,
     RouterStateSnapshot
 } from '@angular/router';
-import { ProfileService } from './ProfileService';
+import { AuthenticationState, UserAuthenticationService } from './UserAuthenticationService';
 
 @Injectable({providedIn: "root"})
 export class AuthGuard implements CanActivate {
 
     private router = inject(Router);
-    private profileService = inject(ProfileService);
+    private authService = inject(UserAuthenticationService);
 
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): MaybeAsync<GuardResult> {
-        if (!this.profileService.isLoggedIn) {
+        if (!this.authService.isLoggedIn()) {
             const loginUrl = this.router.createUrlTree(['/profile/login'], {
-                queryParams: { returnUrl: state.url }
+                queryParams: { returnUrl: state.url },
+                queryParamsHandling: 'merge'
             });
 
             return new RedirectCommand(loginUrl);

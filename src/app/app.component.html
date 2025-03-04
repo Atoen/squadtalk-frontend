@@ -1,28 +1,46 @@
 <div class="h-screen flex">
     <div class="w-64 flex flex-col nav-container">
-        <div class="text-primary text-2xl font-semibold mt-4 ms-4 me-1">
-            Squadtalk
+        <div class="mt-4 ms-4 me-1">
+            <div class="text-primary text-2xl font-semibold">
+                Squadtalk
+            </div>
+            <app-user-status/>
         </div>
 
         <p-divider/>
 
         <nav class="flex-1 flex flex-col">
-            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+            <a routerLink="/" routerLinkActive="active"
+               [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
                 <ng-icon name="matHomeRound"/>
                 <span>Home</span>
             </a>
-            <a routerLink="/profile/login" routerLinkActive="active" class="nav-item">
-                <ng-icon name="matLoginRound"/>
-                <span>Login</span>
-            </a>
-            <a routerLink="/profile/register" routerLinkActive="active" class="nav-item">
-                <ng-icon name="matPersonAddRound"/>
-                <span>Register</span>
-            </a>
+
             <a routerLink="/settings" routerLinkActive="active" class="nav-item">
                 <ng-icon name="matSettingsRound"/>
                 <span>Settings</span>
             </a>
+
+            <ng-container *ngIf="authService.authenticationState() !== AuthenticationState.Unknown">
+                <ng-container *ngIf="authService.isLoggedIn(); else loggedOut">
+                    <a class="nav-item fade-in" (click)="logOut()">
+                        <ng-icon name="matLogoutRound"/>
+                        <span>Log out</span>
+                    </a>
+                </ng-container>
+
+                <ng-template #loggedOut>
+                    <a routerLink="/profile/login" routerLinkActive="active" class="nav-item fade-in">
+                        <ng-icon name="matLoginRound"/>
+                        <span>Login</span>
+                    </a>
+                    <a routerLink="/profile/register" routerLinkActive="active" class="nav-item fade-in">
+                        <ng-icon name="matPersonAddRound"/>
+                        <span>Register</span>
+                    </a>
+                </ng-template>
+            </ng-container>
+
         </nav>
     </div>
 

@@ -1,80 +1,76 @@
 <div class="container max-w-xl mx-auto">
     <p-card>
         <span class="text-primary text-2xl mb-4 block">Register</span>
+        <p-fluid>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+                <p-floatlabel variant="on">
+                    <input pInputText formControlName="username"
+                           variant="outlined" type="text" id="username_input"/>
+                    <label for="username_input">Username</label>
+                </p-floatlabel>
+                <div *ngIf="username?.invalid" class="-mt-4 invalid-text">
+                    <small *ngIf="fieldMissing('username')">
+                        Username is required.
+                    </small>
+                    <small *ngIf="username?.hasError('minlength')">
+                        Username must be at least 3 characters long.
+                    </small>
+                    <small *ngIf="username?.hasError('maxlength')">
+                        Username must be at most 32 characters long.
+                    </small>
+                </div>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-            <p-floatlabel class="w-full" variant="on">
-                <input pInputText formControlName="username"
-                       variant="outlined" type="text" id="username_input"
-                       class="w-full" required/>
-                <label for="username_input">Username</label>
-            </p-floatlabel>
-            <div *ngIf="username?.invalid" class="-mt-4 invalid-text">
-                <small *ngIf="fieldMissing('username')">
-                    Username is required.
-                </small>
-                <small *ngIf="username?.hasError('minlength')">
-                    Username must be at least 3 characters long.
-                </small>
-                <small *ngIf="username?.hasError('maxlength')">
-                    Username must be at most 32 characters long.
-                </small>
+                <p-floatlabel variant="on">
+                    <input pInputText formControlName="email"
+                           variant="outlined" type="email" id="email_input"/>
+                    <label for="email_input">Email address</label>
+                </p-floatlabel>
+                <div *ngIf="email?.invalid" class="-mt-4 invalid-text">
+                    <small *ngIf="fieldMissing('email')">
+                        Email address is required.
+                    </small>
+                    <small *ngIf="email?.hasError('email')">
+                        Invalid email address
+                    </small>
+                </div>
+
+                <p-floatlabel variant="on">
+                    <p-password id="password_input" type="password" [feedback]="false"
+                                [toggleMask]="true" formControlName="password"/>
+                    <label for="password_input">Password</label>
+                </p-floatlabel>
+                <div *ngIf="password?.invalid" class="-mt-4 invalid-text">
+                    <small *ngIf="fieldMissing('password')">
+                        Password is required.
+                    </small>
+                    <small *ngIf="password?.hasError('minlength')">
+                        Password must be at least 8 characters long.
+                    </small>
+                    <small *ngIf="password?.hasError('maxlength')">
+                        Password must be at most 64 characters long.
+                    </small>
+                </div>
+
+                <p-floatlabel variant="on">
+                    <p-password id="password_input2" type="password" [feedback]="false"
+                                [toggleMask]="true" formControlName="repeatPassword"
+                                [ngClass]="{'ng-invalid' : passwordDontMatch}" />
+                    <label for="password_input2">Confirm your password</label>
+                </p-floatlabel>
+                <div *ngIf="passwordDontMatch" class="-mt-4 invalid-text">
+                    <small>Passwords don't match.</small>
+                </div>
+
+                <p-button styleClass="w-60" class="mx-auto" type="submit">
+                    <span class="text-xl m-0 p-0">Create account</span>
+                </p-button>
+            </form>
+
+            <div class="flex flex-col mt-2 gap-1">
+                <p-button variant="text" class="mx-auto" routerLink="/profile/login">
+                    Log in to your account
+                </p-button>
             </div>
-
-            <p-floatlabel class="w-full" variant="on">
-                <input pInputText formControlName="email"
-                       variant="outlined" type="email" id="email_input"
-                       class="w-full"/>
-                <label for="email_input">Email address</label>
-            </p-floatlabel>
-            <div *ngIf="email?.invalid" class="-mt-4 invalid-text">
-                <small *ngIf="fieldMissing('email')">
-                    Email address is required.
-                </small>
-                <small *ngIf="email?.hasError('email')">
-                    Invalid email address
-                </small>
-            </div>
-
-            <p-floatlabel class="w-full" variant="on">
-                <p-password id="password_input" type="password" [feedback]="false"
-                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-                            [toggleMask]="true" formControlName="password"/>
-                <label for="password_input">Password</label>
-            </p-floatlabel>
-            <div *ngIf="password?.invalid" class="-mt-4 invalid-text">
-                <small *ngIf="fieldMissing('password')">
-                    Password is required.
-                </small>
-                <small *ngIf="password?.hasError('minlength')">
-                    Password must be at least 8 characters long.
-                </small>
-                <small *ngIf="password?.hasError('maxlength')">
-                    Password must be at most 64 characters long.
-                </small>
-            </div>
-
-            <p-floatlabel class="w-full" variant="on">
-                <p-password id="password_input2" type="password" [feedback]="false"
-                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-                            [toggleMask]="true" formControlName="repeatPassword"
-                            [ngClass]="{'ng-invalid' : passwordDontMatch}"
-                            class="ng-invalid"/>
-                <label for="password_input2">Confirm your password</label>
-            </p-floatlabel>
-            <div *ngIf="passwordDontMatch" class="-mt-4 invalid-text">
-                <small>Passwords don't match.</small>
-            </div>
-
-            <p-button styleClass="w-60" class="mx-auto" type="submit">
-                <span class="text-xl m-0 p-0">Create account</span>
-            </p-button>
-        </form>
-
-        <div class="flex flex-col mt-2 gap-1">
-            <p-button variant="text" class="mx-auto" routerLink="/profile/login">
-                Log in to your account
-            </p-button>
-        </div>
+        </p-fluid>
     </p-card>
 </div>

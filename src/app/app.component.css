@@ -26,3 +26,10 @@
 .nav-container {
     background: var(--p-content-hover-background);
 }
+
+.fade-in{ animation: fadeIn 500ms; }
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

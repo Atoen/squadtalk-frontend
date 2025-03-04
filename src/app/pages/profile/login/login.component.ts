@@ -10,9 +10,9 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import {NgIf} from '@angular/common';
-import {UserRegisterDto} from '../../../dto/UserRegisterDto';
-import {UserLoginDto} from '../../../dto/UserLoginDto';
-import {ProfileService} from '../../../services/ProfileService';
+import {UserLoginDto} from '../../../data/dtos/UserLoginDto';
+import {UserAuthenticationService} from '../../../services/UserAuthenticationService';
+import { Fluid } from "primeng/fluid";
 
 @Component({
     selector: 'app-login',
@@ -26,7 +26,8 @@ import {ProfileService} from '../../../services/ProfileService';
         Button,
         RouterLink,
         Toast,
-        NgIf
+        NgIf,
+        Fluid
     ],
     providers: [MessageService],
     templateUrl: './login.component.html',
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
     private router = inject(Router);
     private route = inject(ActivatedRoute);
 
-    private profileService = inject(ProfileService);
+    private authenticationService = inject(UserAuthenticationService);
     private messageService = inject(MessageService)
 
     loginForm!: FormGroup;
@@ -58,7 +59,7 @@ export class LoginComponent implements OnInit {
        });
     }
 
-    onSubmit() {
+    async onSubmit() {
         this.usernameOrEmail?.markAsDirty();
         this.password?.markAsDirty();
 
@@ -69,34 +70,21 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        const user: UserLoginDto = this.loginForm.value;
+        const formData: UserLoginDto = this.loginForm.value;
+        const result = await this.authenticationService.login(formData);
 
-        this.profileService.login(user).subscribe({
-            next: (response) => {
-                console.log('Login successful:', response);
+        if (result.success && result.user) {
 
-                this.profileService.getCurrentUser().subscribe({
-                    next: (user) => {
-                        if (user) {
-                            this.profileService.isLoggedIn = true;
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            await this.router.navigateByUrl(returnUrl);
 
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'Logged in',
-                                detail: `Logged in as ${user.username} (id ${user.id})`,
-                                life: 3000
-                            });
-
-                            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                            this.router.navigateByUrl(returnUrl);
-                        }
-                    }
-                })
-            },
-            error: (error) => {
-                console.error('Login failed:', error);
-            }
-        });
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Logged in',
+                detail: `Logged in as ${result.user.username} (id ${result.user.id})`,
+                life: 3000
+            });
+        }
     }
 
     onResendActivationEmail() {

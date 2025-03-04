@@ -21,6 +21,8 @@
     "@angular/platform-server": "^19.1.0",
     "@angular/router": "^19.1.0",
     "@angular/ssr": "^19.1.8",
+    "@microsoft/signalr": "^8.0.7",
+    "@microsoft/signalr-protocol-msgpack": "^8.0.7",
     "@ng-icons/core": "^30.3.0",
     "@ng-icons/material-icons": "^30.3.0",
     "@primeng/themes": "^19.0.8",
