@@ -1,14 +1,18 @@
-import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { Inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
+import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack";
 import { isPlatformServer } from "@angular/common";
-import { MessageDto, MessageDtoPacked } from "../data/dtos/MessageDto";
-import { PendingFriendRequestDto, PendingFriendRequestDtoPacked } from "../data/dtos/PendingFriendRequestDto";
+import { MessageDtoPacked } from "../data/dtos/MessageDto";
+import { UserStatus } from "../data/enums/UserStatus";
 
 @Injectable({providedIn: "root"})
 export class SignalrService {
 
     private connection!: HubConnection;
+
+    private _userStatus = signal(UserStatus.Unknown);
+
+    userStatus = this._userStatus.asReadonly();
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object) {
         if (isPlatformServer(this.platformId)) return;
@@ -24,7 +28,11 @@ export class SignalrService {
     private setEventHandlers() {
         this.connection.on('ReceivedMessage', (data: MessageDtoPacked) => {
             console.log('raw data:', data);
-            console.log('unpacked:', MessageDto.unpack(data));
+            console.log('unpacked:', );
+        });
+
+        this.connection.on('SelfStatusChanged', (status: UserStatus) => {
+            this._userStatus.set(status);
         });
     }
 
@@ -33,14 +41,14 @@ export class SignalrService {
         this.setEventHandlers();
 
         this.connection.start()
-            .then(() => {
-                this.connection.invoke<PendingFriendRequestDtoPacked[]>('GetFriendRequests').then(x => {
-                    console.log('friend requests raw:', x);
-
-                    const unpacked = x.map(y => PendingFriendRequestDto.unpack(y));
-                    console.log('friend request unpacked', unpacked);
-                });
+            .then(async () => {
+                const status = await this.connection.invoke<UserStatus>('GetSelfStatus');
+                this._userStatus.set(status);
             })
             .catch(err => console.error('Error while starting connection: ' + err));
+    }
+
+    async setSelfStatus(status: UserStatus) {
+        return this.connection.send('ChangeStatus', status);
     }
 }

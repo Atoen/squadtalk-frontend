@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, Inject, inject, Injectable, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserRegisterDto } from '../data/dtos/UserRegisterDto';
 import { firstValueFrom } from 'rxjs';
@@ -7,6 +7,7 @@ import { UserDto } from '../data/dtos/UserDto';
 import { StoredUserData } from "../data/local-storage/StoredUserData";
 import { UserStatus } from "../data/enums/UserStatus";
 import { UserId } from "../data/ids/UserId";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({ providedIn: "root" })
 export class UserAuthenticationService {
@@ -24,6 +25,12 @@ export class UserAuthenticationService {
     );
 
     currentUser = this._currentUser.asReadonly();
+
+    constructor(@Inject(PLATFORM_ID) platformId: Object) {
+        if (isPlatformBrowser(platformId)) {
+            this.tryReadStoredUser();
+        }
+    }
 
     async login(user: UserLoginDto): Promise<LoginResult> {
         try {
@@ -83,7 +90,7 @@ export class UserAuthenticationService {
 
     }
 
-    tryReadStoredUser() {
+    private tryReadStoredUser() {
         const data = localStorage.getItem(this.userDataKey);
 
         console.log("retrieved", data);

@@ -21,6 +21,7 @@
     color: var(--p-primary-color);
     background-color: color-mix(in srgb, var(--p-primary-color), transparent 90%);
     font-weight: bold;
+    --p-ripple-background: color-mix(in srgb, var(--p-primary-color), transparent 90%);;
 }
 
 .nav-container {

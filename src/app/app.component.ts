@@ -7,20 +7,32 @@ import {
     matLoginRound,
     matLogoutRound,
     matPersonAddRound,
-    matSettingsRound
+    matSettingsRound,
+    matPeopleRound,
+    matMessageRound
 } from '@ng-icons/material-icons/round';
 import { Divider } from 'primeng/divider';
 import { UserStatusComponent } from "./components/user-status/user-status.component";
 import { AuthenticationState, UserAuthenticationService } from "./services/UserAuthenticationService";
 import { isPlatformBrowser, NgIf } from "@angular/common";
 import { SignalrService } from "./services/SignalrService";
+import { Toast } from "primeng/toast";
+import { Ripple } from "primeng/ripple";
 
 @Component ({
     selector: 'app-root',
-    imports: [RouterOutlet, RouterLink, NgIcon, RouterLinkActive, Divider, UserStatusComponent, NgIf],
+    imports: [RouterOutlet, RouterLink, NgIcon, RouterLinkActive, Divider, UserStatusComponent, NgIf, Toast, Ripple],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    viewProviders: [provideIcons ({ matHomeRound, matLoginRound, matSettingsRound, matPersonAddRound, matLogoutRound })],
+    viewProviders: [provideIcons ({
+        matHomeRound,
+        matLoginRound,
+        matSettingsRound,
+        matPersonAddRound,
+        matLogoutRound,
+        matMessageRound,
+        matPeopleRound
+    })],
 })
 export class AppComponent implements OnInit {
 
@@ -32,7 +44,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if (!isPlatformBrowser(this.platformId)) return;
 
-        if (this.authService.tryReadStoredUser()) {
+        if (untracked(this.authService.authenticationState) === AuthenticationState.PendingVerification) {
             this.authService.verifyCurrentUser();
         }
 

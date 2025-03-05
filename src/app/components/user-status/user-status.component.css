@@ -1,0 +1,14 @@
+.menu {
+    transition: 0.2s;
+}
+
+.menu:hover {
+    background-color: var(--p-content-border-color);
+}
+
+.menu-item {
+    display: flex;
+    gap: calc(var(--spacing) * 2);
+    padding: calc(var(--spacing) * 2);
+    border-radius: var(--radius-sm);
+}

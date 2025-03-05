@@ -1,4 +1,4 @@
-import {ApplicationConfig, Injectable, provideZoneChangeDetection} from '@angular/core';
+import { ApplicationConfig, ErrorHandler, Injectable, provideZoneChangeDetection } from '@angular/core';
 import {provideRouter, RouterStateSnapshot, TitleStrategy} from '@angular/router';
 
 import { routes } from './app.routes';
@@ -8,6 +8,8 @@ import Material from '@primeng/themes/material';
 import {provideNgIconsConfig} from '@ng-icons/core';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideHttpClient, withFetch} from '@angular/common/http';
+import { ToastErrorHandler } from "./services/ErrorHandler";
+import { MessageService } from "primeng/api";
 
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -19,6 +21,8 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
         const title = this.buildTitle(routerState);
         if (title !== undefined) {
             this.title.setTitle(`Squadtalk | ${title}`);
+        } else {
+            this.title.setTitle('Squadtalk');
         }
     }
 }
@@ -42,6 +46,8 @@ export const appConfig: ApplicationConfig = {
         provideNgIconsConfig({
             size: '1.5em'
         }),
-        provideHttpClient(withFetch())
+        provideHttpClient(withFetch()),
+        MessageService,
+        { provide: ErrorHandler, useClass: ToastErrorHandler }
     ]
 };

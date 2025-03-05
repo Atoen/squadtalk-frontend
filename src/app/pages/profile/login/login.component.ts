@@ -29,7 +29,6 @@ import { Fluid } from "primeng/fluid";
         NgIf,
         Fluid
     ],
-    providers: [MessageService],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css'
 })
@@ -78,12 +77,7 @@ export class LoginComponent implements OnInit {
             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
             await this.router.navigateByUrl(returnUrl);
 
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Logged in',
-                detail: `Logged in as ${result.user.username} (id ${result.user.id})`,
-                life: 3000
-            });
+            window.location.reload();
         }
     }
 

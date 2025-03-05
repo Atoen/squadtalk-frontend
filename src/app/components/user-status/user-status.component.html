@@ -1,0 +1,40 @@
+<div *ngIf="authService.isLoggedIn(); else loggedOut" pRipple
+     class="flex items-center mx-2 px-2 gap-2 rounded-sm menu mt-1"
+    (click)="status_menu.toggle($event)">
+    <ng-icon [style.color]="status().color" [name]="status().icon" class="self-center"/>
+
+    <div class="flex flex-col justify-center mt-1">
+        <div class="text-lg -mt-1">{{ authService.currentUser()?.username }}</div>
+        <div class="text-muted-color -mt-1 mb-1 text-sm">{{ status().text }}</div>
+    </div>
+</div>
+<p-popover #status_menu>
+    <div class="flex flex-col text-sm primary-text -m-3">
+        <div class="menu menu-item" (click)="setSelfStatus(UserStatus.Online)">
+            <ng-icon name="matCircleRound" style="color: var(--success)" />
+            <span>Online</span>
+        </div>
+        <div class="menu menu-item" (click)="setSelfStatus(UserStatus.Away)">
+            <ng-icon name="matAccessTimeFilledRound" style="color: var(--warn)" />
+            <span>Away</span>
+        </div>
+        <div class="menu menu-item" (click)="setSelfStatus(UserStatus.DoNotDisturb)">
+            <ng-icon name="matDoNotDisturbOnRound" style="color: var(--error)" />
+            <span>Do not disturb</span>
+        </div>
+        <div class="menu menu-item" (click)="setSelfStatus(UserStatus.Offline)">
+            <ng-icon name="matCircleRound" style="color: var(--dark)" />
+            <span>Offline</span>
+        </div>
+    </div>
+</p-popover>
+
+<ng-template #loggedOut>
+    <ng-container *ngIf="authService.authenticationState() === AuthenticationState.Unknown; else notLoggedIn">
+        <p class="ms-4">Loading...</p>
+    </ng-container>
+</ng-template>
+
+<ng-template #notLoggedIn>
+    <p class="ms-4">You are not logged in.</p>
+</ng-template>

@@ -3,12 +3,54 @@
 
 * {
     box-sizing: border-box;
+    transition: background-color 0.15s;
 }
 
 html, body * {
     scrollbar-width: thin;
+    scrollbar-color: #c4c4c4 transparent;
+}
+
+body {
+    color: var(--text-primary);
+    background: var(--background);
 }
 
 .invalid-text {
     color: var(--p-floatlabel-invalid-color);
+}
+
+.p-popover {
+    background: var(--p-content-hover-background) !important;
+    border-color: var(--p-content-hover-background) !important;
+}
+
+.p-popover::before, .p-popover::after {
+    border-bottom-color: var(--p-content-hover-background) !important
+}
+
+.primary-text {
+    color: var(--text-primary);
+}
+
+:root {
+    --success: var(--color-green-500);
+    --warn: var(--color-amber-500);
+    --error: var(--color-red-500);
+    --info: var(--color-blue-500);
+    --dark: var(--color-stone-600);
+    --text-primary: rgb(70, 70, 70);
+    --surfacce: white;
+    --background: white;
+}
+
+:root.app-dark {
+    --success: var(--color-green-400);
+    --warn: var(--color-amber-400);
+    --error: var(--color-red-400);
+    --info: var(--color-blue-400);
+    --dark: var(--color-stone-900);
+    --text-primary: rgba(255, 255, 255, 0.7);
+    --surfacce: var(--color-stone-800);
+    --background: var(--color-surface-900);
 }
