@@ -1,14 +1,50 @@
 .menu {
-    transition: 0.2s;
+    display: flex;
+    align-items: center;
 }
 
-.menu:hover {
+.status-icon {
+    margin-inline-start: calc(5px - var(--spacing));
+}
+
+.menu:hover, .menu:active {
     background-color: var(--p-content-border-color);
 }
 
 .menu-item {
     display: flex;
-    gap: calc(var(--spacing) * 2);
-    padding: calc(var(--spacing) * 2);
-    border-radius: var(--radius-sm);
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.status {
+    margin-bottom: -2px;
+    margin-top: -2px;
+    margin-inline-start: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    margin-inline-end: 0.5rem;
+    transition: 0.2s ease;
+}
+
+.username {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 160px;
+}
+
+.status-text {
+    margin-top: -4px;
+}
+
+@media (max-width: 767px) {
+    .status:not(.expanded) {
+        opacity: 0;
+    }
+
+    .status {
+        gap: 0.25rem;
+        flex-direction: row;
+    }
 }

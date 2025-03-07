@@ -1,4 +1,4 @@
-import { computed, Inject, inject, Injectable, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
+import { computed, Inject, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserRegisterDto } from '../data/dtos/UserRegisterDto';
 import { firstValueFrom } from 'rxjs';
@@ -11,12 +11,11 @@ import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({ providedIn: "root" })
 export class UserAuthenticationService {
-    private readonly apiUrl = "https://localhost:1230/api/account";
     private readonly userDataKey = 'currentUser';
 
     private http = inject(HttpClient);
 
-    private _authenticationState: WritableSignal<AuthenticationState> = signal(AuthenticationState.Unknown);
+    private _authenticationState = signal(AuthenticationState.Unknown);
     private _currentUser = signal<UserDto | null>(null);
 
     authenticationState = this._authenticationState.asReadonly();
@@ -34,7 +33,7 @@ export class UserAuthenticationService {
 
     async login(user: UserLoginDto): Promise<LoginResult> {
         try {
-            const request = this.http.post<UserDto | null>(`${this.apiUrl}/login`, user, {
+            const request = this.http.post<UserDto | null>('/api/account/login', user, {
                 withCredentials: true
             });
 
@@ -49,7 +48,7 @@ export class UserAuthenticationService {
 
     async register(user: UserRegisterDto): Promise<RegisterResult> {
         try {
-            const response = await firstValueFrom(this.http.post(`${this.apiUrl}/register`, user, {
+            const response = await firstValueFrom(this.http.post('/api/account/register', user, {
                 observe: "response"
             }));
 
@@ -62,7 +61,7 @@ export class UserAuthenticationService {
     logOut() {
         localStorage.removeItem(this.userDataKey);
 
-        const request = this.http.post(`${this.apiUrl}/logout?returnUrl=ng`, {}, {
+        const request = this.http.post('/api/account/logout?returnUrl=ng', {}, {
             withCredentials: true
         });
 
@@ -70,7 +69,7 @@ export class UserAuthenticationService {
     }
 
     async verifyCurrentUser(): Promise<UserDto | null> {
-        const request = this.http.get<UserDto | null>(`${this.apiUrl}/me`, {
+        const request = this.http.get<UserDto | null>('/api/account/me', {
             withCredentials: true
         });
 

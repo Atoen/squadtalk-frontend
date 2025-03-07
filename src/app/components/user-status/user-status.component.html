@@ -1,13 +1,16 @@
-<div *ngIf="authService.isLoggedIn(); else loggedOut" pRipple
-     class="flex items-center mx-2 px-2 gap-2 rounded-sm menu mt-1"
+<div *ngIf="authService.isLoggedIn(); else loggedOut"
+    class="menu px-3 mx-1 py-1 rounded-sm" pRipple
     (click)="status_menu.toggle($event)">
-    <ng-icon [style.color]="status().color" [name]="status().icon" class="self-center"/>
+    <i class="flex status-icon">
+        <ng-icon [style.color]="status().color" [name]="status().icon"/>
+    </i>
 
-    <div class="flex flex-col justify-center mt-1">
-        <div class="text-lg -mt-1">{{ authService.currentUser()?.username }}</div>
-        <div class="text-muted-color -mt-1 mb-1 text-sm">{{ status().text }}</div>
+    <div class="status" [class.expanded]="sidebarExpanded()">
+        <div class="text-lg self-baseline username">{{ authService.currentUser()?.username }}</div>
+        <div class="text-muted-color text-sm self-baseline status-text">{{ status().text }}</div>
     </div>
 </div>
+
 <p-popover #status_menu>
     <div class="flex flex-col text-sm primary-text -m-3">
         <div class="menu menu-item" (click)="setSelfStatus(UserStatus.Online)">

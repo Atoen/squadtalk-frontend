@@ -1,4 +1,4 @@
-import { Component, computed, inject, ViewChild } from '@angular/core';
+import { Component, computed, inject, input, ViewChild } from '@angular/core';
 import { AuthenticationState, UserAuthenticationService } from "../../services/UserAuthenticationService";
 import { NgIf } from "@angular/common";
 import {
@@ -35,6 +35,8 @@ export class UserStatusComponent {
     signalrService = inject(SignalrService);
 
     @ViewChild('status_menu') statusMenu!: Popover;
+
+    sidebarExpanded = input.required<boolean>();
 
     protected readonly AuthenticationState = AuthenticationState;
 

@@ -58,4 +58,16 @@ export class AppComponent implements OnInit {
     logOut() {
         this.authService.logOut();
     }
+
+    isExpanded = false;
+
+    toggleSidebar(event: Event) {
+        if (window.innerWidth <= 767 && event.target === event.currentTarget) {
+            this.isExpanded = !this.isExpanded;
+        }
+    }
+
+    hideSidebar() {
+        this.isExpanded = false;
+    }
 }
