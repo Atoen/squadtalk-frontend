@@ -4,10 +4,9 @@ import { UserRegisterDto } from '../data/dtos/UserRegisterDto';
 import { firstValueFrom } from 'rxjs';
 import { UserLoginDto } from '../data/dtos/UserLoginDto';
 import { UserDto } from '../data/dtos/UserDto';
-import { StoredUserData } from "../data/local-storage/StoredUserData";
-import { UserStatus } from "../data/enums/UserStatus";
-import { UserId } from "../data/ids/UserId";
 import { isPlatformBrowser } from "@angular/common";
+import {User} from '../data/models/User';
+import {UserData} from '../data/interfaces/UserData';
 
 @Injectable({ providedIn: "root" })
 export class UserAuthenticationService {
@@ -16,7 +15,7 @@ export class UserAuthenticationService {
     private http = inject(HttpClient);
 
     private _authenticationState = signal(AuthenticationState.Unknown);
-    private _currentUser = signal<UserDto | null>(null);
+    private _currentUser = signal<UserData | null>(null);
 
     authenticationState = this._authenticationState.asReadonly();
     isLoggedIn = computed(() =>
@@ -68,25 +67,29 @@ export class UserAuthenticationService {
         request.subscribe(() => window.location.reload());
     }
 
-    async verifyCurrentUser(): Promise<UserDto | null> {
+    async verifyCurrentUser(): Promise<User | null> {
         const request = this.http.get<UserDto | null>('/api/account/me', {
             withCredentials: true
         });
 
         try {
-            const user = await firstValueFrom(request);
+            const userDto = await firstValueFrom(request);
+            if (userDto) {
+                const user = new User(userDto, true)
 
-            console.log("Verified user:", user);
+                console.log("Verified user:", user);
 
-            this.setCurrentUser(user);
+                this.setCurrentUser(user);
 
-            return user;
+                return user;
+            }
+
+            return null;
         }
         catch {
             this.setCurrentUser(null);
             return null;
         }
-
     }
 
     private tryReadStoredUser() {
@@ -99,15 +102,13 @@ export class UserAuthenticationService {
             return false;
         }
 
-        const storedUser: StoredUserData = JSON.parse(data);
-        const user = new UserDto(storedUser.username, new UserId(''), UserStatus.Unknown);
-
-        this.setCurrentUser(user, false);
+        const storedUser: UserData = JSON.parse(data);
+        this.setCurrentUser(storedUser, false);
 
         return true;
     }
 
-    private setCurrentUser(user: UserDto | null, updateLocalStorage: boolean = true) {
+    private setCurrentUser(user: UserData | null, updateLocalStorage: boolean = true) {
         if (updateLocalStorage) {
             if (user) {
                 localStorage.setItem(this.userDataKey, JSON.stringify(user));

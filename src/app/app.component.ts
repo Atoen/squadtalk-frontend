@@ -1,6 +1,5 @@
-import { Component, inject, OnInit, PLATFORM_ID, untracked } from '@angular/core';
+import {Component, Inject, inject, OnInit, PLATFORM_ID, untracked} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
     matHomeRound,
@@ -18,10 +17,23 @@ import { isPlatformBrowser, NgIf } from "@angular/common";
 import { SignalrService } from "./services/SignalrService";
 import { Toast } from "primeng/toast";
 import { Ripple } from "primeng/ripple";
+import {TranslateService} from '@ngx-translate/core';
+import {I18nService} from '../i18n/i18n.service';
+import {loadAllLocales} from '../i18n/i18n-util.sync';
 
 @Component ({
     selector: 'app-root',
-    imports: [RouterOutlet, RouterLink, NgIcon, RouterLinkActive, Divider, UserStatusComponent, NgIf, Toast, Ripple],
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        NgIcon,
+        RouterLinkActive,
+        Divider,
+        UserStatusComponent,
+        NgIf,
+        Toast,
+        Ripple,
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     viewProviders: [provideIcons ({
@@ -35,11 +47,20 @@ import { Ripple } from "primeng/ripple";
     })],
 })
 export class AppComponent implements OnInit {
+    constructor(
+        @Inject(PLATFORM_ID) private readonly platformId: Object,
+        private readonly signalrService: SignalrService,
+        private readonly translate: TranslateService,
+        public readonly authService: UserAuthenticationService,
+        private localization: I18nService
+    ) {
+        loadAllLocales();
+        this.localization.setLocale('en');
+    }
 
-    private platformId = inject(PLATFORM_ID);
-    private signalrService = inject(SignalrService);
-
-    authService = inject(UserAuthenticationService);
+    get LL() {
+        return this.localization.LL;
+    }
 
     ngOnInit() {
         if (!isPlatformBrowser(this.platformId)) return;

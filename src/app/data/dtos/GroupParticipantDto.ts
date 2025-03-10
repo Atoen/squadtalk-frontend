@@ -12,9 +12,9 @@ export class GroupParticipantDto implements MessagePackObject<GroupParticipantDt
     readonly packed: GroupParticipantDtoPacked;
 
     constructor(
-        user: UserDto,
-        role: GroupRole,
-        addedBy: UserDto,
+        readonly user: UserDto,
+        readonly role: GroupRole,
+        readonly addedBy: UserDto,
         packed?: GroupParticipantDtoPacked
     ) {
         this.packed = packed ?? [user.packed, role, addedBy.packed];

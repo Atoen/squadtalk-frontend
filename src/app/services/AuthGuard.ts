@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
     ActivatedRouteSnapshot,
     CanActivate,
@@ -8,12 +8,14 @@ import {
     Router,
     RouterStateSnapshot
 } from '@angular/router';
-import { AuthenticationState, UserAuthenticationService } from './UserAuthenticationService';
+import { UserAuthenticationService } from './UserAuthenticationService';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({providedIn: "root"})
 export class AuthGuard implements CanActivate {
 
     private router = inject(Router);
+    private platformId = inject(PLATFORM_ID);
     private authService = inject(UserAuthenticationService);
 
     canActivate(
@@ -21,7 +23,11 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot
     ): MaybeAsync<GuardResult> {
         if (!this.authService.isLoggedIn()) {
-            const loginUrl = this.router.createUrlTree(['/profile/login'], {
+
+            const redirectUrl = isPlatformBrowser(this.platformId)
+                ? '/profile/login' : '/';
+
+            const loginUrl = this.router.createUrlTree([redirectUrl], {
                 queryParams: { returnUrl: state.url },
                 queryParamsHandling: 'merge'
             });

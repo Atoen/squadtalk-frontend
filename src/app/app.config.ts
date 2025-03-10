@@ -10,6 +10,7 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import {provideHttpClient, withFetch} from '@angular/common/http';
 import { ToastErrorHandler } from "./services/ErrorHandler";
 import { MessageService } from "primeng/api";
+import {provideTranslateService} from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -48,6 +49,9 @@ export const appConfig: ApplicationConfig = {
         }),
         provideHttpClient(withFetch()),
         MessageService,
-        { provide: ErrorHandler, useClass: ToastErrorHandler }
+        { provide: ErrorHandler, useClass: ToastErrorHandler },
+        provideTranslateService({
+            defaultLanguage: 'en'
+        })
     ]
 };

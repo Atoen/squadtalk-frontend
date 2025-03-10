@@ -1,17 +1,19 @@
-import { Component, computed, inject, input, ViewChild } from '@angular/core';
-import { AuthenticationState, UserAuthenticationService } from "../../services/UserAuthenticationService";
-import { NgIf } from "@angular/common";
+import {Component, computed, inject, input, ViewChild} from '@angular/core';
+import {AuthenticationState, UserAuthenticationService} from "../../services/UserAuthenticationService";
+import {NgIf} from "@angular/common";
 import {
-    matCircleRound,
     matAccessTimeFilledRound,
+    matCircleRound,
     matDoNotDisturbOnRound,
     matWifiRound
 } from "@ng-icons/material-icons/round";
-import { SignalrService } from "../../services/SignalrService";
-import { UserStatus } from "../../data/enums/UserStatus";
-import { NgIcon, provideIcons } from "@ng-icons/core";
-import { Ripple } from "primeng/ripple";
-import { Popover } from "primeng/popover";
+import {SignalrService} from "../../services/SignalrService";
+import {UserStatus} from "../../data/enums/UserStatus";
+import {NgIcon, provideIcons} from "@ng-icons/core";
+import {Ripple} from "primeng/ripple";
+import {Popover} from "primeng/popover";
+import {Avatar} from 'primeng/avatar';
+import {OverlayBadge} from 'primeng/overlaybadge';
 
 @Component({
     selector: 'app-user-status',
@@ -19,7 +21,9 @@ import { Popover } from "primeng/popover";
         NgIf,
         NgIcon,
         Ripple,
-        Popover
+        Popover,
+        Avatar,
+        OverlayBadge
     ],
     templateUrl: './user-status.component.html',
     styleUrl: './user-status.component.css',
@@ -49,6 +53,23 @@ export class UserStatusComponent {
     };
 
     status = computed(() => UserStatusComponent.statusMap[this.signalrService.userStatus()]);
+
+    statusBadgeSeverity = computed(() => {
+       switch (this.signalrService.userStatus()) {
+           case UserStatus.Unknown:
+               return "info";
+           case UserStatus.Online:
+               return "success";
+           case UserStatus.Away:
+               return "warn";
+           case UserStatus.DoNotDisturb:
+               return "danger";
+           case UserStatus.Offline:
+               return "contrast";
+       }
+    });
+
+    isOffline = computed(() => this.signalrService.userStatus() === UserStatus.Offline);
 
     async setSelfStatus(status: UserStatus) {
         this.statusMenu.hide();

@@ -3,16 +3,16 @@
 <div class="h-screen flex">
     <div class="side-bar" [class.expanded]="isExpanded" (click)="toggleSidebar($event)">
 
-        <div class="-mb-2">
+        <div class="-mb-3">
             <div class="title-text">
-                Squadtalk
+                <p>{{ LL.HI({ name: 'John' }) }}</p>
             </div>
             <app-user-status [sidebarExpanded]="isExpanded"/>
         </div>
 
-        <p-divider/>
+        <p-divider />
 
-        <ul class="-mt-2" (click)="hideSidebar()">
+        <ul class="-mt-3" (click)="hideSidebar()">
             <li routerLink="/messages" routerLinkActive="active"
                 pRipple class="nav-item">
                 <i class="nav-item-icon">

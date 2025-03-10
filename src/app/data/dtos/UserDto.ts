@@ -1,6 +1,7 @@
 import { UserId, UserIdPacked } from "../ids/UserId";
 import { UserStatus } from "../enums/UserStatus";
 import { MessagePackObject, PackedEnum } from "../MessagePackObject";
+import { UserData } from '../interfaces/UserData';
 
 export type UserDtoPacked = [
     string,
@@ -8,7 +9,7 @@ export type UserDtoPacked = [
     PackedEnum
 ];
 
-export class UserDto implements MessagePackObject<UserDtoPacked> {
+export class UserDto implements MessagePackObject<UserDtoPacked>, UserData {
     readonly packed: UserDtoPacked;
 
     constructor(
