@@ -7,6 +7,8 @@ import { Tooltip } from "primeng/tooltip";
 import { matMessageRound, matMoreVertRound } from "@ng-icons/material-icons/round"
 import { Popover } from "primeng/popover";
 import { User } from "../../data/models/User";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialog } from "primeng/confirmdialog";
 
 @Component({
     selector: 'app-friend-list',
@@ -15,14 +17,21 @@ import { User } from "../../data/models/User";
         Button,
         NgIcon,
         Tooltip,
-        Popover
+        Popover,
+        ConfirmDialog
     ],
     templateUrl: './friend-list.component.html',
     styleUrl: './friend-list.component.css',
-    providers: [provideIcons({matMessageRound, matMoreVertRound})]
+    providers: [
+        provideIcons({matMessageRound, matMoreVertRound}),
+        ConfirmationService
+    ]
 })
 export class FriendListComponent {
+
+    private confirmationService = inject(ConfirmationService);
     contactManager = inject(ContactManager);
+
     @ViewChild('more') morePopover!: Popover;
 
     selectedFriend?: User;
@@ -45,7 +54,28 @@ export class FriendListComponent {
         this.morePopover.hide();
     }
 
-    removeSelectedFriend() {
+    removeSelectedFriend(event: Event) {
         this.morePopover.hide();
+
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            closable: true,
+            closeOnEscape: true,
+            message: 'u sure??',
+            rejectButtonProps: {
+                label: 'Cancel',
+                severity: 'secondary',
+                outlined: true
+            },
+            acceptButtonProps: {
+                label: 'Delete',
+                severity: 'danger'
+            },
+            accept: async () => {
+                if (this.selectedFriend) {
+                    await this.contactManager.removeFriend(this.selectedFriend);
+                }
+            }
+        });
     }
 }

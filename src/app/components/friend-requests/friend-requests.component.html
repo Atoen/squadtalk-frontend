@@ -11,15 +11,16 @@
 
                 <div class="ms-auto flex gap-1">
                     <p-button rounded="true" size="small" severity="success" variant="text"
-                              pTooltip="Accept" tooltipPosition="top">
+                              pTooltip="Accept" tooltipPosition="top"
+                              (click)="acceptFriendRequest(incomingRequest)">
                         <ng-icon name="matCheckRound" size="1.8rem" />
                     </p-button>
                     <p-button rounded="true" size="small" severity="danger" variant="text"
-                              pTooltip="Decline" tooltipPosition="top">
+                              pTooltip="Decline" tooltipPosition="top"
+                              (click)="declineFriendRequest(incomingRequest)">
                         <ng-icon name="matCloseRound" size="1.8rem" />
                     </p-button>
                 </div>
-
             </div>
         }
     }
@@ -41,7 +42,8 @@
 
                 <div class="ms-auto flex">
                     <p-button rounded="true" size="small" severity="secondary" variant="text"
-                              pTooltip="Cancel" tooltipPosition="top">
+                              pTooltip="Cancel" tooltipPosition="top"
+                              (click)="cancelFriendRequest(outgoingRequest)">
                         <ng-icon name="matCloseRound" size="1.8rem" />
                     </p-button>
                 </div>
@@ -49,4 +51,3 @@
         }
     }
 }
-

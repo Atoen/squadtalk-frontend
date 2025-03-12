@@ -8,11 +8,14 @@ import { UserDto } from "../data/dtos/UserDto";
 import { UserStatus } from "../data/enums/UserStatus";
 import { UserAuthenticationService } from "./UserAuthenticationService";
 import { PendingFriendRequestDto } from "../data/dtos/PendingFriendRequestDto";
+import { FriendRequestResponseDto } from "../data/dtos/FriendRequestResponseDto";
+import { HubMethodInvoker } from "../signalr/HubMethodInvoker";
 
 @Injectable({providedIn: "root"})
 export class ContactManager {
 
     private readonly _users = new Map<UserId, User>();
+    private readonly _invoker: HubMethodInvoker;
 
     private readonly _friends = signal<Map<UserId, User>>(new Map());
     private readonly _incomingFriendRequests = signal<Map<FriendRequestId, IncomingFriendRequest>>(new Map());
@@ -35,12 +38,24 @@ export class ContactManager {
         private readonly signalrService: SignalrService,
         private readonly authService: UserAuthenticationService
     ) {
+        this._invoker = signalrService.methodInvoker;
+
         this.userModelProvider = this.getOrCreateUser.bind(this);
         this.localUser = this.createLocalUser();
 
         effect(() => {
             this.localUser?.status.set(this.userStatus());
         });
+
+        if (!signalrService.connectionCreated) return;
+
+        const hubHandler = this.signalrService.eventHandler;
+        hubHandler.friendAdded$.subscribe(friend => this.friendAdded(friend));
+        hubHandler.friendRemoved$.subscribe(friendId => this.friendRemoved(friendId));
+        hubHandler.friendRequestCreated$.subscribe(request => this.createdFriendRequest(request));
+        hubHandler.friendRequestCancelled$.subscribe(requestId => this.friendRequestCancelled(requestId));
+        hubHandler.friendRequestResponded$.subscribe(response => this.friendRequestResponded(response));
+        hubHandler.friendStatusChanged$.subscribe(({ friendId, status }) => this.friendStatusChanged(friendId, status));
 
         this.refreshFriendList()
             .then(() => this.refreshFriendRequests());
@@ -61,11 +76,35 @@ export class ContactManager {
     }
 
     async setStatus(status: UserStatus) {
-        await this.signalrService.setSelfStatus(status);
+        await this._invoker.setSelfStatus(status);
+    }
+
+    // async searchUser(username: string) {
+    //
+    // }
+    //
+    // async sendFriendRequest(user: User) {
+    //
+    // }
+
+    async sendFriendRequest(username: string) {
+        const result = await this._invoker.sendFriendRequest(username);
+    }
+
+    async respondToFriendRequest(friendRequest: IncomingFriendRequest, accepted: boolean) {
+        const result = await this._invoker.respondToFriendRequest(friendRequest.id, accepted);
+    }
+
+    async cancelFriendRequest(friendRequest: OutgoingFriendRequest) {
+        const result = await this._invoker.cancelFriendRequest(friendRequest.id);
+    }
+
+    async removeFriend(friend: User) {
+        const result = await this._invoker.removeFriend(friend.id);
     }
 
     async refreshFriendList() {
-        const result = await this.signalrService.getFriends();
+        const result = await this._invoker.getFriends();
         if (result.isError) return;
 
         const friends = new Map(
@@ -79,15 +118,87 @@ export class ContactManager {
     }
 
     async refreshFriendRequests() {
-        const result = await this.signalrService.getFriendRequests();
+        const result = await this._invoker.getFriendRequests();
         if (result.isError) return;
 
-        this._incomingFriendRequests.set(new Map());
-        this._outgoingFriendRequests.set(new Map());
+        const incoming = new Map<FriendRequestId, IncomingFriendRequest>();
+        const outgoing = new Map<FriendRequestId, OutgoingFriendRequest>();
 
-        result.value
-            .map(PendingFriendRequestDto.unpack)
-            .forEach(x => this.addFriendRequest(x));
+        const unpacked = result.value.map(PendingFriendRequestDto.unpack);
+        this.addFriendRequestToMaps(unpacked, incoming, outgoing);
+
+        this._incomingFriendRequests.set(incoming);
+        this._outgoingFriendRequests.set(outgoing);
+    }
+
+    private friendAdded(friend: UserDto) {
+        this._friends.update(friends => {
+            if (friends.has(friend.id)) return friends;
+
+            const updatedFriends = new Map(friends);
+            updatedFriends.set(friend.id, this.getOrCreateUser(friend));
+            return updatedFriends;
+        });
+    }
+
+    private friendRemoved(friendId: UserId) {
+        this._friends.update(friends => {
+            if (friends.delete(friendId)) {
+                return new Map(friends);
+            }
+            return friends;
+        });
+    }
+
+    private createdFriendRequest(friendRequest: PendingFriendRequestDto) {
+        const incoming = new Map(this._incomingFriendRequests());
+        const outgoing = new Map(this._outgoingFriendRequests());
+
+        this.addFriendRequestToMaps([friendRequest], incoming, outgoing);
+
+        this._incomingFriendRequests.set(incoming);
+        this._outgoingFriendRequests.set(outgoing);
+    }
+
+    private friendRequestCancelled(friendRequestId: FriendRequestId) {
+        this._incomingFriendRequests.update(incoming => {
+            if (incoming.delete(friendRequestId)) {
+                return new Map(incoming);
+            }
+            return incoming;
+        });
+
+        this._outgoingFriendRequests.update(outgoing => {
+            if (outgoing.delete(friendRequestId)) {
+                return new Map(outgoing);
+            }
+            return outgoing;
+        });
+    }
+
+    private friendRequestResponded(response: FriendRequestResponseDto) {
+        const incoming = new Map(this._incomingFriendRequests());
+        const outgoing = new Map(this._outgoingFriendRequests());
+
+        if (incoming.delete(response.friendRequestId)) {
+            this._incomingFriendRequests.set(incoming);
+            return;
+        }
+
+        const outgoingRequest = outgoing.get(response.friendRequestId);
+        if (outgoingRequest) {
+            outgoing.delete(response.friendRequestId);
+            this._outgoingFriendRequests.set(outgoing);
+
+            throw new Error(`User ${outgoingRequest.to.username()} responded ${response.accepted} to friend request`);
+        }
+    }
+
+    private friendStatusChanged(friendId: UserId, status: UserStatus) {
+        const friend = this._friends().get(friendId);
+        if (friend) {
+            friend.status.set(status);
+        }
     }
 
     private createLocalUser() {
@@ -104,26 +215,33 @@ export class ContactManager {
         return user;
     }
 
-    private addFriendRequest(pendingFriendRequest: PendingFriendRequestDto) {
+    private addFriendRequestToMaps(
+        pendingFriendRequests: PendingFriendRequestDto[],
+        incoming: Map<FriendRequestId, IncomingFriendRequest>,
+        outgoing: Map<FriendRequestId, OutgoingFriendRequest>
+    ) {
         const currentUserId = this.authService.currentUser()?.id!;
 
-        if (pendingFriendRequest.requester.id === currentUserId) {
-            const outgoing = new OutgoingFriendRequest(
-                this.userModelProvider(pendingFriendRequest.recipient),
-                pendingFriendRequest.createdAt,
-                pendingFriendRequest.id
-            );
-
-            this._outgoingFriendRequests.update(x => x.set(outgoing.id, outgoing));
-        }
-        else if (pendingFriendRequest.recipient.id === currentUserId) {
-            const incoming = new IncomingFriendRequest(
-                this.userModelProvider(pendingFriendRequest.requester),
-                pendingFriendRequest.createdAt,
-                pendingFriendRequest.id
-            );
-
-            this._incomingFriendRequests.update(x => x.set(incoming.id, incoming));
+        for (const request of pendingFriendRequests) {
+            if (request.requester.id === currentUserId) {
+                outgoing.set(
+                    request.id,
+                    new OutgoingFriendRequest(
+                        this.userModelProvider(request.recipient),
+                        request.createdAt,
+                        request.id
+                    )
+                );
+            } else if (request.recipient.id === currentUserId) {
+                incoming.set(
+                    request.id,
+                    new IncomingFriendRequest(
+                        this.userModelProvider(request.requester),
+                        request.createdAt,
+                        request.id
+                    )
+                );
+            }
         }
     }
 }

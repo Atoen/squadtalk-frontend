@@ -10,8 +10,8 @@ export class FriendRequestResponseDto implements MessagePackObject<FriendRequest
     readonly packed: FriendRequestResponseDtoPacked;
 
     constructor(
-        friendRequestId: FriendRequestId,
-        accepted: boolean,
+        readonly friendRequestId: FriendRequestId,
+        readonly accepted: boolean,
         packed?: FriendRequestResponseDtoPacked
     ) {
         this.packed = packed ?? [[friendRequestId], accepted];

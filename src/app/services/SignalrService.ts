@@ -1,21 +1,19 @@
 import { Inject, Injectable, PLATFORM_ID, signal, untracked } from "@angular/core";
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack";
-import { isPlatformBrowser } from "@angular/common";
+import { isPlatformServer } from "@angular/common";
 import { UserStatus } from "../data/enums/UserStatus";
-import { HubHandler } from "../signalr/HubHandler";
+import { HubEventHandler } from "../signalr/HubEventHandler";
 import { HubResult, ValueHubResult } from "../signalr/HubResult";
-import { UserDtoPacked } from "../data/dtos/UserDto";
-import { PendingFriendRequestDtoPacked } from "../data/dtos/PendingFriendRequestDto";
-import { GroupDtoPacked } from "../data/dtos/GroupDto";
 import { UserAuthenticationService } from "./UserAuthenticationService";
+import { HubMethodInvoker } from "../signalr/HubMethodInvoker";
+import { ConnectionMethodInvoker } from "../signalr/ConnectionMethodInvoker";
 
 @Injectable({providedIn: "root"})
-export class SignalrService {
+export class SignalrService implements ConnectionMethodInvoker {
 
     private readonly _connection!: HubConnection;
     private readonly _connectPromise?: Promise<void>;
-    private readonly _isBrowser: boolean;
 
     private readonly _userStatus = signal(UserStatus.Unknown);
     private readonly _connectionStatus = signal(HubConnectionState.Connecting);
@@ -23,15 +21,18 @@ export class SignalrService {
     readonly userStatus = this._userStatus.asReadonly();
     readonly connectionStatus = this._connectionStatus.asReadonly();
 
-    readonly handler!: HubHandler;
+    readonly connectionCreated: boolean;
+    readonly methodInvoker!: HubMethodInvoker;
+    readonly eventHandler!: HubEventHandler;
 
     constructor(
         private authService: UserAuthenticationService,
         @Inject(PLATFORM_ID) platformId: Object
     ) {
-        this._isBrowser = isPlatformBrowser(platformId);
+        this.methodInvoker = new HubMethodInvoker(this);
 
-        if (!this._isBrowser || !untracked(this.authService.isLoggedIn)) {
+        if (isPlatformServer(platformId) || !untracked(this.authService.isLoggedIn)) {
+            this.connectionCreated = false;
             return;
         }
 
@@ -43,29 +44,15 @@ export class SignalrService {
             .build();
 
         this.registerBaseHandlers();
-        this.handler = new HubHandler(this._connection);
+        this.eventHandler = new HubEventHandler(this._connection);
+
+        this.connectionCreated = true;
 
         this._connectPromise = this._connection.start()
             .then(() => {
                 this._connectionStatus.set(HubConnectionState.Connected);
                 this.updateSelfStatus();
             }).catch(err => console.error('Error while starting connection: ' + err));
-    }
-
-    setSelfStatus(status: UserStatus) {
-        return this.send('ChangeStatus', status);
-    }
-
-    async getFriends() {
-        return await this.invoke<UserDtoPacked[]>('GetFriendList');
-    }
-
-    async getGroups() {
-        return this.invoke<GroupDtoPacked[]>('GetGroups');
-    }
-
-    async getFriendRequests() {
-        return await this.invoke<PendingFriendRequestDtoPacked[]>('GetFriendRequests');
     }
 
     private updateSelfStatus() {
@@ -90,8 +77,8 @@ export class SignalrService {
         });
     }
 
-    private async invoke<T>(methodName: string, ...args: any[]): Promise<ValueHubResult<T>> {
-        if (!this._isBrowser) {
+    async invoke<T>(methodName: string, ...args: any[]): Promise<ValueHubResult<T>> {
+        if (!this.connectionCreated) {
             return ValueHubResult.Error;
         }
 
@@ -105,8 +92,8 @@ export class SignalrService {
         }
     }
 
-    private async send(methodName: string, ...args: any[]): Promise<HubResult> {
-        if (!this._isBrowser) {
+    async send(methodName: string, ...args: any[]): Promise<HubResult> {
+        if (!this.connectionCreated) {
             return HubResult.Error;
         }
 

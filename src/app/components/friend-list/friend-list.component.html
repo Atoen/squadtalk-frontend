@@ -33,8 +33,10 @@
             Start voice call
         </div>
         <div class="hover p-1 rounded-sm" style="color: var(--error)"
-            (click)="removeSelectedFriend()">
+            (click)="removeSelectedFriend($event)">
             Remove friend
         </div>
     </div>
 </p-popover>
+
+<p-confirm-dialog />
