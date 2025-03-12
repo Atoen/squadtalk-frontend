@@ -17,9 +17,6 @@ import { isPlatformBrowser, NgIf } from "@angular/common";
 import { SignalrService } from "./services/SignalrService";
 import { Toast } from "primeng/toast";
 import { Ripple } from "primeng/ripple";
-import {TranslateService} from '@ngx-translate/core';
-import {I18nService} from '../i18n/i18n.service';
-import {loadAllLocales} from '../i18n/i18n-util.sync';
 
 @Component ({
     selector: 'app-root',
@@ -49,28 +46,16 @@ import {loadAllLocales} from '../i18n/i18n-util.sync';
 export class AppComponent implements OnInit {
     constructor(
         @Inject(PLATFORM_ID) private readonly platformId: Object,
-        private readonly signalrService: SignalrService,
-        private readonly translate: TranslateService,
-        public readonly authService: UserAuthenticationService,
-        private localization: I18nService
-    ) {
-        loadAllLocales();
-        this.localization.setLocale('en');
-    }
-
-    get LL() {
-        return this.localization.LL;
-    }
+        public readonly authService: UserAuthenticationService) {}
 
     ngOnInit() {
         if (!isPlatformBrowser(this.platformId)) return;
 
+        console.log("Auth state", this.authService.authenticationState());
+        console.log("Logged in", this.authService.isLoggedIn());
+
         if (untracked(this.authService.authenticationState) === AuthenticationState.PendingVerification) {
             this.authService.verifyCurrentUser();
-        }
-
-        if (untracked(this.authService.isLoggedIn)) {
-            this.signalrService.connect();
         }
     }
 

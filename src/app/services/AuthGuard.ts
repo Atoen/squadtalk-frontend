@@ -27,12 +27,12 @@ export class AuthGuard implements CanActivate {
             const redirectUrl = isPlatformBrowser(this.platformId)
                 ? '/profile/login' : '/';
 
-            const loginUrl = this.router.createUrlTree([redirectUrl], {
+            const redirectUrlTree = this.router.createUrlTree([redirectUrl], {
                 queryParams: { returnUrl: state.url },
                 queryParamsHandling: 'merge'
             });
 
-            return new RedirectCommand(loginUrl);
+            return new RedirectCommand(redirectUrlTree);
         }
 
         return true;

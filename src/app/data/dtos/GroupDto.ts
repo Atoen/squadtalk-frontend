@@ -26,7 +26,7 @@ export class GroupDto implements MessagePackObject<GroupDtoPacked>{
         packed?: GroupDtoPacked
     ) {
         this.packed = packed ?? [
-            id.packed,
+            [id],
             customName,
             participants.map(x => x.packed),
             lastMessage?.packed,
@@ -37,7 +37,7 @@ export class GroupDto implements MessagePackObject<GroupDtoPacked>{
 
     static unpack(data: GroupDtoPacked) {
         return new GroupDto(
-            GroupId.unpack(data[0]),
+            data[0][0],
             data[1],
             data[2].map(x => GroupParticipantDto.unpack(x)),
             data[3] ? MessageDto.unpack(data[3]) : undefined,

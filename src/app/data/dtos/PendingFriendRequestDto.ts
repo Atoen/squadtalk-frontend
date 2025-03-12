@@ -21,7 +21,7 @@ export class PendingFriendRequestDto implements MessagePackObject<PendingFriendR
         packed?: PendingFriendRequestDtoPacked
     ) {
         this.packed = packed ?? [
-            id.packed,
+            [id],
             requester.packed,
             recipient.packed,
             createdAt.packed
@@ -30,7 +30,7 @@ export class PendingFriendRequestDto implements MessagePackObject<PendingFriendR
 
     static unpack(data: PendingFriendRequestDtoPacked) {
         return new PendingFriendRequestDto(
-            FriendRequestId.unpack(data[0]),
+            data[0][0],
             UserDto.unpack(data[1]),
             UserDto.unpack(data[2]),
             DateTimeOffset.unpack(data[3]),

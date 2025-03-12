@@ -1,0 +1,7 @@
+<div class="avatar-badge">
+    <p-avatar [label]="user().username()[0]" class="avatar" [size]="this.size()" />
+
+    @if (user().status() !== UserStatus.Unknown) {
+        <ng-icon [name]="statusData().icon" [color]="statusData().color" class="badge"/>
+    }
+</div>

@@ -59,13 +59,12 @@
     line-height: var(--tw-leading, var(--text-2xl--line-height));
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    margin-inline-start: calc(var(--spacing) * 4);
-    margin-top: 0.5rem;
+    margin-inline-start: 0.75rem;
+    margin-top: 0.25rem;
     transition: 0.2s ease;
     opacity: 1;
     overflow: hidden;
     max-height: 2rem;
-    margin-bottom: 0.25rem;
 }
 
 .overlay {

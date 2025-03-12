@@ -1,15 +1,12 @@
 <div *ngIf="authService.isLoggedIn(); else loggedOut"
-    class="menu m-1 rounded-sm" pRipple
+    class="menu mx-1 mt-1 rounded-sm" pRipple
     (click)="status_menu.toggle($event)">
 
-    <div class="avatar-badge">
-        <p-avatar [label]="authService.currentUser()!.username[0]" class="avatar" />
-        <ng-icon [name]="status().icon" [color]="status().color" class="badge"/>
-    </div>
+    <app-avatar-badge [user]="contactManager.localUser"/>
 
     <div class="status" [class.expanded]="sidebarExpanded()">
         <div class="text-lg self-baseline username">{{ authService.currentUser()?.username }}</div>
-        <div class="text-muted-color text-sm self-baseline status-text">{{ status().text }}</div>
+        <div class="text-muted-color text-sm self-baseline status-text">{{ statusText() }}</div>
     </div>
 </div>
 
@@ -28,7 +25,7 @@
             <span>Do not disturb</span>
         </div>
         <div class="menu menu-item" (click)="setSelfStatus(UserStatus.Offline)">
-            <ng-icon name="matCircleRound" style="color: var(--dark)" />
+            <ng-icon name="matCircleRound" style="color: var(--gray)" />
             <span>Offline</span>
         </div>
     </div>

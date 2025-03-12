@@ -5,7 +5,7 @@
 
         <div class="-mb-3">
             <div class="title-text">
-                <p>{{ LL.HI({ name: 'John' }) }}</p>
+                Squadtalk
             </div>
             <app-user-status [sidebarExpanded]="isExpanded"/>
         </div>
@@ -76,7 +76,7 @@
     <div class="overlay" [class.expanded]="isExpanded"
         (click)="toggleSidebar($event)"></div>
 
-    <main class="flex-1 p-6">
+    <main class="flex-1">
         <router-outlet />
     </main>
 </div>

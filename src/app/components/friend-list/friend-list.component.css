@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    --status-badge-border: var(--background);
+}
+
+.text {
+    padding-bottom: 4px;
+    margin-inline-start: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-inline-end: 0.5rem;
+}
+
+.username {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 160px;
+}
+
+.status-text {
+    margin-top: -6px;
+    white-space: nowrap;
+}

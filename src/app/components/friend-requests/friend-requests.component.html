@@ -1,0 +1,52 @@
+@if (!requestsAvailable()) {
+    <p>No pending friend requests.</p>
+} @else {
+    @if (incomingRequestsAvailable()) {
+        <p class="mb-1">Incoming friend requests</p>
+
+        @for (incomingRequest of contactManager.incomingFriendRequests(); track incomingRequest.id) {
+            <div class="hover px-1 py-0.5 rounded-sm mb-0.5 flex items-center">
+                <app-avatar-badge [user]="incomingRequest.from" size="large" />
+                <div class="ms-2">{{ incomingRequest.from.username() }}</div>
+
+                <div class="ms-auto flex gap-1">
+                    <p-button rounded="true" size="small" severity="success" variant="text"
+                              pTooltip="Accept" tooltipPosition="top">
+                        <ng-icon name="matCheckRound" size="1.8rem" />
+                    </p-button>
+                    <p-button rounded="true" size="small" severity="danger" variant="text"
+                              pTooltip="Decline" tooltipPosition="top">
+                        <ng-icon name="matCloseRound" size="1.8rem" />
+                    </p-button>
+                </div>
+
+            </div>
+        }
+    }
+
+    @if (outgoingRequestsAvailable()) {
+
+        @if (incomingRequestsAvailable()) {
+            <div class="-my-2">
+                <p-divider />
+            </div>
+        }
+
+        <p class="mb-1">Outgoing friend requests</p>
+
+        @for (outgoingRequest of contactManager.outgoingFriendRequests(); track outgoingRequest.id) {
+            <div class="hover px-1 py-0.5 rounded-sm mb-0.5 flex items-center">
+                <app-avatar-badge [user]="outgoingRequest.to" size="large" />
+                <div class="ms-2">{{ outgoingRequest.to.username() }}</div>
+
+                <div class="ms-auto flex">
+                    <p-button rounded="true" size="small" severity="secondary" variant="text"
+                              pTooltip="Cancel" tooltipPosition="top">
+                        <ng-icon name="matCloseRound" size="1.8rem" />
+                    </p-button>
+                </div>
+            </div>
+        }
+    }
+}
+

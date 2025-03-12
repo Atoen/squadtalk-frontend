@@ -1,0 +1,40 @@
+@for (friend of contactManager.friends(); track friend.id) {
+    <div class="container hover px-1 rounded-sm">
+        <app-avatar-badge [user]="friend" size="large" />
+
+        <div class="text">
+            <div class="text-lg self-baseline username">{{ friend.username() }}</div>
+            <div class="text-muted-color text-sm self-baseline status-text">{{ friend.status() }}</div>
+        </div>
+
+        <div class="ms-auto flex gap-1">
+            <p-button rounded="true" size="small" severity="secondary" variant="text"
+                      pTooltip="Message" tooltipPosition="top"
+                      (onClick)="messageFriend(friend)">
+                <ng-icon name="matMessageRound" size="1.8rem" />
+            </p-button>
+
+            <p-button rounded="true" size="small" severity="secondary" variant="text"
+                      pTooltip="More" tooltipPosition="top"
+                      (onClick)="displayMore($event, friend)">
+                <ng-icon name="matMoreVertRound" size="1.8rem" />
+            </p-button>
+        </div>
+    </div>
+}
+
+@empty {
+    <p>Friend list is empty</p>
+}
+
+<p-popover #more (onHide)="selectedFriend = undefined">
+    <div class="flex flex-col gap-1 -m-3">
+        <div class="hover p-1 rounded-sm" (click)="callSelectedFriend()">
+            Start voice call
+        </div>
+        <div class="hover p-1 rounded-sm" style="color: var(--error)"
+            (click)="removeSelectedFriend()">
+            Remove friend
+        </div>
+    </div>
+</p-popover>

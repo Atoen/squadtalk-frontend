@@ -1,21 +1,24 @@
-import {UserStatus} from '../enums/UserStatus';
-import {UserId} from '../ids/UserId';
-import {UserDto} from '../dtos/UserDto';
-import { UserData } from '../interfaces/UserData';
+import { UserStatus } from '../enums/UserStatus';
+import { UserId } from '../ids/UserId';
+import { UserDto } from '../dtos/UserDto';
 
-export class User implements UserData {
-    username: string;
-    status: UserStatus;
-    id: UserId;
-    isLocal: boolean;
+import { signal, WritableSignal } from "@angular/core";
+
+export class User {
+
+    username: WritableSignal<string>;
+    status: WritableSignal<UserStatus>;
+
+    readonly id: UserId;
+    readonly isLocal: boolean;
 
     get isRemote() {
         return !this.isLocal;
     }
 
     constructor(dto: UserDto, isLocal: boolean = false) {
-        this.username = dto.username;
-        this.status = dto.status;
+        this.username = signal(dto.username);
+        this.status = signal(dto.status);
         this.id = dto.id;
 
         this.isLocal = isLocal;

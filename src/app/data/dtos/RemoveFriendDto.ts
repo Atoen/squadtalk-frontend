@@ -10,10 +10,10 @@ export class RemoveFriendDto implements MessagePackObject<RemoveFriendDtoPacked>
         readonly friendId: UserId,
         packed?: RemoveFriendDtoPacked
     ) {
-        this.packed = packed ?? [friendId.packed];
+        this.packed = packed ?? [[friendId]];
     }
 
     static unpack(data: RemoveFriendDtoPacked) {
-        return new RemoveFriendDto(UserId.unpack(data[0]), data);
+        return new RemoveFriendDto(data[0][0], data);
     }
 }

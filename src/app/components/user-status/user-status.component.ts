@@ -7,13 +7,12 @@ import {
     matDoNotDisturbOnRound,
     matWifiRound
 } from "@ng-icons/material-icons/round";
-import {SignalrService} from "../../services/SignalrService";
-import {UserStatus} from "../../data/enums/UserStatus";
-import {NgIcon, provideIcons} from "@ng-icons/core";
-import {Ripple} from "primeng/ripple";
-import {Popover} from "primeng/popover";
-import {Avatar} from 'primeng/avatar';
-import {OverlayBadge} from 'primeng/overlaybadge';
+import { UserStatus } from "../../data/enums/UserStatus";
+import { NgIcon, provideIcons } from "@ng-icons/core";
+import { Ripple } from "primeng/ripple";
+import { Popover } from "primeng/popover";
+import { ContactManager } from "../../services/ContactManager";
+import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 
 @Component({
     selector: 'app-user-status',
@@ -22,8 +21,7 @@ import {OverlayBadge} from 'primeng/overlaybadge';
         NgIcon,
         Ripple,
         Popover,
-        Avatar,
-        OverlayBadge
+        AvatarBadgeComponent,
     ],
     templateUrl: './user-status.component.html',
     styleUrl: './user-status.component.css',
@@ -36,46 +34,29 @@ import {OverlayBadge} from 'primeng/overlaybadge';
 })
 export class UserStatusComponent {
     authService = inject(UserAuthenticationService);
-    signalrService = inject(SignalrService);
+    contactManager = inject(ContactManager);
 
-    @ViewChild('status_menu') statusMenu!: Popover;
+    @ViewChild('status_menu', { static: true }) statusMenu!: Popover;
 
     sidebarExpanded = input.required<boolean>();
 
     protected readonly AuthenticationState = AuthenticationState;
 
-    private static readonly statusMap = {
-        [UserStatus.Unknown]: { text: "Connecting", icon: "matWifiRound", color: "var(--info)" },
-        [UserStatus.Online]: { text: "Online", icon: "matCircleRound", color: "var(--success)" },
-        [UserStatus.Away]: { text: "Away", icon: "matAccessTimeFilledRound", color: "var(--warn)" },
-        [UserStatus.DoNotDisturb]: { text: "Do not disturb", icon: "matDoNotDisturbOnRound", color: "var(--error)" },
-        [UserStatus.Offline]: { text: "Offline", icon: "matCircleRound", color: "var(--dark)" }
+    private static readonly statusTextMap = {
+        [UserStatus.Unknown]: "Connecting",
+        [UserStatus.Online]: "Online",
+        [UserStatus.Away]: "Away",
+        [UserStatus.DoNotDisturb]: "Do not disturb",
+        [UserStatus.Offline]: "Offline"
     };
 
-    status = computed(() => UserStatusComponent.statusMap[this.signalrService.userStatus()]);
-
-    statusBadgeSeverity = computed(() => {
-       switch (this.signalrService.userStatus()) {
-           case UserStatus.Unknown:
-               return "info";
-           case UserStatus.Online:
-               return "success";
-           case UserStatus.Away:
-               return "warn";
-           case UserStatus.DoNotDisturb:
-               return "danger";
-           case UserStatus.Offline:
-               return "contrast";
-       }
-    });
-
-    isOffline = computed(() => this.signalrService.userStatus() === UserStatus.Offline);
+    statusText = computed(() => UserStatusComponent.statusTextMap[this.contactManager.userStatus()]);
 
     async setSelfStatus(status: UserStatus) {
         this.statusMenu.hide();
 
-        if (this.signalrService.userStatus() !== UserStatus.Unknown) {
-            await this.signalrService.setSelfStatus(status);
+        if (this.contactManager.userStatus() !== UserStatus.Unknown) {
+            await this.contactManager.setStatus(status);
         }
     }
 

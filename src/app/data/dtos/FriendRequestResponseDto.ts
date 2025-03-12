@@ -14,10 +14,10 @@ export class FriendRequestResponseDto implements MessagePackObject<FriendRequest
         accepted: boolean,
         packed?: FriendRequestResponseDtoPacked
     ) {
-        this.packed = packed ?? [friendRequestId.packed, accepted];
+        this.packed = packed ?? [[friendRequestId], accepted];
     }
 
     static unpack(data: FriendRequestResponseDtoPacked) {
-        return new FriendRequestResponseDto(FriendRequestId.unpack(data[0]), data[1], data);
+        return new FriendRequestResponseDto(data[0][0], data[1], data);
     }
 }

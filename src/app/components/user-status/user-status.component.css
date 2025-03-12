@@ -2,28 +2,8 @@
     display: flex;
     align-items: center;
     padding-inline-start: 9px;
+    cursor: pointer;
     --status-badge-border: var(--p-content-hover-background);
-}
-
-.avatar-badge {
-    position: relative;
-}
-
-.badge {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    outline: var(--status-badge-border) solid 2px;
-    background: var(--status-badge-border);
-    outline-offset: -2px;
-    border-radius: 50%;
-    top: -6px;
-    right: -6px;
-    transition: 0.15s;
-}
-
-.avatar {
-    background: var(--p-primary-color);
 }
 
 .menu:hover, .menu:active {
@@ -36,6 +16,7 @@
     gap: 0.5rem;
     padding: 0.5rem;
     border-radius: 0.25rem;
+    cursor: pointer;
 }
 
 .status {

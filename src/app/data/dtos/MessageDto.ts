@@ -27,10 +27,10 @@ export class MessageDto implements MessagePackObject<MessageDtoPacked> {
         packed?: MessageDtoPacked
     ) {
         this.packed = packed ?? [
-            id.packed,
+            [id],
             author.packed,
             content,
-            groupId.packed,
+            [groupId],
             timestamp.packed,
             embed?.packed
         ];
@@ -38,10 +38,10 @@ export class MessageDto implements MessagePackObject<MessageDtoPacked> {
 
     static unpack(data: MessageDtoPacked) {
         return new MessageDto(
-            MessageId.unpack(data[0]),
+            data[0][0],
             UserDto.unpack(data[1]),
             data[2],
-            GroupId.unpack(data[3]),
+            data[3][0],
             DateTimeOffset.unpack(data[4]),
             data[5] ? EmbedDto.unpack(data[5]) : undefined,
             data

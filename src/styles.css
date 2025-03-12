@@ -37,6 +37,15 @@ body {
     color: var(--text-primary);
 }
 
+.hover {
+    --status-badge-border: var(--background)
+}
+
+.hover:hover, .hover:active {
+    background-color: var(--p-content-border-color);
+    --status-badge-border: var(--p-content-border-color) !important;
+}
+
 :root {
     --success: var(--color-green-500);
     --warn: var(--color-amber-500);
@@ -46,6 +55,9 @@ body {
     --text-primary: rgb(70, 70, 70);
     --surfacce: white;
     --background: white;
+    --gray: var(--color-gray-500);
+    --p-text-color: var(--text-primary);
+    --p-content-color: var(--text-primary);
 }
 
 :root.app-dark {
@@ -54,7 +66,9 @@ body {
     --error: var(--color-red-400);
     --info: var(--color-blue-400);
     --dark: var(--color-stone-900);
-    --text-primary: rgba(255, 255, 255, 0.7);
+    --text-primary: rgba(255, 255, 255, 0.8);
     --surfacce: var(--color-stone-800);
     --background: var(--color-surface-900);
+    --gray: var(--color-gray-600);
+    --p-text-color: var(--text-primary);
 }

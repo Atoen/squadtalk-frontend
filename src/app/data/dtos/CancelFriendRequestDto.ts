@@ -10,10 +10,10 @@ export class CancelFriendRequestDto implements MessagePackObject<CancelFriendReq
         readonly requestId: FriendRequestId,
         packed?: CancelFriendRequestDtoPacked
     ) {
-        this.packed = packed ?? [requestId.packed];
+        this.packed = packed ?? [[requestId]];
     }
 
     static unpack(data: CancelFriendRequestDtoPacked) {
-        return new CancelFriendRequestDto(FriendRequestId.unpack(data[0]), data);
+        return new CancelFriendRequestDto(data[0][0], data);
     }
 }

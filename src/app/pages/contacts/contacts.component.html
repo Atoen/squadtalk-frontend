@@ -1,1 +1,18 @@
-<p>contacts works!</p>
+<p-tabs value="0" scrollable lazy >
+    <p-tablist>
+        <p-tab value="0">Friends</p-tab>
+        <p-tab value="1">Friend requests</p-tab>
+        <p-tab value="2">Add friend</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel value="0">
+            <app-friend-list />
+        </p-tabpanel>
+        <p-tabpanel value="1">
+            <app-friend-requests />
+        </p-tabpanel>
+        <p-tabpanel value="2">
+            <app-add-friend />
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

@@ -2,8 +2,8 @@ import {EmbedType} from '../enums/EmbedType';
 import {EmbedDto} from '../dtos/EmbedDto';
 
 export class MessageEmbed {
-    type: EmbedType;
-    data: Map<string, string>;
+    readonly type: EmbedType;
+    readonly data: Map<string, string>;
 
     private constructor(dto: EmbedDto) {
         this.type = dto.type;

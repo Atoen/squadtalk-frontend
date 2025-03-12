@@ -5,8 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { UserLoginDto } from '../data/dtos/UserLoginDto';
 import { UserDto } from '../data/dtos/UserDto';
 import { isPlatformBrowser } from "@angular/common";
-import {User} from '../data/models/User';
-import {UserData} from '../data/interfaces/UserData';
+import { User } from '../data/models/User';
 
 @Injectable({ providedIn: "root" })
 export class UserAuthenticationService {
@@ -15,7 +14,9 @@ export class UserAuthenticationService {
     private http = inject(HttpClient);
 
     private _authenticationState = signal(AuthenticationState.Unknown);
-    private _currentUser = signal<UserData | null>(null);
+    private _currentUser = signal<UserDto | null>(null);
+
+    private _verifiedUser = false;
 
     authenticationState = this._authenticationState.asReadonly();
     isLoggedIn = computed(() =>
@@ -75,11 +76,12 @@ export class UserAuthenticationService {
         try {
             const userDto = await firstValueFrom(request);
             if (userDto) {
-                const user = new User(userDto, true)
+                const user = new User(userDto, true);
+                this._verifiedUser = true;
 
                 console.log("Verified user:", user);
 
-                this.setCurrentUser(user);
+                this.setCurrentUser(userDto);
 
                 return user;
             }
@@ -102,13 +104,13 @@ export class UserAuthenticationService {
             return false;
         }
 
-        const storedUser: UserData = JSON.parse(data);
+        const storedUser: UserDto = JSON.parse(data);
         this.setCurrentUser(storedUser, false);
 
         return true;
     }
 
-    private setCurrentUser(user: UserData | null, updateLocalStorage: boolean = true) {
+    private setCurrentUser(user: UserDto | null, updateLocalStorage: boolean = true) {
         if (updateLocalStorage) {
             if (user) {
                 localStorage.setItem(this.userDataKey, JSON.stringify(user));
@@ -119,7 +121,7 @@ export class UserAuthenticationService {
 
         this._currentUser.set(user);
         const authState = !user ? AuthenticationState.Unauthenticated
-            : user.id.value ? AuthenticationState.Authenticated : AuthenticationState.PendingVerification;
+            : this._verifiedUser ? AuthenticationState.Authenticated : AuthenticationState.PendingVerification;
 
         this._authenticationState.set(authState);
     }

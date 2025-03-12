@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslatePipe, TranslateDirective],
+  imports: [TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
