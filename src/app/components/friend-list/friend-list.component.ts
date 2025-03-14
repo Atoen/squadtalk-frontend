@@ -55,6 +55,7 @@ export class FriendListComponent {
     }
 
     removeSelectedFriend(event: Event) {
+        const friend = this.selectedFriend;
         this.morePopover.hide();
 
         this.confirmationService.confirm({
@@ -72,8 +73,8 @@ export class FriendListComponent {
                 severity: 'danger'
             },
             accept: async () => {
-                if (this.selectedFriend) {
-                    await this.contactManager.removeFriend(this.selectedFriend);
+                if (friend) {
+                    await this.contactManager.removeFriend(friend);
                 }
             }
         });

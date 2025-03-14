@@ -92,7 +92,7 @@ main {
     }
 
     main {
-        margin-inline-start: 50px;
+        margin-inline-start: 60px;
     }
 
     .side-bar {
@@ -114,8 +114,8 @@ main {
     .side-bar.expanded {
         width: 220px;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-        --sidebar-color: color-mix(in srgb, var(--p-content-hover-background), transparent 30%);
-        backdrop-filter: blur(0.5rem);
+        --sidebar-color: color-mix(in srgb, var(--p-content-hover-background), transparent 20%);
+        backdrop-filter: blur(1rem);
     }
 
     .side-bar.expanded .nav-item-text{

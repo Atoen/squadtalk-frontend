@@ -17,6 +17,10 @@ export class HubMethodInvoker {
 
     constructor(private readonly methodInvoker: ConnectionMethodInvoker) {}
 
+    getSelfStatus() {
+        return this.methodInvoker.invoke<UserStatus>('GetSelfStatus');
+    }
+
     setSelfStatus(status: UserStatus) {
         return this.methodInvoker.send('ChangeStatus', status);
     }

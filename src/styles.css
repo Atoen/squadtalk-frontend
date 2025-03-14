@@ -37,6 +37,16 @@ body {
     color: var(--text-primary);
 }
 
+.hover-primary {
+    background: var(--p-primary-color);
+    --status-badge-border: var(--p-primary-color);
+}
+
+.hover-primary:hover, .hover-primary:active {
+    background-color: color-mix(in srgb, var(--p-primary-color), black 30%);
+    --status-badge-border: color-mix(in srgb, var(--p-primary-color), black 30%);
+}
+
 .hover {
     --status-badge-border: var(--background)
 }

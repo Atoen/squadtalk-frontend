@@ -2,7 +2,6 @@ import { Inject, Injectable, PLATFORM_ID, signal, untracked } from "@angular/cor
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack";
 import { isPlatformServer } from "@angular/common";
-import { UserStatus } from "../data/enums/UserStatus";
 import { HubEventHandler } from "../signalr/HubEventHandler";
 import { HubResult, ValueHubResult } from "../signalr/HubResult";
 import { UserAuthenticationService } from "./UserAuthenticationService";
@@ -15,10 +14,7 @@ export class SignalrService implements ConnectionMethodInvoker {
     private readonly _connection!: HubConnection;
     private readonly _connectPromise?: Promise<void>;
 
-    private readonly _userStatus = signal(UserStatus.Unknown);
     private readonly _connectionStatus = signal(HubConnectionState.Connecting);
-
-    readonly userStatus = this._userStatus.asReadonly();
     readonly connectionStatus = this._connectionStatus.asReadonly();
 
     readonly connectionCreated: boolean;
@@ -49,32 +45,14 @@ export class SignalrService implements ConnectionMethodInvoker {
         this.connectionCreated = true;
 
         this._connectPromise = this._connection.start()
-            .then(() => {
-                this._connectionStatus.set(HubConnectionState.Connected);
-                this.updateSelfStatus();
-            }).catch(err => console.error('Error while starting connection: ' + err));
-    }
-
-    private updateSelfStatus() {
-        this.invoke<UserStatus>('GetSelfStatus').then(x => {
-            if (x.isSuccess) {
-                this._userStatus.set(x.value);
-            }
-        })
+            .then(() => this._connectionStatus.set(HubConnectionState.Connected))
+            .catch(err => console.error('Error while starting connection: ' + err));
     }
 
     private registerBaseHandlers() {
         this._connection.onreconnecting(_ => this._connectionStatus.set(HubConnectionState.Reconnecting));
         this._connection.onclose(_ => this._connectionStatus.set(HubConnectionState.Disconnected));
-        this._connection.onreconnected(_ => {
-            this._connectionStatus.set(HubConnectionState.Connected);
-            this.updateSelfStatus();
-        });
-
-        this._connection.on('SelfStatusChanged', status => {
-            console.log("User status changed")
-            this._userStatus.set(status);
-        });
+        this._connection.onreconnected(_ => this._connectionStatus.set(HubConnectionState.Connected));
     }
 
     async invoke<T>(methodName: string, ...args: any[]): Promise<ValueHubResult<T>> {

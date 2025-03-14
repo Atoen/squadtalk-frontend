@@ -5,6 +5,7 @@ import {MessageEmbed} from './MessageEmbed';
 import {MessageDto} from '../dtos/MessageDto';
 import {UserDto} from '../dtos/UserDto';
 import {GroupId} from '../ids/GroupId';
+import { Func } from "../../util/Delegate";
 
 export class ChatMessage {
     readonly id: MessageId;
@@ -14,7 +15,7 @@ export class ChatMessage {
     readonly timestamp: DateTimeOffset;
     readonly embed?: MessageEmbed;
 
-    private constructor(dto: MessageDto, userProvider: (userDto: UserDto) => User) {
+    constructor(dto: MessageDto, userProvider: Func<UserDto, User>) {
         this.id = dto.id;
         this.groupId = dto.groupId;
         this.author = userProvider(dto.author);

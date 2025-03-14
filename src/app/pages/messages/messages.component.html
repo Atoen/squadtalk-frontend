@@ -1,1 +1,33 @@
-<p>messages works!</p>
+<div class="flex m-2 gap-4 items-center">
+    <div>Private messages</div>
+    <p-button variant="text">Add new group chat</p-button>
+</div>
+
+<div class="flex flex-col gap-2 m-2">
+    @for (chat of chatManager.groups(); track chat.id) {
+        <div class="container hover-primary">
+            <div class="image">
+                <app-group-image [group]="chat" />
+            </div>
+            <div class="chat-name">{{ chat.customName() ?? "oro" }}</div>
+
+            @let lastMessage = chat.lastMessage();
+            @if (lastMessage) {
+                <div class="status">
+                    <div class="last-message">
+                        {{ lastMessage.content }}
+                    </div>
+                    <div class="separator">|</div>
+                    <div class="last-message-time">
+                        {{ lastMessage.timestamp.dateTime | date }}
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @empty {
+        <p>No group chats.</p>
+    }
+</div>
+
