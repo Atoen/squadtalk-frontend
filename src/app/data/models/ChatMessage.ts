@@ -1,11 +1,9 @@
-import {MessageId} from '../ids/MessageId';
-import {User} from './User';
-import {DateTimeOffset} from '../DatetimeOffset';
-import {MessageEmbed} from './MessageEmbed';
-import {MessageDto} from '../dtos/MessageDto';
-import {UserDto} from '../dtos/UserDto';
-import {GroupId} from '../ids/GroupId';
-import { Func } from "../../util/Delegate";
+import { GroupId, MessageId } from "../ids";
+import { User } from "./User";
+import { DateTimeOffset } from "../DatetimeOffset";
+import { MessageEmbed } from "./MessageEmbed";
+import { MessageDto, UserDto } from "../dtos";
+import { Func } from "../../util";
 
 export class ChatMessage {
     readonly id: MessageId;

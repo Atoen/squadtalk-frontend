@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { UserStatus } from "../../data/enums/UserStatus";
+import { UserStatus } from "../../data/enums";
 import {
     matAccessTimeFilledRound,
     matCircleRound,
@@ -8,7 +8,7 @@ import {
 } from "@ng-icons/material-icons/round";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Avatar } from "primeng/avatar";
-import { User } from "../../data/models/User";
+import { User } from "../../data/models";
 
 @Component({
     selector: 'app-avatar-badge',

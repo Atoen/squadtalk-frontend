@@ -1,6 +1,6 @@
 import { MessagePackObject, PackedEnum } from "../MessagePackObject";
 import { PendingFriendRequestDto, PendingFriendRequestDtoPacked } from "./PendingFriendRequestDto";
-import { FriendRequestResult } from "../enums/FriendRequestResult";
+import { FriendRequestResult } from "../enums";
 
 export type FriendRequestResultDtoPacked = [
     PackedEnum,

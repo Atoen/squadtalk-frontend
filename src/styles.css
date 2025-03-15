@@ -16,6 +16,7 @@ html, body * {
 }
 
 body {
+    font-family: 'Roboto','Helvetica','Arial','sans-serif';
     color: var(--text-primary);
     background: var(--background);
 }

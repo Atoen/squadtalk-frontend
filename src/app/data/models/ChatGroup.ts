@@ -1,12 +1,10 @@
-import {GroupParticipant} from "./GroupParticipant";
-import {GroupId} from "../ids/GroupId";
-import {ChatMessage} from "./ChatMessage";
-import {GroupDto} from "../dtos/GroupDto";
-import {GroupParticipantDto} from "../dtos/GroupParticipantDto";
-import {GroupState} from './GroupState';
-import { signal, Signal, WritableSignal } from '@angular/core';
-import { Func } from "../../util/Delegate";
-import { UserDto } from "../dtos/UserDto";
+import { signal, Signal, WritableSignal } from "@angular/core";
+import { GroupParticipant } from "./GroupParticipant";
+import { ChatMessage } from "./ChatMessage";
+import { GroupId } from "../ids";
+import { GroupState } from "./GroupState";
+import { GroupDto, GroupParticipantDto, UserDto } from "../dtos";
+import { Func } from "../../util";
 import { User } from "./User";
 
 export class ChatGroup {

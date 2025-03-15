@@ -2,11 +2,11 @@ import { Inject, Injectable, PLATFORM_ID, signal, untracked } from "@angular/cor
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack";
 import { isPlatformServer } from "@angular/common";
-import { HubEventHandler } from "../signalr/HubEventHandler";
-import { HubResult, ValueHubResult } from "../signalr/HubResult";
+import { HubEventHandler } from "../signalr";
+import { HubResult, ValueHubResult } from "../signalr";
 import { UserAuthenticationService } from "./UserAuthenticationService";
-import { HubMethodInvoker } from "../signalr/HubMethodInvoker";
-import { ConnectionMethodInvoker } from "../signalr/ConnectionMethodInvoker";
+import { HubMethodInvoker } from "../signalr";
+import { ConnectionMethodInvoker } from "../signalr";
 
 @Injectable({providedIn: "root"})
 export class SignalrService implements ConnectionMethodInvoker {

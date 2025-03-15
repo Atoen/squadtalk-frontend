@@ -1,11 +1,11 @@
 import { computed, Inject, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserRegisterDto } from '../data/dtos/UserRegisterDto';
+import { UserRegisterDto } from '../data/dtos';
 import { firstValueFrom } from 'rxjs';
-import { UserLoginDto } from '../data/dtos/UserLoginDto';
-import { UserDto } from '../data/dtos/UserDto';
+import { UserLoginDto } from '../data/dtos';
+import { UserDto } from '../data/dtos';
 import { isPlatformBrowser } from "@angular/common";
-import { User } from '../data/models/User';
+import { User } from '../data/models';
 
 @Injectable({ providedIn: "root" })
 export class UserAuthenticationService {

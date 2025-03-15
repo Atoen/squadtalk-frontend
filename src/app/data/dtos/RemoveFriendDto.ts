@@ -1,4 +1,4 @@
-import { UserId, UserIdPacked } from "../ids/UserId";
+import { UserId, UserIdPacked } from "../ids";
 import { MessagePackObject } from "../MessagePackObject";
 
 export type RemoveFriendDtoPacked = [UserIdPacked];

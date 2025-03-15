@@ -1,5 +1,5 @@
-import { UserId, UserIdPacked } from "../ids/UserId";
-import { UserStatus } from "../enums/UserStatus";
+import { UserId, UserIdPacked } from "../ids";
+import { UserStatus } from "../enums";
 import { MessagePackObject, PackedEnum } from "../MessagePackObject";
 
 export type UserDtoPacked = [

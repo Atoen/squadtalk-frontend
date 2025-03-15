@@ -1,11 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/profile/login/login.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-import { RegisterComponent } from './pages/profile/register/register.component';
-import { ForgotPasswordComponent } from './pages/profile/forgot-password/forgot-password.component';
-import { AuthGuard } from './services/AuthGuard';
+import { AuthGuard } from './services';
 import { MessagesComponent } from "./pages/messages/messages.component";
 import { ContactsComponent } from "./pages/contacts/contacts.component";
 

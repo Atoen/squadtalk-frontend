@@ -10,8 +10,8 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import {NgIf} from '@angular/common';
-import {UserLoginDto} from '../../../data/dtos/UserLoginDto';
-import {UserAuthenticationService} from '../../../services/UserAuthenticationService';
+import {UserLoginDto} from '../../../data/dtos';
+import {UserAuthenticationService} from '../../../services';
 import { Fluid } from "primeng/fluid";
 
 @Component({

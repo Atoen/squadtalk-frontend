@@ -1,17 +1,13 @@
-import { UserStatus } from "../data/enums/UserStatus";
-import { UserDtoPacked } from "../data/dtos/UserDto";
-import { GroupDtoPacked } from "../data/dtos/GroupDto";
-import { PendingFriendRequestDtoPacked } from "../data/dtos/PendingFriendRequestDto";
-import { FriendRequestDto } from "../data/dtos/FriendRequestDto";
-import { FriendRequestResult } from "../data/enums/FriendRequestResult";
-import { FriendRequestId } from "../data/ids/FriendRequestId";
-import { CancelFriendRequestDto } from "../data/dtos/CancelFriendRequestDto";
-import { FriendRequestResponseDto } from "../data/dtos/FriendRequestResponseDto";
-import { FriendRequestResponseResult } from "../data/enums/FriendRequestResponseResult";
-import { UserId } from "../data/ids/UserId";
-import { RemoveFriendDto } from "../data/dtos/RemoveFriendDto";
-import { RemoveFriendResult } from "../data/enums/RemoveFriendResult";
+import {
+    CancelFriendRequestDto,
+    FriendRequestDto, FriendRequestResponseDto,
+    GroupDtoPacked,
+    PendingFriendRequestDtoPacked, RemoveFriendDto,
+    UserDtoPacked
+} from "../data/dtos";
+import { FriendRequestResponseResult, FriendRequestResult, RemoveFriendResult, UserStatus } from "../data/enums";
 import { ConnectionMethodInvoker } from "./ConnectionMethodInvoker";
+import { FriendRequestId, UserId } from "../data/ids";
 
 export class HubMethodInvoker {
 

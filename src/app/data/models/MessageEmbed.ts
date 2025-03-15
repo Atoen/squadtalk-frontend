@@ -1,5 +1,5 @@
-import {EmbedType} from '../enums/EmbedType';
-import {EmbedDto} from '../dtos/EmbedDto';
+import { EmbedType } from '../enums';
+import { EmbedDto } from '../dtos';
 
 export class MessageEmbed {
     readonly type: EmbedType;

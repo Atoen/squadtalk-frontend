@@ -1,12 +1,12 @@
 import { Component, computed, inject } from '@angular/core';
-import { ContactManager } from "../../services/ContactManager";
+import { ContactManager } from "../../services";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 import { Divider } from "primeng/divider";
 import { Button } from "primeng/button";
 import { matCheckRound, matCloseRound } from "@ng-icons/material-icons/round";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Tooltip } from "primeng/tooltip";
-import { IncomingFriendRequest, OutgoingFriendRequest } from "../../data/models/FriendRequest";
+import { IncomingFriendRequest, OutgoingFriendRequest } from "../../data/models";
 
 @Component({
     selector: 'app-friend-requests',

@@ -1,8 +1,8 @@
-import { GroupId, GroupIdPacked } from "../ids/GroupId";
+import { GroupParticipantDto, GroupParticipantDtoPacked } from "./GroupParticipantDto";
+import { GroupId, GroupIdPacked } from "../ids";
 import { MessageDto, MessageDtoPacked } from "./MessageDto";
 import { MessagePackObject, PackedEnum } from "../MessagePackObject";
-import { GroupParticipantDto, GroupParticipantDtoPacked } from "./GroupParticipantDto";
-import { ChatType } from "../enums/ChatType";
+import { ChatType } from "../enums";
 
 export type GroupDtoPacked = [
     GroupIdPacked,

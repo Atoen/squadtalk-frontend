@@ -1,4 +1,4 @@
-import {Component, Inject, inject, OnInit, PLATFORM_ID, untracked} from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, untracked } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -12,9 +12,8 @@ import {
 } from '@ng-icons/material-icons/round';
 import { Divider } from 'primeng/divider';
 import { UserStatusComponent } from "./components/user-status/user-status.component";
-import { AuthenticationState, UserAuthenticationService } from "./services/UserAuthenticationService";
+import { AuthenticationState, UserAuthenticationService } from "./services";
 import { isPlatformBrowser, NgIf } from "@angular/common";
-import { SignalrService } from "./services/SignalrService";
 import { Toast } from "primeng/toast";
 import { Ripple } from "primeng/ripple";
 

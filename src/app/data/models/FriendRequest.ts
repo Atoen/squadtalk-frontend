@@ -1,5 +1,5 @@
 import { DateTimeOffset } from "../DatetimeOffset";
-import { FriendRequestId } from "../ids/FriendRequestId";
+import { FriendRequestId } from "../ids";
 import { User } from "./User";
 
 export abstract class FriendRequest {

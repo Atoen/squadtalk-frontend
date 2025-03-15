@@ -1,12 +1,12 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { ContactManager } from "../../services/ContactManager";
+import { ContactManager } from "../../services";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 import { Button } from "primeng/button";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Tooltip } from "primeng/tooltip";
 import { matMessageRound, matMoreVertRound } from "@ng-icons/material-icons/round"
 import { Popover } from "primeng/popover";
-import { User } from "../../data/models/User";
+import { User } from "../../data/models";
 import { ConfirmationService } from "primeng/api";
 import { ConfirmDialog } from "primeng/confirmdialog";
 

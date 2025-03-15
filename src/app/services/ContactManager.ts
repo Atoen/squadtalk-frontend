@@ -1,17 +1,13 @@
-import { Injectable, Signal, signal, untracked } from "@angular/core";
+import { IncomingFriendRequest, OutgoingFriendRequest, User } from "../data/models";
 import { SignalrService } from "./SignalrService";
-import { UserId } from "../data/ids/UserId";
-import { User } from "../data/models/User";
-import { FriendRequestId } from "../data/ids/FriendRequestId";
-import { IncomingFriendRequest, OutgoingFriendRequest } from "../data/models/FriendRequest";
-import { UserDto } from "../data/dtos/UserDto";
-import { UserStatus } from "../data/enums/UserStatus";
 import { UserAuthenticationService } from "./UserAuthenticationService";
-import { PendingFriendRequestDto } from "../data/dtos/PendingFriendRequestDto";
-import { FriendRequestResponseDto } from "../data/dtos/FriendRequestResponseDto";
-import { HubMethodInvoker } from "../signalr/HubMethodInvoker";
-import { ReactiveMap } from "../data/ReactiveMap";
-import { Func } from "../util/Delegate";
+import { ReactiveMap } from "../data";
+import { Injectable, signal, Signal, untracked } from "@angular/core";
+import { FriendRequestId, UserId } from "../data/ids";
+import { HubMethodInvoker } from "../signalr";
+import { Func } from "../util";
+import { FriendRequestResponseDto, PendingFriendRequestDto, UserDto } from "../data/dtos";
+import { UserStatus } from "../data/enums";
 
 @Injectable({providedIn: "root"})
 export class ContactManager {

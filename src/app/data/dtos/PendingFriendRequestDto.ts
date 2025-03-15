@@ -1,6 +1,6 @@
 import { MessagePackObject } from "../MessagePackObject";
 import { UserDto, UserDtoPacked } from "./UserDto";
-import { FriendRequestId, FriendRequestIdPacked } from "../ids/FriendRequestId";
+import { FriendRequestId, FriendRequestIdPacked } from "../ids";
 import { DateTimeOffset, DateTimeOffsetPacked } from "../DatetimeOffset";
 
 export type PendingFriendRequestDtoPacked = [

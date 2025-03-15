@@ -1,5 +1,5 @@
 import { MessagePackObject } from "../MessagePackObject";
-import { FriendRequestId, FriendRequestIdPacked } from "../ids/FriendRequestId";
+import { FriendRequestId, FriendRequestIdPacked } from "../ids";
 
 export type CancelFriendRequestDtoPacked = [FriendRequestIdPacked];
 

@@ -1,4 +1,4 @@
-import { FriendRequestId, FriendRequestIdPacked } from "../ids/FriendRequestId";
+import { FriendRequestId, FriendRequestIdPacked } from "../ids";
 import { MessagePackObject } from "../MessagePackObject";
 
 export type FriendRequestResponseDtoPacked = [

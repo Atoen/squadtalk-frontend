@@ -1,6 +1,6 @@
-import { UserStatus } from '../enums/UserStatus';
-import { UserId } from '../ids/UserId';
-import { UserDto } from '../dtos/UserDto';
+import { UserStatus } from '../enums';
+import { UserId } from '../ids';
+import { UserDto } from '../dtos';
 
 import { signal, WritableSignal } from "@angular/core";
 

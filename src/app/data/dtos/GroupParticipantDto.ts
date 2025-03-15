@@ -1,6 +1,6 @@
 import { UserDto, UserDtoPacked } from "./UserDto";
 import { MessagePackObject, PackedEnum } from "../MessagePackObject";
-import { GroupRole } from "../enums/GroupRole";
+import { GroupRole } from "../enums";
 
 export type GroupParticipantDtoPacked = [
     UserDtoPacked,

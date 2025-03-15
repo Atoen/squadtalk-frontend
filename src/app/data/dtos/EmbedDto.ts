@@ -1,5 +1,5 @@
 import { MessagePackObject, PackedEnum } from "../MessagePackObject";
-import { EmbedType } from "../enums/EmbedType";
+import { EmbedType } from "../enums";
 
 export type EmbedDtoPacked = [
     PackedEnum,

@@ -2,13 +2,13 @@ import { ApplicationConfig, ErrorHandler, Injectable, provideZoneChangeDetection
 import {provideRouter, RouterStateSnapshot, TitleStrategy} from '@angular/router';
 
 import { routes } from './app.routes';
-import {provideClientHydration, Title, withEventReplay} from '@angular/platform-browser';
+import { provideClientHydration, Title, withEventReplay } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
 import Material from '@primeng/themes/material';
-import {provideNgIconsConfig} from '@ng-icons/core';
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {provideHttpClient, withFetch} from '@angular/common/http';
-import { ToastErrorHandler } from "./services/ErrorHandler";
+import { provideNgIconsConfig } from '@ng-icons/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ToastErrorHandler } from "./services";
 import { MessageService } from "primeng/api";
 import {provideTranslateService} from '@ngx-translate/core';
 

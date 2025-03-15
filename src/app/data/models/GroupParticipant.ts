@@ -1,9 +1,8 @@
-import {User} from './User';
-import {GroupRole} from '../enums/GroupRole';
-import {GroupParticipantDto} from '../dtos/GroupParticipantDto';
-import {UserDto} from '../dtos/UserDto';
+import { GroupParticipantDto, UserDto } from "../dtos";
+import { User } from "./User";
 import { signal, WritableSignal } from "@angular/core";
-import { Func } from "../../util/Delegate";
+import { GroupRole } from "../enums";
+import { Func } from "../../util";
 
 export class GroupParticipant {
     readonly user: User;

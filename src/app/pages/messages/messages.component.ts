@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ChatManager } from "../../services/ChatManager";
+import { Component, inject } from '@angular/core';
+import { ChatManager } from "../../services";
 import { GroupImageComponent } from "../../components/group-image/group-image.component";
 import { DatePipe } from "@angular/common";
 import { Button } from "primeng/button";

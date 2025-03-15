@@ -1,15 +1,13 @@
-import { Injectable } from "@angular/core";
-import { ReactiveMap } from "../data/ReactiveMap";
-import { GroupId } from "../data/ids/GroupId";
-import { ChatGroup } from "../data/models/ChatGroup";
 import { SignalrService } from "./SignalrService";
-import { UserAuthenticationService } from "./UserAuthenticationService";
 import { ContactManager } from "./ContactManager";
-import { HubMethodInvoker } from "../signalr/HubMethodInvoker";
-import { GroupDto } from "../data/dtos/GroupDto";
-import { GroupParticipantDto } from "../data/dtos/GroupParticipantDto";
-import { GroupParticipant } from "../data/models/GroupParticipant";
-import { Func } from "../util/Delegate";
+import { UserAuthenticationService } from "./UserAuthenticationService";
+import { ChatGroup, GroupParticipant } from "../data/models";
+import { Injectable } from "@angular/core";
+import { ReactiveMap } from "../data";
+import { GroupId } from "../data/ids";
+import { HubMethodInvoker } from "../signalr";
+import { Func } from "../util";
+import { GroupDto, GroupParticipantDto } from "../data/dtos";
 
 @Injectable({providedIn: "root"})
 export class ChatManager {

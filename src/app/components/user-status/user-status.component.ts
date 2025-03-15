@@ -1,5 +1,5 @@
 import {Component, computed, inject, input, ViewChild} from '@angular/core';
-import {AuthenticationState, UserAuthenticationService} from "../../services/UserAuthenticationService";
+import {AuthenticationState, UserAuthenticationService} from "../../services";
 import {NgIf} from "@angular/common";
 import {
     matAccessTimeFilledRound,
@@ -7,11 +7,11 @@ import {
     matDoNotDisturbOnRound,
     matWifiRound
 } from "@ng-icons/material-icons/round";
-import { UserStatus } from "../../data/enums/UserStatus";
+import { UserStatus } from "../../data/enums";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Ripple } from "primeng/ripple";
 import { Popover } from "primeng/popover";
-import { ContactManager } from "../../services/ContactManager";
+import { ContactManager } from "../../services";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 
 @Component({
