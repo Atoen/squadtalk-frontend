@@ -1,0 +1,21 @@
+{
+  "app_language": "Język",
+  "app_theme": "Motyw",
+  "messages": "Wiadomości",
+  "contacts": "Kontakty",
+  "home": "Strona główna",
+  "settings": "Ustawienia",
+  "log_in": "Zaloguj się",
+  "log_out": "Wyloguj się",
+  "register": "Zarejestruj się",
+
+  "lang": {
+    "en": "Angielski",
+    "pl": "Polski"
+  },
+
+  "theme": {
+    "light": "Jasny",
+    "dark": "ciemny"
+  }
+}

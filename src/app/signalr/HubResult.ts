@@ -8,7 +8,7 @@ export class ValueHubResult<T> {
         return new ValueHubResult(true, value);
     }
 
-    static readonly Error = new ValueHubResult<any>(false);
+    static readonly Error = new ValueHubResult<never>(false);
 
     get isError() {
         return !this.isSuccess;
@@ -26,19 +26,19 @@ export class ValueHubResult<T> {
     }
 
     errorOrValueIs(value: T) {
-        return this.isError || this._value === value;
+        return this.isError || this._value == value;
     }
 
     errorOrValueIsNot(value: T) {
-        return this.isError || this._value !== value;
+        return this.isError || this._value != value;
     }
 
     successAndValueIs(value: T) {
-        return this.isSuccess && this._value === value;
+        return this.isSuccess && this._value == value;
     }
 
     successAndValueIsNot(value: T) {
-        return this.isSuccess && this._value !== value;
+        return this.isSuccess && this._value != value;
     }
 }
 

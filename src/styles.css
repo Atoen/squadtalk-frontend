@@ -57,6 +57,10 @@ body {
     --status-badge-border: var(--p-content-border-color) !important;
 }
 
+.surface-primary {
+    background: var(--surface-primary);
+}
+
 :root {
     --success: var(--color-green-500);
     --warn: var(--color-amber-500);
@@ -64,11 +68,12 @@ body {
     --info: var(--color-blue-500);
     --dark: var(--color-stone-600);
     --text-primary: rgb(70, 70, 70);
-    --surfacce: white;
+    --surface: white;
     --background: white;
     --gray: var(--color-gray-500);
     --p-text-color: var(--text-primary);
     --p-content-color: var(--text-primary);
+    --surface-primary: var(--p-primary-400);
 }
 
 :root.app-dark {
@@ -78,8 +83,9 @@ body {
     --info: var(--color-blue-400);
     --dark: var(--color-stone-900);
     --text-primary: rgba(255, 255, 255, 0.8);
-    --surfacce: var(--color-stone-800);
+    --surface: var(--color-stone-800);
     --background: var(--color-surface-900);
     --gray: var(--color-gray-600);
     --p-text-color: var(--text-primary);
+    --surface-primary: var(--p-primary-500);
 }

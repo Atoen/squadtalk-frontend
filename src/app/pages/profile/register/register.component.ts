@@ -15,9 +15,9 @@ import {
 import { InputText } from "primeng/inputtext";
 import { Password } from "primeng/password";
 import { RouterLink } from "@angular/router";
-import {NgClass, NgIf} from '@angular/common';
-import {UserAuthenticationService} from '../../../services';
-import {UserRegisterDto} from '../../../data/dtos';
+import { NgClass, NgIf } from '@angular/common';
+import { UserAuthenticationService } from '../../../services';
+import { UserRegisterDto } from '@data/dtos';
 import { Fluid } from "primeng/fluid";
 
 @Component({

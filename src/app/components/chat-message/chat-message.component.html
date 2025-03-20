@@ -1,0 +1,26 @@
+@let message = model();
+@if (message.isSystemMessage) {
+    <div>{{ message.embed | json }}</div>
+    <div>{{ message.timestamp | formatTimestamp }}</div>
+} @else {
+
+    @if (isSeparate()) {
+        <p-avatar [label]="message.author.username()[0]" size="large" class="avatar" />
+        <div class="label">
+            <div>{{ message.author.username() }}</div>
+            <div class="date">{{ message.timestamp | formatTimestamp }}</div>
+        </div>
+    } @else {
+        <div class="hover-date">{{ message.timestamp | formatTimestamp }}</div>
+    }
+
+    <div class="content">
+        @if (message.embed) {
+            <div>{{ message.embed | json }}</div>
+        }
+
+        @if (message.content) {
+            <span class="whitespace-pre-wrap" >{{ message.content }}</span>
+        }
+    </div>
+}

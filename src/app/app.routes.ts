@@ -4,10 +4,12 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { AuthGuard } from './services';
 import { MessagesComponent } from "./pages/messages/messages.component";
 import { ContactsComponent } from "./pages/contacts/contacts.component";
+import { ChatComponent } from "./pages/chat/chat.component";
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'messages', component: MessagesComponent, title: 'Messages', canActivate: [AuthGuard] },
+    { path: 'chat/:id', component: ChatComponent, title: 'Chat', canActivate: [AuthGuard] },
     { path: 'contacts', component: ContactsComponent, title: 'Contacts', canActivate: [AuthGuard] },
     { path: 'settings', component: SettingsComponent, title: 'Settings' },
     {

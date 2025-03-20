@@ -4,22 +4,23 @@
 </div>
 
 <div class="flex flex-col gap-2 m-2">
-    @for (chat of chatManager.groups(); track chat.id) {
-        <div class="container hover-primary">
+    @for (group of chatManager.groups(); track group.id) {
+        <div class="container hover-primary"
+            (click)="chatManager.openGroup(group)">
             <div class="image">
-                <app-group-image [group]="chat" />
+                <app-group-image [group]="group" />
             </div>
-            <div class="chat-name">{{ chat.customName() ?? "oro" }}</div>
+            <div class="chat-name">{{ group.name() }}</div>
 
-            @let lastMessage = chat.lastMessage();
+            @let lastMessage = group.lastMessage();
             @if (lastMessage) {
                 <div class="status">
                     <div class="last-message">
-                        {{ lastMessage.content }}
+                        {{ lastMessage | formatLastMessageContent:group.type }}
                     </div>
                     <div class="separator">|</div>
                     <div class="last-message-time">
-                        {{ lastMessage.timestamp.dateTime | date }}
+                        {{ lastMessage.timestamp | formatTimestamp:TimestampFormatMode.ChannelStatus }}
                     </div>
                 </div>
             }

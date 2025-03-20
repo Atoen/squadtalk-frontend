@@ -7,7 +7,7 @@ import {
     matDoNotDisturbOnRound,
     matWifiRound
 } from "@ng-icons/material-icons/round";
-import { UserStatus } from "../../data/enums";
+import { UserStatus } from "@data/enums";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Ripple } from "primeng/ripple";
 import { Popover } from "primeng/popover";

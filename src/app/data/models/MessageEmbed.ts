@@ -5,9 +5,13 @@ export class MessageEmbed {
     readonly type: EmbedType;
     readonly data: Map<string, string>;
 
-    private constructor(dto: EmbedDto) {
+    constructor(dto: EmbedDto) {
         this.type = dto.type;
-        this.data = dto.data;
+        this.data = new Map(Object.entries(dto.data));
+    }
+
+    get(key: string) {
+        return this.data.get(key);
     }
 
     static tryCreate(dto?: EmbedDto) {

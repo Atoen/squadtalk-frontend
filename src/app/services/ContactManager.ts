@@ -1,13 +1,13 @@
-import { IncomingFriendRequest, OutgoingFriendRequest, User } from "../data/models";
+import { IncomingFriendRequest, OutgoingFriendRequest, User } from "@data/models";
 import { SignalrService } from "./SignalrService";
 import { UserAuthenticationService } from "./UserAuthenticationService";
 import { ReactiveMap } from "../data";
-import { Injectable, signal, Signal, untracked } from "@angular/core";
-import { FriendRequestId, UserId } from "../data/ids";
+import { effect, Injectable, signal, Signal, untracked } from "@angular/core";
+import { FriendRequestId, UserId } from "@data/ids";
 import { HubMethodInvoker } from "../signalr";
 import { Func } from "../util";
-import { FriendRequestResponseDto, PendingFriendRequestDto, UserDto } from "../data/dtos";
-import { UserStatus } from "../data/enums";
+import { FriendRequestResponseDto, PendingFriendRequestDto, UserDto } from "@data/dtos";
+import { UserStatus } from "@data/enums";
 
 @Injectable({providedIn: "root"})
 export class ContactManager {
@@ -38,6 +38,14 @@ export class ContactManager {
         this.userModelProvider = this.getOrCreateUser.bind(this);
         this.localUser = this.createLocalUser();
         this.userStatus = this.localUser.status;
+
+        effect(() => {
+            const username = this.authService.currentUser()?.username;
+            if (username) {
+                this.localUser.username.set(username!);
+            }
+            console.log('Username:', username);
+        });
 
         if (!signalrService.connectionCreated) return;
 

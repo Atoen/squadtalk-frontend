@@ -1,11 +1,10 @@
 import { computed, Inject, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserRegisterDto } from '../data/dtos';
+import { UserDto, UserLoginDto, UserRegisterDto } from '@data/dtos';
 import { firstValueFrom } from 'rxjs';
-import { UserLoginDto } from '../data/dtos';
-import { UserDto } from '../data/dtos';
 import { isPlatformBrowser } from "@angular/common";
-import { User } from '../data/models';
+import { User } from '@data/models';
+import { UserStatus } from "@data/enums";
 
 @Injectable({ providedIn: "root" })
 export class UserAuthenticationService {
@@ -13,7 +12,7 @@ export class UserAuthenticationService {
 
     private http = inject(HttpClient);
 
-    private _authenticationState = signal(AuthenticationState.Unknown);
+    private _authenticationState = signal(AuthenticationState.PendingVerification);
     private _currentUser = signal<UserDto | null>(null);
 
     private _verifiedUser = false;
@@ -94,6 +93,18 @@ export class UserAuthenticationService {
         }
     }
 
+    // TODO: better
+    setPrerender(username: string) {
+        const user: UserDto = {
+            username: username,
+            status: UserStatus.Unknown,
+            id: '',
+            packed: [username, [''], 0],
+        };
+
+        this.setCurrentUser(user, false);
+    }
+
     private tryReadStoredUser() {
         const data = localStorage.getItem(this.userDataKey);
 
@@ -113,6 +124,7 @@ export class UserAuthenticationService {
     private setCurrentUser(user: UserDto | null, updateLocalStorage: boolean = true) {
         if (updateLocalStorage) {
             if (user) {
+                document.cookie = `ud=${user.username}; path=/; Max-Age=31536000; SameSite=Strict`;
                 localStorage.setItem(this.userDataKey, JSON.stringify(user));
             } else {
                 localStorage.removeItem(this.userDataKey);

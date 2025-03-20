@@ -13,34 +13,29 @@
         <p-divider />
 
         <ul class="-mt-3" (click)="hideSidebar()">
-            <li routerLink="/messages" routerLinkActive="active"
-                pRipple class="nav-item">
+            <li routerLink="/messages" routerLinkActive="active" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matMessageRound"/>
                 </i>
-                <span class="nav-item-text">Messages</span>
+                <span class="nav-item-text">{{ 'messages' | translate }}</span>
             </li>
-            <li routerLink="/contacts" routerLinkActive="active"
-                pRipple class="nav-item">
+            <li routerLink="/contacts" routerLinkActive="active" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matPeopleRound"/>
                 </i>
-                <span class="nav-item-text">Contacts</span>
+                <span class="nav-item-text">{{ 'contacts' | translate }}</span>
             </li>
-            <li routerLink="/" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                pRipple class="nav-item">
+            <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matHomeRound"/>
                 </i>
-                <span class="nav-item-text">Home</span>
+                <span class="nav-item-text">{{ 'home' | translate }}</span>
             </li>
-            <li routerLink="/settings" routerLinkActive="active"
-                pRipple class="nav-item">
+            <li routerLink="/settings" routerLinkActive="active" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matSettingsRound"/>
                 </i>
-                <span class="nav-item-text">Settings</span>
+                <span class="nav-item-text">{{ 'settings' | translate }}</span>
             </li>
 
             <ng-container *ngIf="authService.authenticationState() !== AuthenticationState.Unknown">
@@ -49,24 +44,22 @@
                         <i class="nav-item-icon">
                             <ng-icon name="matLogoutRound"/>
                         </i>
-                        <span class="nav-item-text">Log out</span>
+                        <span class="nav-item-text">{{ 'log_out' | translate }}</span>
                     </li>
                 </ng-container>
 
                 <ng-template #loggedOut>
-                    <li routerLink="/profile/login" routerLinkActive="active"
-                       class="nav-item fade-in" pRipple>
+                    <li routerLink="/profile/login" routerLinkActive="active" class="nav-item fade-in" pRipple>
                         <i class="nav-item-icon">
                             <ng-icon name="matLoginRound"/>
                         </i>
-                        <span class="nav-item-text">Login</span>
+                        <span class="nav-item-text">{{ 'log_in' | translate }}</span>
                     </li>
-                    <li routerLink="/profile/register" routerLinkActive="active"
-                       class="nav-item fade-in" pRipple>
+                    <li routerLink="/profile/register" routerLinkActive="active" class="nav-item fade-in" pRipple>
                         <i class="nav-item-icon">
                             <ng-icon name="matPersonAddRound"/>
                         </i>
-                        <span class="nav-item-text">Register</span>
+                        <span class="nav-item-text">{{ 'register' | translate }}</span>
                     </li>
                 </ng-template>
             </ng-container>

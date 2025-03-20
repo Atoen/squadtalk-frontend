@@ -1,0 +1,17 @@
+@let group = model();
+
+{{ group.name() }}
+<div class="ms-auto flex">
+    <p-button variant="text" rounded="true" size="small">
+        <ng-icon name="matCallRound" color="var(--text-primary)" />
+    </p-button>
+
+    @if (group.localUser.isModeratorOrAbove()) {
+        <p-button variant="text" rounded="true" size="small">
+            <ng-icon name="matPersonAddAlt1Round" color="var(--text-primary)" />
+        </p-button>
+        <p-button variant="text" rounded="true" size="small">
+            <ng-icon name="matSettingsRound" color="var(--text-primary)" />
+        </p-button>
+    }
+</div>

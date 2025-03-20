@@ -1,17 +1,17 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Card } from 'primeng/card';
 import { Password } from 'primeng/password';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputText } from 'primeng/inputtext';
 import { Checkbox } from 'primeng/checkbox';
 import { Button } from 'primeng/button';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
-import {NgIf} from '@angular/common';
-import {UserLoginDto} from '../../../data/dtos';
-import {UserAuthenticationService} from '../../../services';
+import { NgIf } from '@angular/common';
+import { UserLoginDto } from '@data/dtos';
+import { UserAuthenticationService } from '../../../services';
 import { Fluid } from "primeng/fluid";
 
 @Component({

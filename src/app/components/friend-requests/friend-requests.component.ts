@@ -6,7 +6,7 @@ import { Button } from "primeng/button";
 import { matCheckRound, matCloseRound } from "@ng-icons/material-icons/round";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Tooltip } from "primeng/tooltip";
-import { IncomingFriendRequest, OutgoingFriendRequest } from "../../data/models";
+import { IncomingFriendRequest, OutgoingFriendRequest } from "@data/models";
 
 @Component({
     selector: 'app-friend-requests',

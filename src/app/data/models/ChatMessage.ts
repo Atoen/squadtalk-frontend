@@ -4,6 +4,7 @@ import { DateTimeOffset } from "../DatetimeOffset";
 import { MessageEmbed } from "./MessageEmbed";
 import { MessageDto, UserDto } from "../dtos";
 import { Func } from "../../util";
+import { EmbedType } from "@data/enums";
 
 export class ChatMessage {
     readonly id: MessageId;
@@ -12,6 +13,14 @@ export class ChatMessage {
     readonly content: string;
     readonly timestamp: DateTimeOffset;
     readonly embed?: MessageEmbed;
+
+    get isByLocalUser() {
+        return this.author.isLocal;
+    }
+
+    get isSystemMessage() {
+        return this.embed?.type === EmbedType.SystemMessage;
+    }
 
     constructor(dto: MessageDto, userProvider: Func<UserDto, User>) {
         this.id = dto.id;

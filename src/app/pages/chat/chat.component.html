@@ -1,0 +1,9 @@
+<div class="chat-container p-2">
+    @if (group) {
+        <app-group-header [model]="group" class="row-start-1 rounded-sm ps-1.5 surface-primary text-xl flex items-center shadow shadow-black font-medium" />
+
+        <app-message-scroll [groupChat]="group" class="row-start-3 overflow-auto my-2 mx-1" />
+
+        <app-message-input class="row-start-5" />
+    }
+</div>

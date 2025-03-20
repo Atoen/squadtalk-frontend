@@ -1,0 +1,16 @@
+@let group = groupChat();
+
+@if (group.state.scrolledToTop()) {
+    <p>This is the begging of chat with {{ group.name() }}.</p>
+}
+
+<div infinite-scroll #scrollContainer
+     class="flex flex-col gap-1"
+     (scrolledUp)="onScrollUp()"
+     [infiniteScrollContainer]="'app-message-scroll'"
+     [fromRoot]="true">
+    @for (message of group.messages(); track message.id) {
+        <app-chat-message [model]="message" [isSeparate]="$index % 3 === 0"
+                          class="message-container hover rounded-sm" />
+    }
+</div>

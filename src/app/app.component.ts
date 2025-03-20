@@ -1,21 +1,23 @@
-import { Component, Inject, OnInit, PLATFORM_ID, untracked } from '@angular/core';
+import { Component, inject, Inject, OnInit, PLATFORM_ID, untracked } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
     matHomeRound,
     matLoginRound,
     matLogoutRound,
-    matPersonAddRound,
-    matSettingsRound,
+    matMessageRound,
     matPeopleRound,
-    matMessageRound
+    matPersonAddRound,
+    matSettingsRound
 } from '@ng-icons/material-icons/round';
 import { Divider } from 'primeng/divider';
-import { UserStatusComponent } from "./components/user-status/user-status.component";
+import { UserStatusComponent } from "@components/user-status/user-status.component";
 import { AuthenticationState, UserAuthenticationService } from "./services";
 import { isPlatformBrowser, NgIf } from "@angular/common";
 import { Toast } from "primeng/toast";
 import { Ripple } from "primeng/ripple";
+import { UserPreferencesManager } from "@services/UserPreferencesManager";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component ({
     selector: 'app-root',
@@ -29,6 +31,7 @@ import { Ripple } from "primeng/ripple";
         NgIf,
         Toast,
         Ripple,
+        TranslateModule
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
@@ -43,9 +46,14 @@ import { Ripple } from "primeng/ripple";
     })],
 })
 export class AppComponent implements OnInit {
+
+    // Injecting at root to make sure it is instantiated early
+    preferencesManager = inject(UserPreferencesManager);
+
     constructor(
         @Inject(PLATFORM_ID) private readonly platformId: Object,
-        public readonly authService: UserAuthenticationService) {}
+        readonly authService: UserAuthenticationService
+    ) {}
 
     ngOnInit() {
         if (!isPlatformBrowser(this.platformId)) return;
@@ -54,7 +62,7 @@ export class AppComponent implements OnInit {
         console.log("Logged in", this.authService.isLoggedIn());
 
         if (untracked(this.authService.authenticationState) === AuthenticationState.PendingVerification) {
-            this.authService.verifyCurrentUser();
+            void this.authService.verifyCurrentUser();
         }
     }
 

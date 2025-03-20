@@ -1,0 +1,5 @@
+.chat-container {
+    height: 100dvh;
+    display: grid;
+    grid-template-rows: min-content min-content auto min-content min-content;
+}

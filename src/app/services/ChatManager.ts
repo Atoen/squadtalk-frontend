@@ -1,27 +1,32 @@
 import { SignalrService } from "./SignalrService";
 import { ContactManager } from "./ContactManager";
 import { UserAuthenticationService } from "./UserAuthenticationService";
-import { ChatGroup, GroupParticipant } from "../data/models";
-import { Injectable } from "@angular/core";
+import { ChatGroup, GroupParticipant } from "@data/models";
+import { Injectable, signal, Signal, untracked } from "@angular/core";
 import { ReactiveMap } from "../data";
-import { GroupId } from "../data/ids";
+import { GroupId } from "@data/ids";
 import { HubMethodInvoker } from "../signalr";
 import { Func } from "../util";
-import { GroupDto, GroupParticipantDto } from "../data/dtos";
+import { GroupDto, GroupParticipantDto } from "@data/dtos";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: "root"})
 export class ChatManager {
 
-    private readonly _groups = new ReactiveMap<GroupId, ChatGroup>();
     private readonly _hubInvoker: HubMethodInvoker;
 
-    readonly groups = this._groups.values;
+    private readonly _groups = new ReactiveMap<GroupId, ChatGroup>();
+    private readonly _currentGroup = signal<ChatGroup | undefined>(undefined);
+
+    readonly groups: Signal<ChatGroup[]> = this._groups.values;
+    readonly currentGroup = this._currentGroup.asReadonly();
 
     readonly groupParticipantProvider: Func<GroupParticipantDto, GroupParticipant>;
 
     constructor(
         private readonly contactManager: ContactManager,
         private readonly authService: UserAuthenticationService,
+        private readonly router: Router,
         signalrService: SignalrService
     ) {
         this._hubInvoker = signalrService.methodInvoker;
@@ -35,6 +40,24 @@ export class ChatManager {
         hubHandler.groupNameChanged$.subscribe(({ groupId, name }) => this.groupNameChanged(groupId, name));
 
         void this.refreshGroups();
+    }
+
+    getGroup(groupId: GroupId) {
+        return this._groups.get(groupId);
+    }
+
+    openGroup(group: ChatGroup, navigate: boolean = true) {
+        if (untracked(this._currentGroup) === group) return;
+
+        this._currentGroup.set(group);
+
+        if (navigate) {
+            void this.router.navigate([`/chat/${group.id}`]);
+        }
+    }
+
+    clearSelectedGroup() {
+        this._currentGroup.set(undefined);
     }
 
     async refreshGroups() {

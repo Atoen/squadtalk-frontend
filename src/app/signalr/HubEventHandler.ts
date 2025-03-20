@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
-import { FriendRequestResponseDto, GroupDto, MessageDto, PendingFriendRequestDto, UserDto } from "../data/dtos";
-import { FriendRequestId, GroupId, GroupIdPacked, unpackId, UserId, UserIdPacked } from "../data/ids";
+import { FriendRequestResponseDto, GroupDto, MessageDto, PendingFriendRequestDto, UserDto } from "@data/dtos";
+import { FriendRequestId, GroupId, GroupIdPacked, unpackId, UserId, UserIdPacked } from "@data/ids";
 import { PackedEnum } from "../data";
-import { GroupRole, UserStatus } from "../data/enums";
+import { GroupRole, UserStatus } from "@data/enums";
 import { HubConnection } from "@microsoft/signalr";
 
 export class HubEventHandler {
