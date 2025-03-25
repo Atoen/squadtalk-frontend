@@ -3,7 +3,7 @@ import {
     ErrorHandler,
     importProvidersFrom,
     Injectable,
-    provideZoneChangeDetection
+    provideExperimentalZonelessChangeDetection
 } from '@angular/core';
 import { provideRouter, RouterStateSnapshot, TitleStrategy, withComponentInputBinding } from '@angular/router';
 
@@ -18,6 +18,7 @@ import { ToastErrorHandler } from "./services";
 import { MessageService } from "primeng/api";
 import { provideTranslateService, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { StaticTranslationsLoader } from "./StaticTranslationsLoader";
+import { DialogService } from "primeng/dynamicdialog";
 
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -39,7 +40,7 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideExperimentalZonelessChangeDetection(),
         provideRouter(routes, withComponentInputBinding()),
         { provide: TitleStrategy, useClass: TemplatePageTitleStrategy },
         provideClientHydration(withEventReplay()),
@@ -57,7 +58,7 @@ export const appConfig: ApplicationConfig = {
             size: '1.5em'
         }),
         provideHttpClient(withFetch()),
-        MessageService,
+        MessageService, DialogService,
         { provide: ErrorHandler, useClass: ToastErrorHandler },
         provideTranslateService({
             defaultLanguage: 'en'

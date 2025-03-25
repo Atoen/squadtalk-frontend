@@ -1,0 +1,61 @@
+.image {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border: 4px solid;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    max-width: 100%;
+    grid-column: 2 / 5;
+    grid-row: 1;
+    white-space: nowrap;
+}
+
+.chat-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-grow: 1;
+}
+
+.chat-badge {
+    flex-shrink: 0;
+}
+
+.status {
+    display: flex;
+    grid-row: 2;
+    grid-column: 2 / 5;
+}
+
+.unread {
+    font-weight: bold;
+}
+
+.last-message {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-self: start;
+}
+
+.last-message-time {
+    align-self: start;
+    white-space: nowrap;
+}
+
+.separator {
+    align-self: start;
+    padding: 0 2px;
+}

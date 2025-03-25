@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit, PLATFORM_ID, untracked } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject, OnInit, PLATFORM_ID, untracked } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -12,12 +12,13 @@ import {
 } from '@ng-icons/material-icons/round';
 import { Divider } from 'primeng/divider';
 import { UserStatusComponent } from "@components/user-status/user-status.component";
-import { AuthenticationState, UserAuthenticationService } from "./services";
+import { AuthenticationState, ContactManager, UserAuthenticationService } from "./services";
 import { isPlatformBrowser, NgIf } from "@angular/common";
 import { Toast } from "primeng/toast";
 import { Ripple } from "primeng/ripple";
 import { UserPreferencesManager } from "@services/UserPreferencesManager";
 import { TranslateModule } from "@ngx-translate/core";
+import { TextChatService } from "@services/TextChatService";
 
 @Component ({
     selector: 'app-root',
@@ -44,11 +45,14 @@ import { TranslateModule } from "@ngx-translate/core";
         matMessageRound,
         matPeopleRound
     })],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
     // Injecting at root to make sure it is instantiated early
     preferencesManager = inject(UserPreferencesManager);
+    textChatService = inject(TextChatService);
+    contactManager = inject(ContactManager);
 
     constructor(
         @Inject(PLATFORM_ID) private readonly platformId: Object,

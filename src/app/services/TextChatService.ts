@@ -56,8 +56,11 @@ export class TextChatService {
         const message = new ChatMessage(messageDto, this.contactManager.userModelProvider);
         group.addMessage(message);
 
-        if (untracked(this.chatManager.currentGroup)?.id !== group.id && !message.isByLocalUser) {
+        const messageOnCurrentGroup = untracked(this.chatManager.currentGroup)?.id === group.id;
+        if (!messageOnCurrentGroup && !message.isByLocalUser) {
             group.unreadMessages.update(x => x + 1);
+        } else {
+            void this._hubInvoker.markMessageSeen(group.id, message.id);
         }
     }
 }

@@ -17,5 +17,7 @@
   "theme": {
     "light": "Light",
     "dark": "Dark"
-  }
+  },
+
+  "add_friend": "Add friend"
 }

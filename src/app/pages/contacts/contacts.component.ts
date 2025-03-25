@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ContactManager } from "../../services";
 
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "primeng/tabs";
@@ -19,7 +19,8 @@ import { AddFriendComponent } from "@components/add-friend/add-friend.component"
         AddFriendComponent
     ],
     templateUrl: './contacts.component.html',
-    styleUrl: './contacts.component.css'
+    styleUrl: './contacts.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactsComponent {
     contactManager = inject(ContactManager);

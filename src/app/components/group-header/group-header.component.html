@@ -1,17 +1,68 @@
 @let group = model();
 
-{{ group.name() }}
+<div class="group-name">
+    {{ group.name() }}
+</div>
+
 <div class="ms-auto flex">
     <p-button variant="text" rounded="true" size="small">
         <ng-icon name="matCallRound" color="var(--text-primary)" />
     </p-button>
 
     @if (group.localUser.isModeratorOrAbove()) {
-        <p-button variant="text" rounded="true" size="small">
+        <p-button variant="text" rounded="true" size="small"
+            (onClick)="showAddFriendDialog()">
             <ng-icon name="matPersonAddAlt1Round" color="var(--text-primary)" />
         </p-button>
-        <p-button variant="text" rounded="true" size="small">
+
+        <p-button variant="text" rounded="true" size="small" (click)="manage.toggle($event)">
             <ng-icon name="matSettingsRound" color="var(--text-primary)" />
         </p-button>
     }
 </div>
+
+<p-popover #manage>
+    <div class="-m-3 flex flex-col">
+        <div class="menu-item hover"
+            (click)="showChangeGroupNameDialog()">
+            <ng-icon name="matEditRound"/>
+            Group name
+        </div>
+        <div class="menu-item hover -mb-3">
+            <ng-icon name="matImageRound"/>
+            Group image
+        </div>
+
+        <p-divider />
+
+        <div class="menu-item hover -mt-3"
+            (click)="showGroupParticipantsDialog()">
+            <ng-icon name="matPeopleRound"/>
+            Participants
+        </div>
+        <div class="menu-item hover -mb-3"
+            (click)="showAddFriendDialog()">
+            <ng-icon name="matPersonAddAlt1Round"/>
+            Add friends to group
+        </div>
+
+        <p-divider />
+
+        <div class="menu-item hover -mt-3">
+            <ng-icon name="matExitToAppRound" color="var(--error)"/>
+            Leave group
+        </div>
+        <div class="menu-item hover">
+            <ng-icon name="matDeleteForeverRound" color="var(--error)"/>
+            Delete group
+        </div>
+    </div>
+</p-popover>
+
+<!--@if (addModelVisible()) {-->
+<!--    <p-dialog modal [(visible)]="addModelVisible">-->
+<!--        <app-select-friends [selectionType]="FriendsSelectionType.InviteToGroup"-->
+<!--                            class="w-80" (friendsSelected)="onFriendsSelected($event)" />-->
+<!--    </p-dialog>-->
+<!--}-->
+

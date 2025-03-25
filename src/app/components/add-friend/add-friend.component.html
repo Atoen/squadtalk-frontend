@@ -1,1 +1,23 @@
-<p>add-friend works!</p>
+<p> {{ 'add_friend' | translate }} </p>
+
+@let message = messageData();
+@if (message) {
+    <p-message closable="true" size="small" (onClose)="hideMessage()"
+               [severity]="message.severity" styleClass="max-w-96">
+        {{ message.text }}
+    </p-message>
+}
+
+<form class="flex grow mt-4 gap-2 items-center" (ngSubmit)="addFriend()">
+    <p-input-group class="max-w-96" >
+        <p-float-label variant="on">
+            <input id="add-friend-entry" type="text" name="friend"
+                   pInputText autocomplete="off" [(ngModel)]="friendUsername"
+                   class="max-w-96">
+            <label for="add-friend-entry">Friend username</label>
+        </p-float-label>
+        <p-inputgroup-addon>
+            <p-button class="whitespace-nowrap h-full" type="submit">Send invite</p-button>
+        </p-inputgroup-addon>
+    </p-input-group>
+</form>

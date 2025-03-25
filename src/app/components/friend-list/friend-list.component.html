@@ -1,4 +1,6 @@
-@for (friend of contactManager.friends(); track friend.id) {
+<p>Friends active - {{ friendsActive() }}</p>
+
+@for (friend of sortedFriends(); track friend.id) {
     <div class="container hover px-1 rounded-sm">
         <app-avatar-badge [user]="friend" size="large" />
 
@@ -21,9 +23,7 @@
             </p-button>
         </div>
     </div>
-}
-
-@empty {
+} @empty {
     <p>Friend list is empty</p>
 }
 

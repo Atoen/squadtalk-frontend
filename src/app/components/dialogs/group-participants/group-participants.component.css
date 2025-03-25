@@ -1,0 +1,6 @@
+.member-list-item {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 0.25rem;
+}

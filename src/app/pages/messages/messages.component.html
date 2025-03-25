@@ -5,26 +5,8 @@
 
 <div class="flex flex-col gap-2 m-2">
     @for (group of chatManager.groups(); track group.id) {
-        <div class="container hover-primary"
-            (click)="chatManager.openGroup(group)">
-            <div class="image">
-                <app-group-image [group]="group" />
-            </div>
-            <div class="chat-name">{{ group.name() }}</div>
-
-            @let lastMessage = group.lastMessage();
-            @if (lastMessage) {
-                <div class="status">
-                    <div class="last-message">
-                        {{ lastMessage | formatLastMessageContent:group.type }}
-                    </div>
-                    <div class="separator">|</div>
-                    <div class="last-message-time">
-                        {{ lastMessage.timestamp | formatTimestamp:TimestampFormatMode.ChannelStatus }}
-                    </div>
-                </div>
-            }
-        </div>
+        <app-group-chat [chatGroup]="group" class="container hover-primary"
+                        (click)="chatManager.openGroup(group)"/>
     }
 
     @empty {

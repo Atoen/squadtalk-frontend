@@ -1,7 +1,13 @@
 <div class="avatar-badge">
-    <p-avatar [label]="user().username()[0]" class="avatar" [size]="this.size()" />
+    @let u = user();
+    <p-avatar [label]="u.username()[0]" class="avatar" [size]="this.size()" />
 
-    @if (user().status() !== UserStatus.Unknown) {
-        <ng-icon [name]="statusData().icon" [color]="statusData().color" class="badge"/>
+    @let status = u.status();
+    @let data = statusData();
+
+    @let showBadge = status !== UserStatus.Unknown && !(status === UserStatus.Offline && !displayOfflineBadge());
+
+    @if (showBadge) {
+        <ng-icon [name]="data.icon" [color]="data.color" class="badge"/>
     }
 </div>

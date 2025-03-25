@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Button } from 'primeng/button';
 import { MenuItem } from "primeng/api";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
@@ -17,7 +17,8 @@ import { Subscription } from "rxjs";
         TranslatePipe
     ],
     templateUrl: './settings.component.html',
-    styleUrl: './settings.component.css'
+    styleUrl: './settings.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 

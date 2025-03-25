@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, ViewChild } from '@angular/core';
 import { ContactManager } from "../../services";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 import { Button } from "primeng/button";
@@ -25,12 +25,25 @@ import { ConfirmDialog } from "primeng/confirmdialog";
     providers: [
         provideIcons({matMessageRound, matMoreVertRound}),
         ConfirmationService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FriendListComponent {
 
-    private confirmationService = inject(ConfirmationService);
-    contactManager = inject(ContactManager);
+    private readonly confirmationService = inject(ConfirmationService);
+    readonly contactManager = inject(ContactManager);
+
+    private readonly collator = new Intl.Collator('en');
+
+    readonly sortedFriends = computed(() =>
+        this.contactManager.friends().slice().sort((a, b) =>
+            a.status() - b.status() || this.collator.compare(a.username(), b.username())
+        )
+    );
+
+    readonly friendsActive = computed(() => {
+        return this.contactManager.friends().filter(x => x.isActive()).length;
+    })
 
     @ViewChild('more') morePopover!: Popover;
 

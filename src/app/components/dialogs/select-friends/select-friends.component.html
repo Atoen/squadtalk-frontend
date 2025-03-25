@@ -1,0 +1,40 @@
+<div class="flex flex-wrap gap-2 mb-2">
+    @for (selected of selectedFriends(); track selected.id) {
+        <div class="chip hover" (click)="closeChip(selected)" >
+            {{ selected.username() }}
+            <ng-icon name="matCloseRound" size="1.25rem" />
+        </div>
+    }
+</div>
+
+<p-fluid>
+    <p-float-label variant="on">
+        <input id="find-friend-entry" pInputText autocomplete="off"
+               [(ngModel)]="searchText">
+        <label for="find-friend-entry">Friend username</label>
+    </p-float-label>
+</p-fluid>
+
+<div class="my-1 overflow-y-auto mt-2" style="max-height: 200px">
+    @for (filtered of filteredFriends(); track filtered.id) {
+        <div class="search-result hover" pRipple (click)="clickResult(filtered)">
+            <app-avatar-badge [user]="filtered.user" [displayOfflineBadge]="false" />
+
+            <span class="ms-2 me-auto">{{ filtered.username() }}</span>
+
+            @if (filtered.isSelected()) {
+                <ng-icon name="matCheckBoxRound" color="var(--p-primary-color)" />
+            } @else {
+                <ng-icon name="matCheckBoxOutlineBlankRound" />
+            }
+        </div>
+    } @empty {
+        no friends found.
+    }
+</div>
+
+<p-button styleClass="w-full mt-2" (click)="confirmSelection()"
+    [disabled]="selectedNone()">
+    Create group
+</p-button>
+

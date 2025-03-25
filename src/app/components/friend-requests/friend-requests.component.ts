@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ContactManager } from "../../services";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 import { Divider } from "primeng/divider";
@@ -19,7 +19,8 @@ import { IncomingFriendRequest, OutgoingFriendRequest } from "@data/models";
     ],
     templateUrl: './friend-requests.component.html',
     styleUrl: './friend-requests.component.css',
-    providers: [provideIcons({matCheckRound, matCloseRound})]
+    providers: [provideIcons({matCheckRound, matCloseRound})],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FriendRequestsComponent {
     contactManager = inject(ContactManager);

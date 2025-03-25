@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
 import { ChatGroup } from "@data/models";
 import { InfiniteScrollDirective } from "ngx-infinite-scroll";
 import { ChatMessageComponent } from "@components/chat-message/chat-message.component";
@@ -11,7 +11,8 @@ import { TextChatService } from "@services/TextChatService";
         ChatMessageComponent
     ],
     templateUrl: './message-scroll.component.html',
-    styleUrl: './message-scroll.component.css'
+    styleUrl: './message-scroll.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageScrollComponent implements OnInit {
 

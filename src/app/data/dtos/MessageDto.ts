@@ -1,7 +1,6 @@
 import { MessagePackObject } from "../MessagePackObject";
-import { MessageId, MessageIdPacked } from "../ids";
+import { GroupId, GroupIdPacked, MessageId, MessageIdPacked } from "../ids";
 import { UserDto, UserDtoPacked } from "./UserDto";
-import { GroupId, GroupIdPacked } from "../ids";
 import { DateTimeOffset, DateTimeOffsetPacked } from "../DatetimeOffset";
 import { EmbedDto, EmbedDtoPacked } from "./EmbedDto";
 

@@ -1,0 +1,27 @@
+.chip {
+    display: flex;
+    align-items: center;
+    width: min-content;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 4px 8px;
+}
+
+.chip:not(:hover) {
+    background: var(--gray);
+}
+
+ng-icon {
+    transition: 0.15s ease;
+}
+
+.chip:hover ng-icon {
+    color: var(--error);
+}
+
+.search-result {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 0.25rem;
+}

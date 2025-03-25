@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { GroupId } from "@data/ids";
 import { ChatManager } from "@services/ChatManager";
 import { Router } from "@angular/router";
@@ -13,12 +13,13 @@ import { MessageInputComponent } from "@components/message-input/message-input.c
 @Component({
     selector: 'app-chat',
     imports: [
-    GroupHeaderComponent,
-    MessageScrollComponent,
-    MessageInputComponent
-],
+        GroupHeaderComponent,
+        MessageScrollComponent,
+        MessageInputComponent
+    ],
     templateUrl: './chat.component.html',
-    styleUrl: './chat.component.css'
+    styleUrl: './chat.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatComponent implements OnInit, OnDestroy {
 

@@ -1,6 +1,6 @@
-import {signal} from '@angular/core';
-import {ChatMessage} from './ChatMessage';
-import {ChatGroup} from './ChatGroup';
+import { signal } from '@angular/core';
+import { ChatMessage } from './ChatMessage';
+import { ChatGroup } from './ChatGroup';
 import { TextChatCursor } from "@dtos/TextChatCursor";
 import { TextChatService } from "@services/TextChatService";
 

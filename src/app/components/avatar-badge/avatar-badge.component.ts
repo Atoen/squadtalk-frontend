@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { UserStatus } from "@data/enums";
 import {
     matAccessTimeFilledRound,
@@ -23,11 +23,13 @@ import { User } from "@data/models";
         matAccessTimeFilledRound,
         matDoNotDisturbOnRound,
         matWifiRound
-    })]
+    })],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AvatarBadgeComponent {
 
     size = input<'normal' | 'large' | 'xlarge'>();
+    displayOfflineBadge = input<boolean>(true);
     user = input.required<User>();
 
     private static readonly statusMap = {

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ChatMessage } from "@data/models";
 import { FormatTimestampPipe } from "@data/pipes/FormatTimestampPipe";
 import { JsonPipe } from "@angular/common";
@@ -12,7 +12,8 @@ import { Avatar } from "primeng/avatar";
         Avatar
     ],
     templateUrl: './chat-message.component.html',
-    styleUrl: './chat-message.component.css'
+    styleUrl: './chat-message.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatMessageComponent {
     model = input.required<ChatMessage>();

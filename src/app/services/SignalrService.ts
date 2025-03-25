@@ -2,11 +2,8 @@ import { Inject, Injectable, PLATFORM_ID, signal, untracked } from "@angular/cor
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack";
 import { isPlatformServer } from "@angular/common";
-import { HubEventHandler } from "../signalr";
-import { HubResult, ValueHubResult } from "../signalr";
+import { ConnectionMethodInvoker, HubEventHandler, HubMethodInvoker, HubResult, ValueHubResult } from "../signalr";
 import { UserAuthenticationService } from "./UserAuthenticationService";
-import { HubMethodInvoker } from "../signalr";
-import { ConnectionMethodInvoker } from "../signalr";
 
 @Injectable({providedIn: "root"})
 export class SignalrService implements ConnectionMethodInvoker {
@@ -50,12 +47,15 @@ export class SignalrService implements ConnectionMethodInvoker {
     }
 
     private registerBaseHandlers() {
-        this._connection.onreconnecting(_ => this._connectionStatus.set(HubConnectionState.Reconnecting));
-        this._connection.onclose(_ => this._connectionStatus.set(HubConnectionState.Disconnected));
-        this._connection.onreconnected(_ => this._connectionStatus.set(HubConnectionState.Connected));
+        this._connection.onreconnecting(() => this._connectionStatus.set(HubConnectionState.Reconnecting));
+        this._connection.onclose(() => this._connectionStatus.set(HubConnectionState.Disconnected));
+        this._connection.onreconnected(() => this._connectionStatus.set(HubConnectionState.Connected));
     }
 
     async invoke<T>(methodName: string, ...args: any[]): Promise<ValueHubResult<T>> {
+
+        console.log(`Invoking ${methodName} with args:`, ...args);
+
         if (!this.connectionCreated) {
             return ValueHubResult.Error;
         }
@@ -71,6 +71,9 @@ export class SignalrService implements ConnectionMethodInvoker {
     }
 
     async send(methodName: string, ...args: any[]): Promise<HubResult> {
+
+        console.log(`Sending ${methodName} with args:`, ...args);
+
         if (!this.connectionCreated) {
             return HubResult.Error;
         }

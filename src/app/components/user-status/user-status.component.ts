@@ -1,6 +1,6 @@
-import {Component, computed, inject, input, ViewChild} from '@angular/core';
-import {AuthenticationState, UserAuthenticationService} from "../../services";
-import {NgIf} from "@angular/common";
+import { ChangeDetectionStrategy, Component, computed, inject, input, ViewChild } from '@angular/core';
+import { AuthenticationState, ContactManager, UserAuthenticationService } from "../../services";
+import { NgIf } from "@angular/common";
 import {
     matAccessTimeFilledRound,
     matCircleRound,
@@ -11,7 +11,6 @@ import { UserStatus } from "@data/enums";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Ripple } from "primeng/ripple";
 import { Popover } from "primeng/popover";
-import { ContactManager } from "../../services";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
 
 @Component({
@@ -30,7 +29,8 @@ import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
         matAccessTimeFilledRound,
         matDoNotDisturbOnRound,
         matWifiRound
-    })]
+    })],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserStatusComponent {
     authService = inject(UserAuthenticationService);

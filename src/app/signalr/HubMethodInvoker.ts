@@ -1,13 +1,16 @@
 import {
     CancelFriendRequestDto,
-    FriendRequestDto, FriendRequestResponseDto,
-    GroupDtoPacked, MessageDtoPacked,
-    PendingFriendRequestDtoPacked, RemoveFriendDto,
+    FriendRequestDto,
+    FriendRequestResponseDto,
+    GroupDtoPacked,
+    MessageDtoPacked,
+    PendingFriendRequestDtoPacked,
+    RemoveFriendDto,
     UserDtoPacked
 } from "@data/dtos";
 import { FriendRequestResponseResult, FriendRequestResult, RemoveFriendResult, UserStatus } from "@data/enums";
 import { ConnectionMethodInvoker } from "./ConnectionMethodInvoker";
-import { FriendRequestId, GroupId, UserId } from "@data/ids";
+import { FriendRequestId, GroupId, MessageId, UserId } from "@data/ids";
 import { TextChatCursor } from "@dtos/TextChatCursor";
 
 export class HubMethodInvoker {
@@ -24,6 +27,10 @@ export class HubMethodInvoker {
 
     sendMessage(message: string, groupId: GroupId) {
         return this.methodInvoker.send('SendMessage', message, [groupId]);
+    }
+
+    markMessageSeen(groupId: GroupId, messageId: MessageId) {
+        return this.methodInvoker.send('MarkMessageSeen', [groupId], [messageId]);
     }
 
     getMessagePage(groupId: GroupId, cursor: TextChatCursor = TextChatCursor.default) {

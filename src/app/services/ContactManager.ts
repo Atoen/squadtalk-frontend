@@ -7,7 +7,7 @@ import { FriendRequestId, UserId } from "@data/ids";
 import { HubMethodInvoker } from "../signalr";
 import { Func } from "../util";
 import { FriendRequestResponseDto, PendingFriendRequestDto, UserDto } from "@data/dtos";
-import { UserStatus } from "@data/enums";
+import { FriendRequestResult, UserStatus } from "@data/enums";
 
 @Injectable({providedIn: "root"})
 export class ContactManager {
@@ -94,6 +94,7 @@ export class ContactManager {
 
     async sendFriendRequest(username: string) {
         const result = await this._hubInvoker.sendFriendRequest(username);
+        return result.valueOr(FriendRequestResult.Error);
     }
 
     async respondToFriendRequest(friendRequest: IncomingFriendRequest, accepted: boolean) {

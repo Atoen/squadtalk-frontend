@@ -15,6 +15,7 @@ export class ChatGroup {
     readonly others: WritableSignal<GroupParticipant[]>;
     readonly lastMessage: WritableSignal<ChatMessage | undefined>;
     readonly unreadMessages: WritableSignal<number>;
+    readonly hasUnreadMessages: Signal<boolean>;
     readonly localUser: GroupParticipant;
     readonly id: GroupId;
     readonly type: ChatType;
@@ -23,6 +24,7 @@ export class ChatGroup {
 
     readonly messages: Signal<ChatMessage[]>;
     readonly name: Signal<string>;
+    readonly unreadBadgeContent: Signal<string | null>;
 
     private constructor(
         dto: GroupDto,
@@ -32,6 +34,8 @@ export class ChatGroup {
         this.type = dto.type;
         this.customName = signal(dto.customName);
         this.unreadMessages = signal(dto.messagesSince);
+        this.hasUnreadMessages = computed(() => this.unreadMessages() > 0);
+
         this.lastMessage = signal<ChatMessage | undefined>(undefined);
 
         const participants = dto.participants.map(participantProvider);
@@ -42,11 +46,17 @@ export class ChatGroup {
 
         this.state = new GroupState(this);
         this.messages = this.state.messages.asReadonly();
+
         this.name = computed(() => {
-            return this.customName() ?? this.participants()
+            return this.customName() ?? this.others()
                 .slice(0, 3)
                 .map(x => x.user.username())
                 .join(', ');
+        });
+
+        this.unreadBadgeContent = computed(() => {
+            const unread = this.unreadMessages();
+            return unread ? (unread < 100 ? unread.toString() : "99+") : null;
         });
     }
 

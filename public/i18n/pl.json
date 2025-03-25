@@ -17,5 +17,7 @@
   "theme": {
     "light": "Jasny",
     "dark": "ciemny"
-  }
+  },
+
+  "add_friend": "Dodaj znajomego"
 }

@@ -1,0 +1,26 @@
+@let group = chatGroup();
+
+<div class="image">
+    <app-group-image [group]="group" />
+</div>
+<div class="chat-header">
+    <span class="chat-title">{{ group.name() }}</span>
+
+    @let badgeValue = group.unreadBadgeContent();
+    @if (badgeValue) {
+        <p-badge class="chat-badge" severity="danger" [value]="badgeValue"/>
+    }
+</div>
+
+@let lastMessage = group.lastMessage();
+@if (lastMessage) {
+    <div class="status" [class.unread]="group.hasUnreadMessages()">
+        <div class="last-message" >
+            {{ lastMessage | formatLastMessageContent:group.type }}
+        </div>
+        <div class="separator">|</div>
+        <div class="last-message-time">
+            {{ lastMessage.timestamp | formatTimestamp:TimestampFormatMode.ChannelStatus }}
+        </div>
+    </div>
+}

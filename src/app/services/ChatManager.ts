@@ -50,6 +50,12 @@ export class ChatManager {
         if (untracked(this._currentGroup) === group) return;
 
         this._currentGroup.set(group);
+        group.unreadMessages.set(0);
+
+        const lastMessage = untracked(group.lastMessage);
+        if (lastMessage) {
+            void this._hubInvoker.markMessageSeen(group.id, lastMessage.id);
+        }
 
         if (navigate) {
             void this.router.navigate([`/chat/${group.id}`]);

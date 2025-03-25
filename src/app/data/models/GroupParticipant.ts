@@ -11,6 +11,10 @@ export class GroupParticipant {
     readonly role: WritableSignal<GroupRole>;
     readonly isModeratorOrAbove: Signal<boolean>;
 
+    get id() {
+        return this.user.id;
+    }
+
     private constructor(dto: GroupParticipantDto, userProvider: Func<UserDto, User>) {
         this.user = userProvider(dto.user);
         this.addedBy = userProvider(dto.addedBy);

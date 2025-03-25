@@ -1,0 +1,12 @@
+<form (ngSubmit)="changeGroupName()">
+    <p-float-label>
+        <input id="change-group-name-entry" name="name"
+               pInputText [(ngModel)]="name" maxlength="100" class="w-full">
+        <label for="change-group-name-entry">Group name</label>
+    </p-float-label>
+</form>
+
+<div class="flex gap-2 mt-2 justify-end">
+    <p-button variant="text" (click)="cancel()">Cancel</p-button>
+    <p-button [loading]="working()" (click)="changeGroupName()">Change group name</p-button>
+</div>
