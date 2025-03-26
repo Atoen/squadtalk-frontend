@@ -2,6 +2,8 @@
   "name": "squadtalk",
   "version": "0.0.0",
   "scripts": {
+    "prestart": "node public/i18n/convert.js",
+    "prebuild": "node public/i18n/convert.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -31,7 +33,9 @@
     "@ngx-translate/http-loader": "^16.0.1",
     "@primeng/themes": "^19.0.8",
     "@tailwindcss/postcss": "^4.0.9",
+    "chalk": "4.1.2",
     "express": "^4.18.2",
+    "linq-to-typescript": "^12.0.0",
     "lz4": "^0.6.5",
     "ngx-infinite-scroll": "^19.0.0",
     "postcss": "^8.5.3",
@@ -42,6 +46,7 @@
     "tailwindcss-primeui": "^0.5.1",
     "tslib": "^2.3.0",
     "typesafe-i18n": "^5.26.2",
+    "yaml": "^2.7.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

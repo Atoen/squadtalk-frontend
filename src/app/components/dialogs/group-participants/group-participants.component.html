@@ -1,43 +1,64 @@
 <p-tabs value="0" lazy>
-    <p-tablist>
-        <p-tab value="0">All members</p-tab>
-        <p-tab value="1">Moderators</p-tab>
-    </p-tablist>
+    <div class="mx-auto">
+        <p-tablist>
+            <p-tab value="0">All members</p-tab>
+            <p-tab value="1">Moderators</p-tab>
+        </p-tablist>
+    </div>
     <p-tabpanels>
         <p-tabpanel value="0">
+            <span>{{ sortedParticipants().length }} members</span>
+            <div style="max-height: 300px">
+                @for (participant of sortedParticipants(); track participant.id) {
+                    <div class="hover member-list-item">
+                        <app-avatar-badge [user]="participant.user" [displayOfflineBadge]="false" size="large" />
+                        <div class="flex flex-col ms-2 me-auto">
+                            <span>{{ participant.user.username() }}</span>
 
-            <span>{{ group.participants().length }} members</span>
+                            <span class="text-sm">
+                                @if (participant.role() === GroupRole.Owner) {
+                                    {{ 'group_role.creator' | translate }}
+                                } @else {
+                                    Added by {{ participant.addedBy.username() }}
+                                }
+                            </span>
 
-            @for (participant of group.participants(); track participant.id) {
-                <div class="hover member-list-item">
-                    <app-avatar-badge [user]="participant.user" [displayOfflineBadge]="false" size="large" />
-                    <div class="flex flex-col ms-2">
-                        <span>{{ participant.user.username() }}</span>
+                        </div>
+                        <p-button rounded variant="text" size="small">
+                            <ng-icon name="matEditRound" />
+                        </p-button>
 
-                        <span class="text-sm">
-                            @if (participant.role() === GroupRole.Owner) {
-                                Group owner
-                            } @else {
-                                Added by {{ participant.addedBy.username() }}
-                            }
-                        </span>
+                        <p-button rounded variant="text" size="small" (click)="removeParticipant($event, participant)">
+                            <ng-icon name="matPersonRemoveRound" color="var(--error)" />
+                        </p-button>
                     </div>
-                </div>
-            }
+                }
+            </div>
+
         </p-tabpanel>
         <p-tabpanel value="1">
-
             <span>{{ moderators().length }} moderators</span>
-            
-            @for (moderator of moderators(); track moderator.id) {
-                <div class="hover member-list-item">
-                    <app-avatar-badge [user]="moderator.user" [displayOfflineBadge]="false" size="large" />
-                    <div class="flex flex-col ms-2">
-                        <span>{{ moderator.user.username() }}</span>
-                        <span class="text-sm">Role - {{ moderator.role() }}</span>
+            <div style="max-height: 300px">
+                @for (moderator of moderators(); track moderator.id) {
+                    <div class="hover member-list-item">
+                        <app-avatar-badge [user]="moderator.user" [displayOfflineBadge]="false" size="large" />
+                        <div class="flex flex-col ms-2 me-auto">
+                            <span>{{ moderator.user.username() }}</span>
+                            <span class="text-sm">Role - {{ moderator.role() | groupRoleName }}</span>
+                        </div>
+
+                        <p-button rounded variant="text" size="small">
+                            <ng-icon name="matEditRound" />
+                        </p-button>
+
+                        <p-button rounded variant="text" size="small" (click)="removeParticipant($event, moderator)">
+                            <ng-icon name="matPersonRemoveRound" color="var(--error)" />
+                        </p-button>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </p-tabpanel>
     </p-tabpanels>
 </p-tabs>
+
+<p-confirm-popup />

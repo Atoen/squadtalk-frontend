@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, ViewChild } from '@angular/core';
 import { AuthenticationState, ContactManager, UserAuthenticationService } from "../../services";
 import { NgIf } from "@angular/common";
 import {
@@ -12,6 +12,8 @@ import { NgIcon, provideIcons } from "@ng-icons/core";
 import { Ripple } from "primeng/ripple";
 import { Popover } from "primeng/popover";
 import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
+import { TranslatePipe } from "@ngx-translate/core";
+import { SelfStatusNamePipe } from "@data/pipes/StatusNamePipe";
 
 @Component({
     selector: 'app-user-status',
@@ -21,6 +23,8 @@ import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
         Ripple,
         Popover,
         AvatarBadgeComponent,
+        TranslatePipe,
+        SelfStatusNamePipe,
     ],
     templateUrl: './user-status.component.html',
     styleUrl: './user-status.component.css',
@@ -33,24 +37,15 @@ import { AvatarBadgeComponent } from "../avatar-badge/avatar-badge.component";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserStatusComponent {
+    protected readonly AuthenticationState = AuthenticationState;
+    protected readonly UserStatus = UserStatus;
+
     authService = inject(UserAuthenticationService);
     contactManager = inject(ContactManager);
 
-    @ViewChild('status_menu', { static: true }) statusMenu!: Popover;
-
     sidebarExpanded = input.required<boolean>();
 
-    protected readonly AuthenticationState = AuthenticationState;
-
-    private static readonly statusTextMap = {
-        [UserStatus.Unknown]: "Connecting",
-        [UserStatus.Online]: "Online",
-        [UserStatus.Away]: "Away",
-        [UserStatus.DoNotDisturb]: "Do not disturb",
-        [UserStatus.Offline]: "Offline"
-    };
-
-    statusText = computed(() => UserStatusComponent.statusTextMap[this.contactManager.userStatus()]);
+    @ViewChild('status_menu', { static: true }) statusMenu!: Popover;
 
     async setSelfStatus(status: UserStatus) {
         this.statusMenu.hide();
@@ -59,6 +54,4 @@ export class UserStatusComponent {
             await this.contactManager.setStatus(status);
         }
     }
-
-    protected readonly UserStatus = UserStatus;
 }

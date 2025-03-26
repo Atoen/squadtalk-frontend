@@ -9,6 +9,7 @@ import { Popover } from "primeng/popover";
 import { User } from "@data/models";
 import { ConfirmationService } from "primeng/api";
 import { ConfirmDialog } from "primeng/confirmdialog";
+import { StatusNamePipe } from "@data/pipes/StatusNamePipe";
 
 @Component({
     selector: 'app-friend-list',
@@ -18,7 +19,8 @@ import { ConfirmDialog } from "primeng/confirmdialog";
         NgIcon,
         Tooltip,
         Popover,
-        ConfirmDialog
+        ConfirmDialog,
+        StatusNamePipe
     ],
     templateUrl: './friend-list.component.html',
     styleUrl: './friend-list.component.css',

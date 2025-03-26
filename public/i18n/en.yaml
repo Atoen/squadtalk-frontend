@@ -1,0 +1,35 @@
+app_language: Language
+app_theme: Theme
+messages: Messages
+contacts: Contacts
+home: Home
+settings: Settings
+log_in: Log in
+log_out: Log out
+register: Register
+
+lang:
+  en: English
+  pl: Polish
+
+theme:
+  light: Light
+  dark: Dark
+
+add_friend: Add friend
+
+status:
+  unknown: Unknown
+  online: Online
+  away: Away
+  do_not_disturb: Do not disturb
+  offline: Offline
+  hidden: Hidden
+
+group_role:
+  member: Member
+  moderator: Moderator
+  admin: Admin
+  creator: Group creator
+
+loading: Loading

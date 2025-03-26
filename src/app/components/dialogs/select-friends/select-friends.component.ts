@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
-import { User } from "@data/models";
+import { ChatGroup, User } from "@data/models";
 import { matCheckBoxOutlineBlankRound, matCheckBoxRound, matCloseRound } from "@ng-icons/material-icons/round";
 import { ContactManager } from "@services/ContactManager";
 import { AvatarBadgeComponent } from "@components/avatar-badge/avatar-badge.component";
@@ -11,6 +11,7 @@ import { Fluid } from "primeng/fluid";
 import { Ripple } from "primeng/ripple";
 import { Button } from "primeng/button";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { FriendsSelectionType } from "@data/enums/FriendSelectionType";
 
 @Component({
     selector: 'app-select-friends',
@@ -35,10 +36,20 @@ export class SelectFriendsComponent implements OnInit {
     readonly dialogRef = inject(DynamicDialogRef);
     readonly dialogService = inject(DialogService);
 
+    private selectionType: FriendsSelectionType = FriendsSelectionType.CreateGroup;
+    private group?: ChatGroup;
+
     ngOnInit() {
         const dialogInstance = this.dialogService.getInstance(this.dialogRef);
-        if (dialogInstance) {
-            console.log(dialogInstance.data);
+        if (!dialogInstance || !dialogInstance.data) {
+            this.dialogRef.close();
+        }
+
+        const data = dialogInstance.data;
+
+        this.selectionType = data['selectionType'];
+        if (this.selectionType === FriendsSelectionType.InviteToGroup) {
+            this.group = data['group'];
         }
     }
 
@@ -47,10 +58,19 @@ export class SelectFriendsComponent implements OnInit {
     readonly searchText = signal('');
 
     private readonly searchResults = computed(() => {
-        return this.contactManager.friends()
+        const group = this.group;
+        if (this.selectionType === FriendsSelectionType.InviteToGroup && !group) {
+            return [];
+        }
+
+        const friends = this.contactManager.friends();
+        const filteredFriends = this.selectionType === FriendsSelectionType.InviteToGroup
+            ? friends.filter(x => !group!.others().some(u => u.user === x))
+            : friends;
+
+        return filteredFriends
             .map(x => new SearchResult(x))
-            .sort((a, b) => this.collator
-                .compare(a.username(), b.username()));
+            .sort((a, b) => this.collator.compare(a.username(), b.username()));
     });
 
     readonly selectedFriends = computed(() => {
@@ -64,9 +84,7 @@ export class SelectFriendsComponent implements OnInit {
         const result = text === ''
             ? this.searchResults()
             : this.searchResults()
-                .filter(x => {
-                    return x.username().toLowerCase().includes(text);
-                });
+                .filter(x => x.username().toLowerCase().includes(text));
 
         return result.slice(0, 10);
     });

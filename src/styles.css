@@ -25,14 +25,14 @@ body {
     color: var(--p-floatlabel-invalid-color);
 }
 
-.p-popover {
-    background: var(--p-content-hover-background) !important;
-    border-color: var(--p-content-hover-background) !important;
-}
+/*.p-popover {*/
+/*    background: var(--p-content-hover-background) !important;*/
+/*    border-color: var(--p-content-hover-background) !important;*/
+/*}*/
 
-.p-popover::before, .p-popover::after {
-    border-bottom-color: var(--p-content-hover-background) !important
-}
+/*.p-popover::before, .p-popover::after {*/
+/*    border-bottom-color: var(--p-content-hover-background) !important*/
+/*}*/
 
 .primary-text {
     color: var(--text-primary);

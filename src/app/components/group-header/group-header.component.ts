@@ -57,7 +57,7 @@ export class GroupHeaderComponent {
             SelectFriendsComponent,
             "Add friends to the group",
             {
-                selection: FriendsSelectionType.InviteToGroup,
+                selectionType: FriendsSelectionType.InviteToGroup,
                 group: this.model()
             }
         ) as User[] | undefined;

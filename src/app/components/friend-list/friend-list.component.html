@@ -6,7 +6,7 @@
 
         <div class="text">
             <div class="text-lg self-baseline username">{{ friend.username() }}</div>
-            <div class="text-muted-color text-sm self-baseline status-text">{{ friend.status() }}</div>
+            <div class="text-muted-color text-sm self-baseline status-text">{{ friend.status() | statusName }}</div>
         </div>
 
         <div class="ms-auto flex gap-1">
