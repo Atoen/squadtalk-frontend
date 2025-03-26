@@ -1,16 +1,14 @@
-<p>settings works!</p>
-
 <div class="flex flex-col gap-1">
     <p-menu #langMenu [model]="languageOptions" popup="true" />
     <p-button (click)="langMenu.toggle($event)">
-        {{ 'app_language' | translate }}
+        {{ 'settings.language' | translate }}
     </p-button>
 
     <p-menu #themeMenu [model]="themeOptions" popup="true">
 
     </p-menu>
     <p-button (click)="themeMenu.toggle($event)">
-        {{ 'app_theme' | translate }}
+        {{ 'settings.theme' | translate }}
     </p-button>
 </div>
 

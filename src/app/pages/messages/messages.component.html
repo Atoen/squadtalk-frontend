@@ -1,16 +1,16 @@
 <div class="flex m-2 gap-4 items-center">
-    <div>Private messages</div>
-    <p-button variant="text">Add new group chat</p-button>
+    <div>{{ 'messages.private' | translate }}</div>
+    <p-button variant="text">{{ 'messages.add_group' | translate }}</p-button>
 </div>
 
 <div class="flex flex-col gap-2 m-2">
-    @for (group of chatManager.groups(); track group.id) {
+    @for (group of sortedGroups(); track group.id) {
         <app-group-chat [chatGroup]="group" class="container hover-primary"
                         (click)="chatManager.openGroup(group)"/>
     }
 
     @empty {
-        <p>No group chats.</p>
+        <p>{{ 'messages.empty' | translate }}</p>
     }
 </div>
 

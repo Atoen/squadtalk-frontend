@@ -1,22 +1,57 @@
-app_language: Language
-app_theme: Theme
-messages: Messages
-contacts: Contacts
-home: Home
-settings: Settings
-log_in: Log in
-log_out: Log out
-register: Register
+loading: Loading...
 
-lang:
+nav:
+  messages: Messages
+  contacts: Contacts
+  home: Home
+  settings: Settings
+  log_in: Log in
+  log_out: Log out
+  register: Register
+  not_found: Page not found
+
+account:
+  recovery: Account recovery
+  send_reset_link: Send password reset link
+  reset_password: Reset your password
+  log_in: Log in
+  log_in_account: Log in to your account
+  register: Register
+  create: Create account
+  create_new: Create new account
+  forgot_password: Forgot your password?
+  resend_activation: Resend activation email
+
+forms:
+  email: Email address
+  email_required: Email address is required.
+  email_invalid: Email address is invalid.
+  username: Username
+  username_required: Username is required.
+  username_too_short: Username must be at least {{length}} characters long.
+  username_too_long: Username must be at most {{length}} characters long.
+  username_or_email: Username or email
+  username_or_email_required: Username or email is required.
+  password: Password
+  password_required: Password is required.
+  password_too_short: Password must be at least {{length}} characters long.
+  password_too_long: Password must be at most {{length}} characters long.
+  password_confirm: Confirm your password
+  password_not_match: Passwords don't match.
+  remember: Remember me
+
+settings:
+  language: Language
+  theme: Theme
+
+language:
   en: English
   pl: Polish
 
 theme:
   light: Light
   dark: Dark
-
-add_friend: Add friend
+  auto: Auto
 
 status:
   unknown: Unknown
@@ -32,4 +67,24 @@ group_role:
   admin: Admin
   creator: Group creator
 
-loading: Loading
+messages:
+  private: Private messages
+  add_group: Add new group chat
+  empty: No group chats
+
+friend_list:
+  empty: Friend list is empty.
+  active: Friends active
+  add: Add friend
+
+contacts_tabs:
+  friends: Friends
+  friend_requests: Friend requests
+  add_friends: Add friend
+
+friend_requests:
+  empty: No pending friend requests.
+  outgoing: Outgoing requests
+  incoming: Incoming requests
+  accept: Accept
+  decline: Decline

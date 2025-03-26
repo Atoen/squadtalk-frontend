@@ -6,7 +6,6 @@ import { Menu } from "primeng/menu";
 import { UserPreferencesManager } from "@services/UserPreferencesManager";
 import { ApplicationLanguage } from "@data/preferences/ApplicationLanguage";
 import { ApplicationTheme } from "@data/preferences/ApplicationTheme";
-import { marker as _ } from '@colsen1991/ngx-translate-extract-marker';
 import { Subscription } from "rxjs";
 
 @Component({
@@ -41,13 +40,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
     updateMenuItems() {
         this.languageOptions = [
             {
-                label: this.translation.instant(_('lang.en')),
+                label: this.translation.instant('language.en'),
                 command: () => {
                     this.preferencesManager.changeLanguage(ApplicationLanguage.English);
                 }
             },
             {
-                label: this.translation.instant(_('lang.pl')),
+                label: this.translation.instant('language.pl'),
                 command: () => {
                     this.preferencesManager.changeLanguage(ApplicationLanguage.Polish);
                 }
@@ -56,13 +55,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
         this.themeOptions = [
             {
-                label: this.translation.instant(_('theme.light')),
+                label: this.translation.instant('theme.light'),
                 command: () => {
                     this.preferencesManager.changeTheme(ApplicationTheme.Light);
                 }
             },
             {
-                label: this.translation.instant(_('theme.dark')),
+                label: this.translation.instant('theme.dark'),
                 command: () => {
                     this.preferencesManager.changeTheme(ApplicationTheme.Dark);
                 }

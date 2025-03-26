@@ -1,35 +1,90 @@
-app_language: Język
-app_theme: Motyw
-messages: Wiadomości
-contacts: Kontakty
-home: Strona główna
-settings: Ustawienia
-log_in: Zaloguj się
-log_out: Wyloguj się
-register: Zarejestruj się
+loading: Ładowanie...
 
-lang:
+nav:
+  messages: Wiadomości
+  contacts: Kontakty
+  home: Strona główna
+  settings: Ustawienia
+  log_in: Zaloguj się
+  log_out: Wyloguj się
+  register: Zarejestruj się
+  not_found: Strona nie znaleziona
+
+account:
+  recovery: Odzyskiwanie konta
+  send_reset_link: Wyślij link do resetowania hasła
+  reset_password: Zresetuj swoje hasło
+  log_in: Zaloguj się
+  log_in_account: Zaloguj się na swoje konto
+  register: Zarejestruj się
+  create: Utwórz konto
+  create_new: Utwórz nowe konto
+  forgot_password: Zapomniałeś hasła?
+  resend_activation: Wyślij ponownie e-mail aktywacyjny
+
+forms:
+  email: Adres e-mail
+  email_required: Adres e-mail jest wymagany.
+  email_invalid: Adres e-mail jest nieprawidłowy.
+  username: Nazwa użytkownika
+  username_required: Nazwa użytkownika jest wymagana.
+  username_too_short: Nazwa użytkownika musi mieć co najmniej {{length}} znaków.
+  username_too_long: Nazwa użytkownika może mieć maksymalnie {{length}} znaków.
+  username_or_email: Nazwa użytkownika lub e-mail
+  username_or_email_required: Nazwa użytkownika lub e-mail jest wymagany.
+  password: Hasło
+  password_required: Hasło jest wymagane.
+  password_too_short: Hasło musi mieć co najmniej {{length}} znaków.
+  password_too_long: Hasło może mieć maksymalnie {{length}} znaków.
+  password_confirm: Potwierdź hasło
+  password_not_match: Hasła nie pasują do siebie.
+  remember: Zapamiętaj mnie
+
+settings:
+  language: Język
+  theme: Motyw
+
+language:
   en: Angielski
   pl: Polski
 
 theme:
   light: Jasny
   dark: Ciemny
-
-add_friend: Dodaj znajomego
+  auto: Automatyczny
 
 status:
   unknown: Nieznany
-  online: Dostępny
-  away: Zaraz wracam
+  online: Online
+  away: Z dala
   do_not_disturb: Nie przeszkadzać
-  offline: Niedostępny
-  hidden: Niewidoczny
+  offline: Offline
+  hidden: Ukryty
 
 group_role:
   member: Członek
   moderator: Moderator
   admin: Administrator
-  creator: Założyciel grupy
+  creator: Twórca grupy
 
-loading: Ładowanie
+messages:
+  private: Prywatne wiadomości
+  add_group: Dodaj nowy czat grupowy
+  empty: Brak czatów grupowych
+
+friend_list:
+  empty: Lista znajomych jest pusta.
+  active: Aktywni znajomi
+  add: Dodaj znajomego
+
+contacts_tabs:
+  friends: Znajomi
+  friend_requests: Prośby o dodanie do znajomych
+  add_friends: Dodaj znajomego
+
+friend_requests:
+  empty: Brak oczekujących próśb o dodanie do znajomych.
+  outgoing: Wysłane prośby
+  incoming: Otrzymane prośby
+  accept: Akceptuj
+  decline: Odrzuć

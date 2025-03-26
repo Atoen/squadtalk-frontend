@@ -13,6 +13,7 @@ import { NgIf } from '@angular/common';
 import { UserLoginDto } from '@data/dtos';
 import { UserAuthenticationService } from '../../../services';
 import { Fluid } from "primeng/fluid";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-login',
@@ -27,7 +28,8 @@ import { Fluid } from "primeng/fluid";
         RouterLink,
         Toast,
         NgIf,
-        Fluid
+        Fluid,
+        TranslatePipe
     ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css'

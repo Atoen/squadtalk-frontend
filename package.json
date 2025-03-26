@@ -2,6 +2,8 @@
   "name": "squadtalk",
   "version": "0.0.0",
   "scripts": {
+    "i18n": "node public/i18n/convert.js",
+    "i18n-watch": "node public/i18n/watch.js",
     "prestart": "node public/i18n/convert.js",
     "prebuild": "node public/i18n/convert.js",
     "ng": "ng",
@@ -34,6 +36,7 @@
     "@primeng/themes": "^19.0.8",
     "@tailwindcss/postcss": "^4.0.9",
     "chalk": "4.1.2",
+    "chokidar": "^4.0.3",
     "express": "^4.18.2",
     "linq-to-typescript": "^12.0.0",
     "lz4": "^0.6.5",

@@ -17,25 +17,25 @@
                 <i class="nav-item-icon">
                     <ng-icon name="matMessageRound"/>
                 </i>
-                <span class="nav-item-text">{{ 'messages' | translate }}</span>
+                <span class="nav-item-text">{{ 'nav.messages' | translate }}</span>
             </li>
             <li routerLink="/contacts" routerLinkActive="active" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matPeopleRound"/>
                 </i>
-                <span class="nav-item-text">{{ 'contacts' | translate }}</span>
+                <span class="nav-item-text">{{ 'nav.contacts' | translate }}</span>
             </li>
             <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matHomeRound"/>
                 </i>
-                <span class="nav-item-text">{{ 'home' | translate }}</span>
+                <span class="nav-item-text">{{ 'nav.home' | translate }}</span>
             </li>
             <li routerLink="/settings" routerLinkActive="active" pRipple class="nav-item">
                 <i class="nav-item-icon">
                     <ng-icon name="matSettingsRound"/>
                 </i>
-                <span class="nav-item-text">{{ 'settings' | translate }}</span>
+                <span class="nav-item-text">{{ 'nav.settings' | translate }}</span>
             </li>
 
             <ng-container *ngIf="authService.authenticationState() !== AuthenticationState.Unknown">
@@ -44,7 +44,7 @@
                         <i class="nav-item-icon">
                             <ng-icon name="matLogoutRound"/>
                         </i>
-                        <span class="nav-item-text">{{ 'log_out' | translate }}</span>
+                        <span class="nav-item-text">{{ 'nav.log_out' | translate }}</span>
                     </li>
                 </ng-container>
 
@@ -53,13 +53,13 @@
                         <i class="nav-item-icon">
                             <ng-icon name="matLoginRound"/>
                         </i>
-                        <span class="nav-item-text">{{ 'log_in' | translate }}</span>
+                        <span class="nav-item-text">{{ 'nav.log_in' | translate }}</span>
                     </li>
                     <li routerLink="/profile/register" routerLinkActive="active" class="nav-item fade-in" pRipple>
                         <i class="nav-item-icon">
                             <ng-icon name="matPersonAddRound"/>
                         </i>
-                        <span class="nav-item-text">{{ 'register' | translate }}</span>
+                        <span class="nav-item-text">{{ 'nav.register' | translate }}</span>
                     </li>
                 </ng-template>
             </ng-container>

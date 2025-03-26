@@ -7,6 +7,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { InputText } from 'primeng/inputtext';
 import { NgIf } from '@angular/common';
 import { Fluid } from "primeng/fluid";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-forgot-password',
@@ -19,6 +20,7 @@ import { Fluid } from "primeng/fluid";
         ReactiveFormsModule,
         NgIf,
         Fluid,
+        TranslatePipe,
     ],
     providers: [MessageService],
     templateUrl: './forgot-password.component.html',

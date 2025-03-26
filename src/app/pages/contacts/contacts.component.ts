@@ -5,6 +5,7 @@ import { Tab, TabList, TabPanel, TabPanels, Tabs } from "primeng/tabs";
 import { FriendListComponent } from "@components/friend-list/friend-list.component";
 import { FriendRequestsComponent } from "@components/friend-requests/friend-requests.component";
 import { AddFriendComponent } from "@components/add-friend/add-friend.component";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-contacts',
@@ -16,7 +17,8 @@ import { AddFriendComponent } from "@components/add-friend/add-friend.component"
         TabPanel,
         FriendListComponent,
         FriendRequestsComponent,
-        AddFriendComponent
+        AddFriendComponent,
+        TranslatePipe
     ],
     templateUrl: './contacts.component.html',
     styleUrl: './contacts.component.css',

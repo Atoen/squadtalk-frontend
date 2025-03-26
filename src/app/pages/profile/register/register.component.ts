@@ -19,6 +19,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { UserAuthenticationService } from '../../../services';
 import { UserRegisterDto } from '@data/dtos';
 import { Fluid } from "primeng/fluid";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-register',
@@ -34,6 +35,7 @@ import { Fluid } from "primeng/fluid";
         NgIf,
         NgClass,
         Fluid,
+        TranslatePipe,
     ],
     templateUrl: './register.component.html',
     styleUrl: './register.component.css'

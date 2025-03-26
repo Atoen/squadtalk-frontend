@@ -1,52 +1,62 @@
 <div class="container max-w-xl mx-auto">
     <p-card>
-        <span class="text-primary text-2xl mb-4 block">Log in</span>
+        <span class="text-primary text-2xl mb-4 block">
+            {{ 'account.log_in' | translate }}
+        </span>
 
         <p-fluid>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
                 <p-floatlabel variant="on">
                     <input pInputText formControlName="usernameOrEmail"
                            variant="outlined" type="text" id="username_input"/>
-                    <label for="username_input">Username or Email</label>
+                    <label for="username_input">
+                        {{ 'forms.username_or_email' | translate }}
+                    </label>
                 </p-floatlabel>
                 <div *ngIf="usernameOrEmail?.invalid && usernameOrEmail?.dirty" class="-mt-4 invalid-text">
                     <small>
-                        Username or email is required.
+                        {{ 'forms.username_or_email_required' | translate }}
                     </small>
                 </div>
 
                 <p-floatlabel variant="on">
                     <p-password id="password_input" type="password" [feedback]="false"
                                 [toggleMask]="true" formControlName="password"/>
-                    <label for="password_input">Password</label>
+                    <label for="password_input">
+                        {{ 'forms.password' | translate }}
+                    </label>
                 </p-floatlabel>
                 <div *ngIf="password?.invalid && password?.dirty" class="-mt-4 invalid-text">
                     <small>
-                        Password is required.
+                        {{ 'forms.password_required' | translate }}
                     </small>
                 </div>
 
                 <div class="flex items-center ms-2">
                     <p-checkbox formControlName="rememberMe" [binary]="true" inputId="remember" />
-                    <label for="remember" class="ml-2">Remember me</label>
+                    <label for="remember" class="ml-2">
+                        {{ 'forms.remember' | translate }}
+                    </label>
                 </div>
 
                 <p-button styleClass="w-60" class="mx-auto" type="submit">
-                    <span class="text-xl">Log in</span>
+                    <span class="text-xl">
+                        {{ 'account.log_in' | translate }}
+                    </span>
                 </p-button>
             </form>
 
             <div class="flex flex-col mt-2">
                 <p-button variant="text" class="mx-auto" routerLink="/profile/register">
-                    Create an account
+                    {{ 'account.create_new' | translate }}
                 </p-button>
                 <p-button variant="text" class="mx-auto" size="small" routerLink="/profile/forgot-password">
-                    Forgot your password?
+                    {{ 'account.forgot_password' | translate }}
                 </p-button>
 
                 <p-toast />
                 <p-button variant="text" class="mx-auto" size="small" (onClick)="onResendActivationEmail()">
-                    Resend activation email
+                    {{ 'account.resend_activation' | translate }}
                 </p-button>
             </div>
         </p-fluid>
