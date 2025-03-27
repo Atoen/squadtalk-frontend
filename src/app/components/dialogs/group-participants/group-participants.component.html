@@ -1,13 +1,15 @@
 <p-tabs value="0" lazy>
     <div class="mx-auto">
-        <p-tablist>
-            <p-tab value="0">All members</p-tab>
-            <p-tab value="1">Moderators</p-tab>
+        <p-tablist >
+            <p-tab value="0">{{ 'group_members.all' | translate }}</p-tab>
+            <p-tab value="1">{{ 'group_members.moderators' | translate }}</p-tab>
         </p-tablist>
     </div>
     <p-tabpanels>
         <p-tabpanel value="0">
-            <span>{{ sortedParticipants().length }} members</span>
+            <span>
+                {{ 'group_members.members_count' | translate:{ count: moderators().length } }}
+            </span>
             <div style="max-height: 300px">
                 @for (participant of sortedParticipants(); track participant.id) {
                     <div class="hover member-list-item">
@@ -19,7 +21,7 @@
                                 @if (participant.role() === GroupRole.Owner) {
                                     {{ 'group_role.creator' | translate }}
                                 } @else {
-                                    Added by {{ participant.addedBy.username() }}
+                                    {{ 'group_members.added_by' | translate:{ user: participant.addedBy.username() } }}
                                 }
                             </span>
 
@@ -37,7 +39,9 @@
 
         </p-tabpanel>
         <p-tabpanel value="1">
-            <span>{{ moderators().length }} moderators</span>
+            <span>
+                {{ 'group_members.moderators_count' | translate:{ count: moderators().length } }}
+            </span>
             <div style="max-height: 300px">
                 @for (moderator of moderators(); track moderator.id) {
                     <div class="hover member-list-item">

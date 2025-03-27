@@ -16,9 +16,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ToastErrorHandler } from "./services";
 import { ConfirmationService, MessageService } from "primeng/api";
-import { provideTranslateService, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService, TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { StaticTranslationsLoader } from "./StaticTranslationsLoader";
 import { DialogService } from "primeng/dynamicdialog";
+import { TranslateMessageFormatCompiler } from "ngx-translate-messageformat-compiler";
 
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -67,6 +68,10 @@ export const appConfig: ApplicationConfig = {
             loader: {
                 provide: TranslateLoader,
                 useClass: StaticTranslationsLoader
+            },
+            compiler: {
+                provide: TranslateCompiler,
+                useClass: TranslateMessageFormatCompiler
             }
         })])
     ]

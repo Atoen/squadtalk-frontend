@@ -39,6 +39,10 @@ forms:
   password_confirm: Potwierdź hasło
   password_not_match: Hasła nie pasują do siebie.
   remember: Zapamiętaj mnie
+  friend_username: Nazwa użytkownika znajomego
+
+dialog:
+  cancel: Anuluj
 
 settings:
   language: Język
@@ -56,16 +60,16 @@ theme:
 status:
   unknown: Nieznany
   online: Online
-  away: Z dala
+  away: Zaraz wracam
   do_not_disturb: Nie przeszkadzać
   offline: Offline
-  hidden: Ukryty
+  hidden: Niewidoczny
 
 group_role:
   member: Członek
   moderator: Moderator
   admin: Administrator
-  creator: Twórca grupy
+  creator: Założyciel grupy
 
 messages:
   private: Prywatne wiadomości
@@ -79,7 +83,7 @@ friend_list:
 
 contacts_tabs:
   friends: Znajomi
-  friend_requests: Prośby o dodanie do znajomych
+  friend_requests: Zaproszenia
   add_friends: Dodaj znajomego
 
 friend_requests:
@@ -88,3 +92,30 @@ friend_requests:
   incoming: Otrzymane prośby
   accept: Akceptuj
   decline: Odrzuć
+
+manage_group:
+  options: Opcje
+  change_name: Zmień nazwę grupy
+  name: Nazwa grupy
+  image: Zdjęcie grupy
+  participants: Uczestnicy
+  add_friends: Dodaj znajomych do grupy
+  leave: Opuść grupę
+  delete: Usuń grupę
+  call: Rozpocznij rozmowę głosową
+
+group_members:
+  all: "Wszyscy"
+  moderators: "Moderatorzy"
+  members_count: "{count, plural, one{# członek}, other{# członków}}"
+  moderators_count: "{count, plural, one{# moderator}, other{# moderatorów}}"
+  edit_role: Zmień rolę
+  remove: Usuń z grupy
+  added_by: Dodany przez {{user}}
+
+select_friends:
+  create_or_find_chat: Utwórz lub znajdź czat
+  create_new_chat: Utwórz nową grupę czatową
+  add: Dodaj znajomych
+  none_found: Nie znaleziono znajomych.
+  none_not_present_found: Nie znaleziono znajomych, którzy nie są w tej grupie.

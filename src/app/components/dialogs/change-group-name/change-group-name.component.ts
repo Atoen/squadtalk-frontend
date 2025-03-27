@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { InputText } from "primeng/inputtext";
 import { FloatLabel } from "primeng/floatlabel";
 import { Button } from "primeng/button";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-change-group-name',
@@ -12,7 +13,8 @@ import { Button } from "primeng/button";
         FormsModule,
         InputText,
         FloatLabel,
-        Button
+        Button,
+        TranslatePipe
     ],
     templateUrl: './change-group-name.component.html',
     styleUrl: './change-group-name.component.css',

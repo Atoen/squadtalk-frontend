@@ -20,6 +20,8 @@ import { DialogService } from "primeng/dynamicdialog";
 import { firstValueFrom } from "rxjs";
 import { GroupParticipantsComponent } from "@components/dialogs/group-participants/group-participants.component";
 import { ChangeGroupNameComponent } from "@components/dialogs/change-group-name/change-group-name.component";
+import { GroupRolePermissions } from "../../util/GroupParticipantPermissions";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-group-header',
@@ -27,7 +29,8 @@ import { ChangeGroupNameComponent } from "@components/dialogs/change-group-name/
         Button,
         NgIcon,
         Popover,
-        Divider
+        Divider,
+        TranslatePipe
     ],
     templateUrl: './group-header.component.html',
     styleUrl: './group-header.component.css',
@@ -46,7 +49,8 @@ import { ChangeGroupNameComponent } from "@components/dialogs/change-group-name/
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupHeaderComponent {
-    dialogService = inject(DialogService);
+    readonly dialogService = inject(DialogService);
+    readonly translateService = inject(TranslateService);
 
     model = input.required<ChatGroup>();
 
@@ -55,7 +59,7 @@ export class GroupHeaderComponent {
     async showAddFriendDialog() {
         const result = await this.openDialog(
             SelectFriendsComponent,
-            "Add friends to the group",
+            this.translateService.instant('manage_group.add_friends'),
             {
                 selectionType: FriendsSelectionType.InviteToGroup,
                 group: this.model()
@@ -70,11 +74,19 @@ export class GroupHeaderComponent {
     }
 
     showChangeGroupNameDialog() {
-        void this.openDialog(ChangeGroupNameComponent, "Change group name", { group: this.model() });
+        void this.openDialog(
+            ChangeGroupNameComponent,
+            this.translateService.instant('manage_group.change_name'),
+            { group: this.model() }
+        );
     }
 
     showGroupParticipantsDialog() {
-        void this.openDialog(GroupParticipantsComponent, "Participants", { group: this.model() });
+        void this.openDialog(
+            GroupParticipantsComponent,
+            this.translateService.instant('manage_group.participants'),
+            { group: this.model() }
+        );
     }
 
     private async openDialog<C>(component: Type<C>, header?: string, data?: any) {
@@ -93,4 +105,6 @@ export class GroupHeaderComponent {
 
         return await firstValueFrom(dialogRef.onClose);
     }
+
+    protected readonly GroupRolePermissions = GroupRolePermissions;
 }

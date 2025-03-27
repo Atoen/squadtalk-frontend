@@ -11,7 +11,9 @@
     <p-float-label variant="on">
         <input id="find-friend-entry" pInputText autocomplete="off"
                [(ngModel)]="searchText">
-        <label for="find-friend-entry">Friend username</label>
+        <label for="find-friend-entry">
+            {{ 'forms.friend_username' | translate }}
+        </label>
     </p-float-label>
 </p-fluid>
 
@@ -29,12 +31,24 @@
             }
         </div>
     } @empty {
-        no friends found.
+        @if (selectionType === FriendsSelectionType.CreateGroup) {
+            {{ 'select_friends.none_found' | translate }}
+        } @else {
+            {{ 'select_friends.none_not_present_found' | translate }}
+        }
     }
 </div>
 
 <p-button styleClass="w-full mt-2" (click)="confirmSelection()"
     [disabled]="selectedNone()">
-    Create group
+    @if (selectionType === FriendsSelectionType.InviteToGroup) {
+        {{ 'select_friends.add' | translate }}
+    } @else {
+        @if (selectedFriends().length === 1) {
+            {{ 'select_friends.create_or_find_chat' | translate }}
+        } @else {
+            {{ 'select_friends.create_new_chat' | translate }}
+        }
+    }
 </p-button>
 

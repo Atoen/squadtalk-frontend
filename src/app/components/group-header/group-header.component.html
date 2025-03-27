@@ -9,60 +9,66 @@
         <ng-icon name="matCallRound" color="var(--text-primary)" />
     </p-button>
 
-    @if (group.localUser.isModeratorOrAbove()) {
+    @if (GroupRolePermissions.canAddNewMembers(group.localUser)) {
         <p-button variant="text" rounded="true" size="small"
             (onClick)="showAddFriendDialog()">
             <ng-icon name="matPersonAddAlt1Round" color="var(--text-primary)" />
         </p-button>
-
-        <p-button variant="text" rounded="true" size="small" (click)="manage.toggle($event)">
-            <ng-icon name="matSettingsRound" color="var(--text-primary)" />
-        </p-button>
     }
+
+    <p-button variant="text" rounded="true" size="small" (click)="manage.toggle($event)">
+        <ng-icon name="matSettingsRound" color="var(--text-primary)" />
+    </p-button>
 </div>
 
 <p-popover #manage>
     <div class="-m-3 flex flex-col">
+        @let user = group.localUser;
+        @let canChangeNameAndImage = GroupRolePermissions.canChangeGroupNameAndImage(user);
+        @if (canChangeNameAndImage) {
+            <div class="menu-item hover"
+                (click)="showChangeGroupNameDialog()">
+                <ng-icon name="matEditRound"/>
+                {{ 'manage_group.name' | translate }}
+            </div>
+            <div class="menu-item hover -mb-3">
+                <ng-icon name="matImageRound"/>
+                {{ 'manage_group.image' | translate }}
+            </div>
+
+            <p-divider />
+        }
+
+        @let canAddMembers = GroupRolePermissions.canAddNewMembers(user);
+
         <div class="menu-item hover"
-            (click)="showChangeGroupNameDialog()">
-            <ng-icon name="matEditRound"/>
-            Group name
-        </div>
-        <div class="menu-item hover -mb-3">
-            <ng-icon name="matImageRound"/>
-            Group image
-        </div>
-
-        <p-divider />
-
-        <div class="menu-item hover -mt-3"
+             [class.-mt-3]="canChangeNameAndImage"
+             [class.-mb-3]="!canAddMembers"
             (click)="showGroupParticipantsDialog()">
             <ng-icon name="matPeopleRound"/>
-            Participants
+            {{ 'manage_group.participants' | translate }}
         </div>
-        <div class="menu-item hover -mb-3"
-            (click)="showAddFriendDialog()">
-            <ng-icon name="matPersonAddAlt1Round"/>
-            Add friends to group
-        </div>
+
+        @if (canAddMembers) {
+            <div class="menu-item hover -mb-3"
+                (click)="showAddFriendDialog()">
+                <ng-icon name="matPersonAddAlt1Round"/>
+                {{ 'manage_group.add_friends' | translate }}
+            </div>
+        }
 
         <p-divider />
 
         <div class="menu-item hover -mt-3">
             <ng-icon name="matExitToAppRound" color="var(--error)"/>
-            Leave group
+            {{ 'manage_group.leave' | translate }}
         </div>
-        <div class="menu-item hover">
-            <ng-icon name="matDeleteForeverRound" color="var(--error)"/>
-            Delete group
-        </div>
+
+        @if (GroupRolePermissions.canDeleteGroup(user)) {
+            <div class="menu-item hover">
+                <ng-icon name="matDeleteForeverRound" color="var(--error)"/>
+                {{ 'manage_group.delete | translate }}
+            </div>
+        }
     </div>
 </p-popover>
-
-<!--@if (addModelVisible()) {-->
-<!--    <p-dialog modal [(visible)]="addModelVisible">-->
-<!--        <app-select-friends [selectionType]="FriendsSelectionType.InviteToGroup"-->
-<!--                            class="w-80" (friendsSelected)="onFriendsSelected($event)" />-->
-<!--    </p-dialog>-->
-<!--}-->
-

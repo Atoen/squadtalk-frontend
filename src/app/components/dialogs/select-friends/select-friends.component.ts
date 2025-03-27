@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal, signal } from '@angular/core';
 import { ChatGroup, User } from "@data/models";
 import { matCheckBoxOutlineBlankRound, matCheckBoxRound, matCloseRound } from "@ng-icons/material-icons/round";
 import { ContactManager } from "@services/ContactManager";
@@ -12,6 +12,7 @@ import { Ripple } from "primeng/ripple";
 import { Button } from "primeng/button";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { FriendsSelectionType } from "@data/enums/FriendSelectionType";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-select-friends',
@@ -23,7 +24,8 @@ import { FriendsSelectionType } from "@data/enums/FriendSelectionType";
         FloatLabel,
         Fluid,
         Ripple,
-        Button
+        Button,
+        TranslatePipe
     ],
     templateUrl: './select-friends.component.html',
     styleUrl: './select-friends.component.css',
@@ -36,8 +38,8 @@ export class SelectFriendsComponent implements OnInit {
     readonly dialogRef = inject(DynamicDialogRef);
     readonly dialogService = inject(DialogService);
 
-    private selectionType: FriendsSelectionType = FriendsSelectionType.CreateGroup;
     private group?: ChatGroup;
+    selectionType: FriendsSelectionType = FriendsSelectionType.CreateGroup;
 
     ngOnInit() {
         const dialogInstance = this.dialogService.getInstance(this.dialogRef);
@@ -101,9 +103,11 @@ export class SelectFriendsComponent implements OnInit {
         const selected = this.selectedFriends().map(x => x.user);
         this.dialogRef.close(selected);
     }
+
+    protected readonly FriendsSelectionType = FriendsSelectionType;
 }
 
-export class SearchResult {
+class SearchResult {
     constructor(readonly user: User) {}
 
     isSelected = signal(false);

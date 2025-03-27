@@ -39,6 +39,10 @@ forms:
   password_confirm: Confirm your password
   password_not_match: Passwords don't match.
   remember: Remember me
+  friend_username: Friend username
+
+dialog:
+  cancel: Cancel
 
 settings:
   language: Language
@@ -88,3 +92,30 @@ friend_requests:
   incoming: Incoming requests
   accept: Accept
   decline: Decline
+
+manage_group:
+  options: Options
+  name: Group name
+  change_name: Change group name
+  image: Group image
+  participants: Participants
+  add_friends: Add friends to the group
+  leave: Leave group
+  delete: Delete group
+  call: Start voice call
+
+group_members:
+  all: All
+  moderators: Moderators
+  members_count: "{count, plural, one{member}, other{members}}"
+  moderators_count: "There {count, plural, =0{is no apple} one{is one apple} other{there are several apples}}."
+  edit_role: Edit role
+  remove: Remove from group
+  added_by: Dodany przez {{user}}
+
+select_friends:
+  create_or_find_chat: Create or find chat
+  create_new_chat: Create new group chat
+  add: Add friends
+  none_found: No friends found.
+  none_not_present_found: No friends found that are not in this group.
