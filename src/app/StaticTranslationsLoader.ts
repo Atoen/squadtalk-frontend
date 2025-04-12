@@ -1,8 +1,8 @@
 import { TranslateLoader, Translation, TranslationObject } from "@ngx-translate/core";
 import { Observable, of } from "rxjs";
 
-import * as TranslationsEN from '../../public/i18n/generated/en.json';
-import * as TranslationsPL from '../../public/i18n/generated/pl.json';
+import * as TranslationsEN from '../../public/i18n/en.json';
+import * as TranslationsPL from '../../public/i18n/pl.json';
 
 const TRANSLATIONS: Translation = {
     en: TranslationsEN,

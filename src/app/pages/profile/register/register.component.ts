@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Button } from "primeng/button";
 import { Card } from "primeng/card";
 
@@ -68,6 +68,12 @@ export class RegisterComponent implements OnInit {
         return this.registerForm.get('password');
     }
 
+    get repeatPassword() {
+        return this.registerForm.get('repeatPassword')
+    }
+
+    readonly working = signal(false);
+
     ngOnInit() {
         this.registerForm = new FormGroup(
             {
@@ -109,16 +115,18 @@ export class RegisterComponent implements OnInit {
         this.username?.markAsDirty();
         this.email?.markAsDirty();
         this.password?.markAsDirty();
-
-        console.debug('Register data:', this.registerForm.value);
-        console.debug('Form valid:', this.registerForm.valid);
+        this.repeatPassword?.markAsDirty();
 
         if (this.registerForm.invalid) {
             return;
         }
 
+        this.working.set(true);
+
         const formData: UserRegisterDto = this.registerForm.value;
         const result = await this.profileService.register(formData);
+
+        this.working.set(false);
 
         if (result.success) {
             console.log('Registration successful');

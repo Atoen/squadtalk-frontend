@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Card } from 'primeng/card';
 import { Password } from 'primeng/password';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
 
     loginForm!: FormGroup;
 
+    readonly working = signal(false);
+
     get usernameOrEmail() {
         return this.loginForm.get('usernameOrEmail');
     }
@@ -64,15 +66,16 @@ export class LoginComponent implements OnInit {
         this.usernameOrEmail?.markAsDirty();
         this.password?.markAsDirty();
 
-        console.log('Login Data:', this.loginForm.value);
-        console.log('Form valid:', this.loginForm.valid);
-
         if (this.loginForm.invalid) {
             return;
         }
 
+        this.working.set(true);
+
         const formData: UserLoginDto = this.loginForm.value;
         const result = await this.authenticationService.login(formData);
+
+        this.working.set(false);
 
         if (result.success && result.user) {
 

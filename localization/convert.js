@@ -5,8 +5,8 @@ const chalk = require('chalk');
 
 const timeLabel = 'i18n build time';
 
-const yamlDir = './public/i18n';
-const jsonDir = './public/i18n/generated';
+const yamlDir = './localization/translations';
+const jsonDir = './public/i18n/';
 
 const yamlExt = /\.(yaml|yml)$/;
 
@@ -40,8 +40,7 @@ fs.readdirSync(yamlDir).forEach(file => {
 
 if (convertedFiles) {
     console.log(chalk.green(`Converted ${convertedFiles} files`));
+    console.timeEnd(timeLabel);
 } else {
     console.log(chalk.gray('No YAML conversion performed'));
 }
-
-console.timeEnd(timeLabel);

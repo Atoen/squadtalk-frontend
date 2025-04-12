@@ -4,9 +4,7 @@
         {{ 'settings.language' | translate }}
     </p-button>
 
-    <p-menu #themeMenu [model]="themeOptions" popup="true">
-
-    </p-menu>
+    <p-menu #themeMenu [model]="themeOptions" popup="true" />
     <p-button (click)="themeMenu.toggle($event)">
         {{ 'settings.theme' | translate }}
     </p-button>

@@ -71,7 +71,7 @@
                     <small>{{ 'forms.password_not_match' | translate }}</small>
                 </div>
 
-                <p-button styleClass="w-60" class="mx-auto" type="submit">
+                <p-button styleClass="w-60" class="mx-auto" type="submit" [loading]="working()">
                     <span class="text-xl m-0 p-0">
                         {{ 'account.create' | translate }}
                     </span>

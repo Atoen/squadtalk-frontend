@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ChatGroup, User } from "@data/models";
 import { matCheckBoxOutlineBlankRound, matCheckBoxRound, matCloseRound } from "@ng-icons/material-icons/round";
 import { ContactManager } from "@services/ContactManager";

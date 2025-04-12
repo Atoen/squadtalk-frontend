@@ -4,8 +4,8 @@ const yaml = require('yaml');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 
-const yamlDir = './public/i18n';
-const jsonDir = './public/i18n/generated';
+const yamlDir = './localization/translations';
+const jsonDir = './public/i18n/';
 const yamlExt = /\.(yaml|yml)$/;
 
 if (!fs.existsSync(jsonDir)) {
